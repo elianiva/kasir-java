@@ -1,11 +1,9 @@
 package jswing;
 
-import main.java.jswing.TableData;
+import main.java.jswing.EditableTable;
 
 public class App {
     public static void main(String[] args) {
-        TableData frame = new TableData();
-        frame.pack();
-        frame.setVisible(true);
+        EditableTable tableAdd = new EditableTable();
     }
 }
