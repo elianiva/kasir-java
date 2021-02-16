@@ -26,5 +26,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'guitest.App'
+    mainClass = 'hitung_gaji.App'
 }
