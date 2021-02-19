@@ -22,9 +22,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'mysql:mysql-connector-java:8.0.12'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'jswing.App'
+    mainClass = 'tugas2.App'
 }
