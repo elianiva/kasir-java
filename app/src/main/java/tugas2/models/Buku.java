@@ -1,31 +1,59 @@
 package tugas2.models;
 
-public class Buku {
-	private long id_buku;
-	private String judulBuku;
-	private String pengarang;
+/**
+ * Book model
+ * self reminder: similar to mongoose model
+ */
+public class Book {
+	private long bookID;
+	private String bookTitle;
+	private String bookAuthor;
 
-	public long getId() {
-		return id_buku;
+	/**
+	 * Gets the book ID
+	 * @return bookID
+	 */
+	public long getBookID() {
+		return bookID;
 	}
 
-	public void setId(long id) {
-		this.id_buku = id;
+	/**
+	 * Sets the book ID
+	 * @param id the `Book` id
+	 */
+	public void setBookID(long id) {
+		this.bookID = id;
 	}
 
-	public String getJudulBuku() {
-		return judulBuku;
+	/**
+	 * Gets the book title
+	 * @return bookTitle
+	 */
+	public String getBookTitle() {
+		return bookTitle;
 	}
 
-	public void setJudulBuku(String judulBuku) {
-		this.judulBuku = judulBuku;
+	/**
+	 * Sets the book title
+	 * @param title the `Book` title
+	 */
+	public void setBookTitle(String title) {
+		this.bookTitle = title;
 	}
 
-	public String getPengarang() {
-		return pengarang;
+	/**
+	 * Gets the book author
+	 * @return bookAuthor
+	 */
+	public String getBookAuthor() {
+		return bookAuthor;
 	}
 
-	public void setPengarang(String pengarang) {
-		this.pengarang = pengarang;
+	/**
+	 * Sets the book author
+	 * @param author the `Book` author
+	 */
+	public void setBookAuthor(String author) {
+		this.bookAuthor = author;
 	}
 }

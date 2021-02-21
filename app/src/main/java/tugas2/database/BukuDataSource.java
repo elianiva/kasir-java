@@ -10,7 +10,7 @@ import java.util.List;
 import tugas2.models.Buku;
 
 /**
-* A class that handles the CRUD operation of the books
+* A class that handles all CRUD operations of the book
 */
 public class BookDataSource {
 	/**
@@ -18,7 +18,7 @@ public class BookDataSource {
 	 * @param buku - book model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Buku buku) throws SQLException {
+	public void save(Book buku) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO buku(judul, pengarang) VALUES (?, ?)";
@@ -27,8 +27,8 @@ public class BookDataSource {
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?) will turn into ("title", "author")
-		preparedStatement.setString(1, buku.getJudulBuku());
-		preparedStatement.setString(2, buku.getPengarang());
+		preparedStatement.setString(1, buku.getBookTitle());
+		preparedStatement.setString(2, buku.getBookAuthor());
 
 		preparedStatement.executeUpdate();
 	}
@@ -38,7 +38,7 @@ public class BookDataSource {
 	 * @param buku - book model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(Buku buku) throws SQLException {
+	public void update(Book buku) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "UPDATE buku SET judul=?, pengarang=?, WHERE id_buku=?";
@@ -47,9 +47,9 @@ public class BookDataSource {
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?) will turn into ("title", "author")
-		preparedStatement.setString(1, buku.getJudulBuku());
-		preparedStatement.setString(2, buku.getPengarang());
-		preparedStatement.setLong(3, buku.getId());
+		preparedStatement.setString(1, buku.getBookTitle());
+		preparedStatement.setString(2, buku.getBookAuthor());
+		preparedStatement.setLong(3, buku.getBookID());
 
 		preparedStatement.executeUpdate();
 	}
@@ -59,12 +59,12 @@ public class BookDataSource {
 	 * @param buku book model with the corresponding Id
 	 * @return void
 	 */
-	public void delete(Buku buku) throws SQLException {
+	public void delete(Book buku) throws SQLException {
 		String sql = "DELETE FROM buku WHERE id=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-		preparedStatement.setLong(1, buku.getId());
+		preparedStatement.setLong(1, buku.getBookID());
 
 		preparedStatement.executeUpdate();
 	}
@@ -73,20 +73,20 @@ public class BookDataSource {
 	 * Get all books from the database
 	 * @return List<Buku>
 	 */
-	public List<Buku> findAll() throws SQLException {
+	public List<Book> findAll() throws SQLException {
 		String sql = "SELECT * FROM buku";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet result = connection.createStatement().executeQuery(sql);
 
 		// we use List instead of Vector because it's the recommended way
-		List<Buku> bookList = new ArrayList<Buku>();
+		List<Book> bookList = new ArrayList<Book>();
 
 		// iterate through the available data and add the result to `bookList`
 		while(result.next()) {
-			Buku buku = new Buku();
-			buku.setId(result.getLong("id_buku"));
-			buku.setJudulBuku(result.getString("judul"));
-			buku.setPengarang(result.getString("pengarang"));
+			Book buku = new Book();
+			buku.setBookID(result.getLong("id_buku"));
+			buku.setBookTitle(result.getString("judul"));
+			buku.setBookAuthor(result.getString("pengarang"));
 			bookList.add(buku);
 		}
 
