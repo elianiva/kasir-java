@@ -1,10 +1,10 @@
 package tugas2.ui;
 
-import tugas2.models.Buku;
+import tugas2.models.Book;
 
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import tugas2.database.BukuDataSource;
+import tugas2.database.BookDataSource;
 
 public class BookActivityForm extends javax.swing.JFrame {
 	// initialise the model
@@ -173,14 +173,14 @@ public class BookActivityForm extends javax.swing.JFrame {
 		bookTitle.setText("Masukkan judul buku...");
 		bookTitle.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				JudulBukuActionPerformed(evt);
+				BookTitleActionPerformed(evt);
 			}
 		});
 
 		bookAuthor.setText("Masukkan judul buku...");
 		bookAuthor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				PengarangBukuActionPerformed(evt);
+				BookAuthorActionPerformed(evt);
 			}
 		});
 
@@ -247,11 +247,11 @@ public class BookActivityForm extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void JudulBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JudulBukuActionPerformed
+	private void BookTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookTitleActionPerformed
 		// TODO add your handling code here:
 	}//GEN-LAST:event_JudulBukuActionPerformed
 
-	private void PengarangBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PengarangBukuActionPerformed
+	private void BookAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookAuthorActionPerformed
 		// TODO add your handling code here:
 	}//GEN-LAST:event_PengarangBukuActionPerformed
 

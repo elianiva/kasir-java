@@ -1,7 +1,7 @@
 package tugas2.ui;
 
-import tugas2.database.BukuDataSource;
-import tugas2.models.Buku;
+import tugas2.database.BookDataSource;
+import tugas2.models.Book;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class DataManagerForm extends JFrame {
 	// initialise the model
 	private DefaultTableModel tableModel;
-	private List<Book> bukuList;
+	private List<Book> bookList;
 
 
 	/**
@@ -71,8 +71,8 @@ public class DataManagerForm extends JFrame {
 	 * @param bookList - list of `Book`
 	 */
 	private void addMultipleRowsToTableFor(List<Book> bookList) {
-		for (Book buku : bookList) {
-			addRowToTableFor(buku);
+		for (Book book : bookList) {
+			addRowToTableFor(book);
 		}
 	}
 
@@ -87,8 +87,8 @@ public class DataManagerForm extends JFrame {
 		}
 
 		try {
-			bukuList = datasource.findAll();
-			addMultipleRowsToTableFor(bukuList);
+			bookList = datasource.findAll();
+			addMultipleRowsToTableFor(bookList);
 		} catch (SQLException e) {
 			showError("Tidak dapat memuat data buku");
 			e.printStackTrace();
@@ -130,10 +130,10 @@ public class DataManagerForm extends JFrame {
 			return;
 		}
 
-		Book selectedBuku = bukuList.get(selectedRow);
+		Book selectedBook = bookList.get(selectedRow);
 		BookActivityForm activity = new BookActivityForm();
 		activity.setTitle("Update Data Buku");
-		activity.setBook(selectedBuku);
+		activity.setBook(selectedBook);
 		open(activity);
 	}
 
@@ -147,14 +147,14 @@ public class DataManagerForm extends JFrame {
 			return;
 		}
 
-		Book selectedBook = bukuList.get(selectedRow);
+		Book selectedBook = bookList.get(selectedRow);
 		int confirm = JOptionPane.showConfirmDialog(this, "Yakin Hapus"+selectedBook.getBookTitle()+" ?");
 		if (confirm == JOptionPane.YES_OPTION) {
 			BookDataSource datasource = new BookDataSource();
 			try {
 				datasource.delete(selectedBook);
 				tableModel.removeRow(selectedRow);
-				bukuList.remove(selectedBook);
+				bookList.remove(selectedBook);
 				showSuccess("Data buku berhasil dihapus");
 			} catch (SQLException e) {
 				showSuccess("Data buku gagal dihapus");

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import tugas2.models.Buku;
+import tugas2.models.Book;
 
 /**
 * A class that handles all CRUD operations of the book
@@ -15,10 +15,10 @@ import tugas2.models.Buku;
 public class BookDataSource {
 	/**
 	 * Save the passed `book` instance to the database
-	 * @param buku - book model
+	 * @param book - book model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Book buku) throws SQLException {
+	public void save(Book book) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO buku(judul, pengarang) VALUES (?, ?)";
@@ -27,51 +27,51 @@ public class BookDataSource {
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?) will turn into ("title", "author")
-		preparedStatement.setString(1, buku.getBookTitle());
-		preparedStatement.setString(2, buku.getBookAuthor());
+		preparedStatement.setString(1, book.getBookTitle());
+		preparedStatement.setString(2, book.getBookAuthor());
 
 		preparedStatement.executeUpdate();
 	}
 
 	/**
 	 * Delete books based on the passed `id` from the database
-	 * @param buku - book model
+	 * @param book - book model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(Book buku) throws SQLException {
+	public void update(Book book) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
-		String sql = "UPDATE buku SET judul=?, pengarang=?, WHERE id_buku=?";
+		String sql = "UPDATE buku SET judul=?, pengarang=? WHERE id_buku=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?) will turn into ("title", "author")
-		preparedStatement.setString(1, buku.getBookTitle());
-		preparedStatement.setString(2, buku.getBookAuthor());
-		preparedStatement.setLong(3, buku.getBookID());
+		preparedStatement.setString(1, book.getBookTitle());
+		preparedStatement.setString(2, book.getBookAuthor());
+		preparedStatement.setLong(3, book.getBookID());
 
 		preparedStatement.executeUpdate();
 	}
 
 	/**
 	 * Delete books based on the passed `id` from the database
-	 * @param buku book model with the corresponding Id
+	 * @param book book model with the corresponding Id
 	 * @return void
 	 */
-	public void delete(Book buku) throws SQLException {
-		String sql = "DELETE FROM buku WHERE id=?";
+	public void delete(Book book) throws SQLException {
+		String sql = "DELETE FROM buku WHERE id_buku=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-		preparedStatement.setLong(1, buku.getBookID());
+		preparedStatement.setLong(1, book.getBookID());
 
 		preparedStatement.executeUpdate();
 	}
 
 	/**
 	 * Get all books from the database
-	 * @return List<Buku>
+	 * @return List<Book>
 	 */
 	public List<Book> findAll() throws SQLException {
 		String sql = "SELECT * FROM buku";
@@ -83,11 +83,11 @@ public class BookDataSource {
 
 		// iterate through the available data and add the result to `bookList`
 		while(result.next()) {
-			Book buku = new Book();
-			buku.setBookID(result.getLong("id_buku"));
-			buku.setBookTitle(result.getString("judul"));
-			buku.setBookAuthor(result.getString("pengarang"));
-			bookList.add(buku);
+			Book book = new Book();
+			book.setBookID(result.getLong("id_buku"));
+			book.setBookTitle(result.getString("judul"));
+			book.setBookAuthor(result.getString("pengarang"));
+			bookList.add(book);
 		}
 
 		return bookList;
