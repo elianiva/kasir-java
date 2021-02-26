@@ -4,15 +4,17 @@
 package kasir;
 
 import javax.swing.JFrame;
-import com.formdev.flatlaf.FlatDarkLaf;
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 import kasir.ui.Login;
 
 public class App {
     public static void main(String[] args) {
-		FlatDarkLaf.install();
+		FlatLightLaf.install();
 
 		JFrame loginScreen = new Login();
+		loginScreen.setTitle("Login Aplikasi Kasir");
 		loginScreen.setVisible(true);
 		loginScreen.setResizable(false);
     }

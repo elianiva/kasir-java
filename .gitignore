@@ -1,3 +1,4 @@
+app/bin/
 .gradle
 **/build/
 !src/**/build/
