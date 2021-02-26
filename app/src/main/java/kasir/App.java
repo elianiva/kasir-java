@@ -3,12 +3,17 @@
  */
 package kasir;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import javax.swing.JFrame;
+import com.formdev.flatlaf.FlatDarkLaf;
 
+import kasir.ui.Login;
+
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+		FlatDarkLaf.install();
+
+		JFrame loginScreen = new Login();
+		loginScreen.setVisible(true);
+		loginScreen.setResizable(false);
     }
 }

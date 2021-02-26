@@ -25,6 +25,9 @@ dependencies {
 
     // MySQLDriver
     implementation 'mysql:mysql-connector-java:8.0.12'
+
+    // Material look and feel
+    implementation 'com.formdev:flatlaf:1.0'
 }
 
 application {
