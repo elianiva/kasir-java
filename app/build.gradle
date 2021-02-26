@@ -3,7 +3,7 @@
  *
  * This generated file contains a sample Java application project to get you started.
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
- * User Manual available at https://docs.gradle.org/6.8.1/userguide/building_java_projects.html
+ * User Manual available at https://docs.gradle.org/6.8.2/userguide/building_java_projects.html
  */
 
 plugins {
@@ -22,9 +22,12 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
+
+    // MySQLDriver
+    implementation 'mysql:mysql-connector-java:8.0.12'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'guitest.App'
+    mainClass = 'kasir.App'
 }
