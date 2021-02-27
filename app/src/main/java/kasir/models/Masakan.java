@@ -47,7 +47,7 @@ public class Masakan {
 	 * Get the food stock
 	 * @return stock
 	 */
-	public int getStock() {
+	public long getStock() {
 		return stock;
 	}
 
