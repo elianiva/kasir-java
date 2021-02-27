@@ -4,11 +4,11 @@ package kasir.models;
  * User model
  * self reminder: similar to Mongoose model
  */
-public class Makanan {
+public class Masakan {
 	private long foodID;
 	private String name;
 	private long price;
-	private int stock;
+	private long stock;
 	private String status;
 
 	/**
@@ -39,7 +39,7 @@ public class Makanan {
 	 * Set the food name
 	 * @param newName
 	 */
-	public void setUsername(String newName) {
+	public void setName(String newName) {
 		this.name = newName;
 	}
 
@@ -55,7 +55,7 @@ public class Makanan {
 	 * Set the food stock
 	 * @param newStock
 	 */
-	public void setStock(int newStock) {
+	public void setStock(long newStock) {
 		this.stock = newStock;
 	}
 
@@ -71,13 +71,13 @@ public class Makanan {
 	 * Set the food price
 	 * @param newPrice
 	 */
-	public void setStock(long newPrice) {
+	public void setPrice(long newPrice) {
 		this.price = newPrice;
 	}
 
 	/**
 	 * Get the food status
-	 * @return levelID
+	 * @return status
 	 */
 	public String getStatus() {
 		return status;
