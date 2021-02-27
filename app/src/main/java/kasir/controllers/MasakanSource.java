@@ -75,7 +75,7 @@ public class MasakanSource {
 	 * @return List<Masakan>
 	 */
 	public List<Masakan> findAll() throws SQLException {
-		String sql = "SELECT * FROM user";
+		String sql = "SELECT * FROM masakan";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet result = connection.createStatement().executeQuery(sql);
 
@@ -88,8 +88,8 @@ public class MasakanSource {
 			food.setFoodID(result.getLong("id_masakan"));
 			food.setName(result.getString("nama_masakan"));
 			food.setPrice(result.getLong("harga"));
-			food.setStock(result.getLong("stock"));
-			food.setStatus(result.getString("status"));
+			food.setStock(result.getLong("stok"));
+			food.setStatus(result.getString("status_masakan"));
 			foodList.add(food);
 		}
 
@@ -116,7 +116,7 @@ public class MasakanSource {
 			foodResult.setName(rs.getString("nama_masakan"));
 			foodResult.setPrice(rs.getLong("harga"));
 			foodResult.setStock(rs.getLong("stock"));
-			foodResult.setStatus(rs.getString("status"));
+			foodResult.setStatus(rs.getString("status_masakan"));
 
 			return foodResult;
 		}

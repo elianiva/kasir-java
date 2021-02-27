@@ -7,29 +7,73 @@ package kasir.ui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
+
+import kasir.controllers.MasakanSource;
+import kasir.models.Masakan;
 
 /**
  *
  * @author elianiva
  */
 public class OrderPopup extends javax.swing.JFrame {
+	private DefaultTableModel foodTableModel;
 
 	/**
 	 * Creates new form OrderPopup
 	 */
 	public OrderPopup() {
 		initComponents();
+		initTableModel();
+		populateData();
 		this.setLocationRelativeTo(null); // center the window
 	}
 
-	private void populateData() {
-
+	private void initTableModel() {
+		String[] columns = new String[]{
+			"ID", "Nama Masakan", "Harga", "Stok", "Status"
+		};
+		foodTableModel = new DefaultTableModel(columns, 0) {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+		};
+		foodTable.setModel(foodTableModel);
+		foodTable.getTableHeader().setReorderingAllowed(false); // prevent from table re-ordering
 	}
+
+	private void populateData() {
+		MasakanSource foodSource = new MasakanSource();
+
+		try {
+			List<Masakan> foods = foodSource.findAll();
+
+			for (Masakan food : foods) {
+				foodTableModel.addRow(new Object[] {
+					food.getFoodID(),
+					food.getName(),
+					food.getPrice(),
+					food.getStock(),
+					food.getStatus(),
+				});
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, "Tidak dapat memuat data!");
+			ex.printStackTrace();
+		}
+	}
+
+	// private void addRow(Masakan food) {
+	// 	foodtable
+	// }
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -40,7 +84,7 @@ public class OrderPopup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tableScrollPane = new javax.swing.JScrollPane();
         foodTable = new javax.swing.JTable();
         windowTitle = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
@@ -48,15 +92,15 @@ public class OrderPopup extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        foodTable.setModel(new javax.swing.table.DefaultTableModel(
+        foodTable.setModel(new DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null},
             },
             new String [] {
-                "ID", "Nama Makanan", "Harga", "Stok", "Status"
+                "ID", "Nama Masakan", "Harga", "Stok", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -74,7 +118,7 @@ public class OrderPopup extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(foodTable);
+        tableScrollPane.setViewportView(foodTable);
 
         windowTitle.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         windowTitle.setText("Tambah Item");
@@ -106,7 +150,7 @@ public class OrderPopup extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(19, 19, 19)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(242, 242, 242)
                             .addComponent(windowTitle))))
@@ -118,7 +162,7 @@ public class OrderPopup extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(windowTitle)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
@@ -152,7 +196,7 @@ public class OrderPopup extends javax.swing.JFrame {
     private javax.swing.JTable foodTable;
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JLabel windowTitle;
     // End of variables declaration//GEN-END:variables
 }
