@@ -11,7 +11,7 @@ public class User {
 	private String password;
 
 	/**
-	 * Get a user ID
+	 * Get the user ID
 	 * @return userID
 	 */
 	public long getUserID() {
@@ -19,15 +19,15 @@ public class User {
 	}
 
 	/**
-	 * Set a user ID
-	 * @param userID
+	 * Set the user ID
+	 * @param newID
 	 */
-	public void setUserID(long id) {
-		this.userID = id;
+	public void setUserID(long newID) {
+		this.userID = newID;
 	}
 
 	/**
-	 * Get a username
+	 * Get the username
 	 * @return username
 	 */
 	public String getUsername() {
@@ -35,15 +35,15 @@ public class User {
 	}
 
 	/**
-	 * Set a user ID
-	 * @param name
+	 * Set the user ID
+	 * @param newName
 	 */
-	public void setUsername(String name) {
-		this.username = name;
+	public void setUsername(String newName) {
+		this.username = newName;
 	}
 
 	/**
-	 * Get a password
+	 * Get the password
 	 * @return username
 	 */
 	public String getPassword() {
@@ -51,15 +51,15 @@ public class User {
 	}
 
 	/**
-	 * Set a password
-	 * @param pass
+	 * Set the password
+	 * @param newPassword
 	 */
-	public void setPassword(String pass) {
-		this.password = pass;
+	public void setPassword(String newPassword) {
+		this.password = newPassword;
 	}
 
 	/**
-	 * Get a levelID
+	 * Get the levelID
 	 * @return levelID
 	 */
 	public long getLevelID() {
@@ -67,10 +67,10 @@ public class User {
 	}
 
 	/**
-	 * Set a level ID
-	 * @param id
+	 * Set the level ID
+	 * @param newID
 	 */
-	public void setLevelID(long id) {
-		this.levelID = id;
+	public void setLevelID(long newID) {
+		this.levelID = newID;
 	}
 }
