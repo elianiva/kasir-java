@@ -28,6 +28,7 @@ dependencies {
 
     // Material look and feel
     implementation 'com.formdev:flatlaf:1.0'
+    implementation 'com.formdev:flatlaf-intellij-themes:1.0'
 }
 
 application {

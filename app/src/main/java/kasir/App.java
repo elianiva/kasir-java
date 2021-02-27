@@ -6,16 +6,19 @@ package kasir;
 import javax.swing.JFrame;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 
 import kasir.ui.Login;
 
 public class App {
     public static void main(String[] args) {
 		FlatLightLaf.install();
+		FlatArcOrangeIJTheme.install();
 
 		JFrame loginScreen = new Login();
 		loginScreen.setTitle("Login Aplikasi Kasir");
 		loginScreen.setVisible(true);
 		loginScreen.setResizable(false);
+		loginScreen.setLocationRelativeTo(null); // center the window
     }
 }
