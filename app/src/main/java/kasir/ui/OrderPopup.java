@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kasir.ui;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -18,38 +12,47 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import kasir.controllers.MasakanSource;
+import kasir.helpers.OrderTable;
 import kasir.models.Masakan;
 
-/**
- *
- * @author elianiva
- */
 public class OrderPopup extends javax.swing.JFrame {
 	private DefaultTableModel foodTableModel;
+	private OrderTable tableData;
+	private Order parentWindow;
 
 	/**
 	 * Creates new form OrderPopup
 	 */
 	public OrderPopup() {
+	}
+	public OrderPopup(OrderTable data, Order parent) {
 		initComponents();
 		initTableModel();
 		populateData();
 		this.setLocationRelativeTo(null); // center the window
+		tableData = data;
+		parentWindow = parent;
 	}
 
+	/**
+	 * Set the desired table model
+	 */
 	private void initTableModel() {
 		String[] columns = new String[]{
 			"ID", "Nama Masakan", "Harga", "Stok", "Status"
 		};
 		foodTableModel = new DefaultTableModel(columns, 0) {
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return false;
+			}
 		};
 		foodTable.setModel(foodTableModel);
 		foodTable.getTableHeader().setReorderingAllowed(false); // prevent from table re-ordering
 	}
 
+	/**
+	 * Populate table with initial data from database
+	 */
 	private void populateData() {
 		MasakanSource foodSource = new MasakanSource();
 
@@ -71,9 +74,42 @@ public class OrderPopup extends javax.swing.JFrame {
 		}
 	}
 
-	// private void addRow(Masakan food) {
-	// 	foodtable
-	// }
+	/**
+	 * Set parent with selected row
+	 */
+	private void setSelectedRow() {
+		if (amountField.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "Jumlah masakan tidak boleh kosong!");
+			return;
+		}
+
+		int row = foodTable.getSelectedRow();
+
+		if ((int)foodTable.getValueAt(row, 3) == 0) {
+			JOptionPane.showMessageDialog(this, "Stok masakan sedang kosong!");
+			return;
+		}
+
+		List<List<Object>> allItems = new ArrayList<List<Object>>();
+		allItems.addAll(tableData.getRows());
+
+		// create a row
+		List<Object> item = new ArrayList<Object>();
+		item.add(foodTable.getValueAt(row, 0));
+		item.add(foodTable.getValueAt(row, 1));
+		long amount = Long.parseLong(amountField.getText());
+		item.add(amount);
+		item.add((long)foodTable.getValueAt(row, 2) * amount);
+
+		allItems.add(item);
+
+		// set parent table data
+		parentWindow.setTableData(allItems);
+
+		// cleanup, reset to initial state
+		foodTable.clearSelection();
+		amountField.setText("");
+	}
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -84,23 +120,23 @@ public class OrderPopup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tableScrollPane = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         foodTable = new javax.swing.JTable();
         windowTitle = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        amountField = new javax.swing.JTextField();
+        amountLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        foodTable.setModel(new DefaultTableModel(
+        foodTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
-                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nama Masakan", "Harga", "Stok", "Status"
+                "ID", "Nama Makanan", "Harga", "Stok", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -118,7 +154,7 @@ public class OrderPopup extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableScrollPane.setViewportView(foodTable);
+        jScrollPane1.setViewportView(foodTable);
 
         windowTitle.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         windowTitle.setText("Tambah Item");
@@ -126,35 +162,48 @@ public class OrderPopup extends javax.swing.JFrame {
         addButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
         addButton.setText("Tambah Item");
         addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
         cancelButton.setText("Batalkan");
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		cancelButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				dispose();
-			}
-		});
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        amountField.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+
+        amountLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        amountLabel.setText("Jumlah");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(19, 19, 19)
-                            .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(242, 242, 242)
-                            .addComponent(windowTitle))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGap(242, 242, 242)
+                        .addComponent(windowTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cancelButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(amountLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(addButton))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,16 +211,27 @@ public class OrderPopup extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(windowTitle)
                 .addGap(18, 18, 18)
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(cancelButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amountLabel)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addButton)
+                        .addComponent(cancelButton)
+                        .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        setSelectedRow();
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -193,10 +253,12 @@ public class OrderPopup extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable foodTable;
     private javax.swing.JButton addButton;
+    private javax.swing.JTextField amountField;
+    private javax.swing.JLabel amountLabel;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JScrollPane tableScrollPane;
+    private javax.swing.JTable foodTable;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel windowTitle;
     // End of variables declaration//GEN-END:variables
 }
