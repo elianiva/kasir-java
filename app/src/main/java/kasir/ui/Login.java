@@ -5,8 +5,8 @@
 */
 package kasir.ui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -119,8 +119,8 @@ public class Login extends javax.swing.JFrame {
 		loginButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
 		loginButton.setText("Login");
 		loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		loginButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				executeLogin();
 			}
 		});
