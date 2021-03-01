@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import tugas2.database.BookDataSource;
 
-public class BookActivityForm extends javax.swing.JFrame {
+public class BookPopup extends javax.swing.JFrame {
 	// initialise the model
 	private Book book;
 
 	/**
 	 * Creates new form BookActivityForm
 	 */
-	public BookActivityForm() {
+	public BookPopup() {
 		initComponents();
 	}
 
@@ -257,10 +257,11 @@ public class BookActivityForm extends javax.swing.JFrame {
 
 	private void SubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitButtonActionPerformed
 		save();
+		this.dispose();
 	}//GEN-LAST:event_SubmitButtonActionPerformed
 
 	private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-		dispose();
+		this.dispose();
 	}//GEN-LAST:event_CancelButtonActionPerformed
 
 	/**
@@ -280,20 +281,20 @@ public class BookActivityForm extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(BookActivityForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(BookPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(BookActivityForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(BookPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(BookActivityForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(BookPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(BookActivityForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(BookPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		//</editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new BookActivityForm().setVisible(true);
+				new BookPopup().setVisible(true);
 			}
 		});
 	}

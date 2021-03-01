@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
-public class DataManagerForm extends JFrame {
+public class DataManager extends JFrame {
 	// initialise the model
 	private DefaultTableModel tableModel;
 	private List<Book> bookList;
@@ -20,7 +20,7 @@ public class DataManagerForm extends JFrame {
 	/**
 	 * Creates new form java
 	 */
-	public DataManagerForm() {
+	public DataManager() {
 		initComponents();
 		initTableModel();
 		loadBookData();
@@ -46,34 +46,10 @@ public class DataManagerForm extends JFrame {
 
 	// initialise the table model that consists of 3 columns
 	private void initTableModel() {
-		String[] columns = new String[]{"ID Buku", "Judul", "Pengarang"};
-		tableModel = new DefaultTableModel(columns, 0);
+		tableModel = new DefaultTableModel(new String[]{
+			"ID Buku", "Judul", "Pengarang"
+		}, 0);
 		bookTable.setModel(tableModel);
-	}
-
-	/**
-	 * Add row to the table with the data from the `book` model
-	 *
-	 * @param book - the `Book` model
-	 */
-	private void addRowToTableFor(Book book) {
-		tableModel.addRow(new Object[]{
-			book.getBookID(),
-			book.getBookTitle(),
-			book.getBookAuthor(),
-		});
-	}
-
-	/**
-	 * Add multiple rows to the table at once
-	 * Shorthand for loop and calling `addRowToTableFor`
-	 *
-	 * @param bookList - list of `Book`
-	 */
-	private void addMultipleRowsToTableFor(List<Book> bookList) {
-		for (Book book : bookList) {
-			addRowToTableFor(book);
-		}
 	}
 
 	/**
@@ -88,7 +64,13 @@ public class DataManagerForm extends JFrame {
 
 		try {
 			bookList = datasource.findAll();
-			addMultipleRowsToTableFor(bookList);
+			for (Book book : bookList) {
+				tableModel.addRow(new Object[]{
+					book.getBookID(),
+					book.getBookTitle(),
+					book.getBookAuthor(),
+				});
+			}
 		} catch (SQLException e) {
 			showError("Tidak dapat memuat data buku");
 			e.printStackTrace();
@@ -98,10 +80,11 @@ public class DataManagerForm extends JFrame {
 	/**
 	 * Opens the given window
 	 */
-	private void open(Window activity) {
-		activity.setLocationRelativeTo(this);
-		activity.setVisible(true);
-		activity.addWindowListener(new WindowAdapter() {
+	private void open(BookPopup window) {
+		window.setLocationRelativeTo(this);
+		window.setVisible(true);
+		window.setResizable(false);
+		window.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				super.windowClosed(e); //To change body of generated methods, choose Tools | Templates.
@@ -114,9 +97,9 @@ public class DataManagerForm extends JFrame {
 	 * Opens the form popup
 	 */
 	private void openAddBookActivity() {
-		BookActivityForm activity = new BookActivityForm();
-		activity.setTitle("Tambah Data Buku");
-		open(activity);
+		BookPopup popup = new BookPopup();
+		popup.setTitle("Tambah Data Buku");
+		open(popup);
 	}
 
 	/**
@@ -131,7 +114,7 @@ public class DataManagerForm extends JFrame {
 		}
 
 		Book selectedBook = bookList.get(selectedRow);
-		BookActivityForm activity = new BookActivityForm();
+		BookPopup activity = new BookPopup();
 		activity.setTitle("Update Data Buku");
 		activity.setBook(selectedBook);
 		open(activity);
@@ -148,7 +131,7 @@ public class DataManagerForm extends JFrame {
 		}
 
 		Book selectedBook = bookList.get(selectedRow);
-		int confirm = JOptionPane.showConfirmDialog(this, "Yakin Hapus"+selectedBook.getBookTitle()+" ?");
+		int confirm = JOptionPane.showConfirmDialog(this, "Yakin Hapus "+selectedBook.getBookTitle()+" ?");
 		if (confirm == JOptionPane.YES_OPTION) {
 			BookDataSource datasource = new BookDataSource();
 			try {
@@ -302,13 +285,13 @@ public class DataManagerForm extends JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(DataManagerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(DataManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(DataManagerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(DataManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(DataManagerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(DataManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(DataManagerForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(DataManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		//</editor-fold>
 		//</editor-fold>
@@ -316,7 +299,7 @@ public class DataManagerForm extends JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new DataManagerForm().setVisible(true);
+				new DataManager().setVisible(true);
 			}
 		});
 	}
