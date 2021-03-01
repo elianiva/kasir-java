@@ -61,14 +61,22 @@ public class Login extends javax.swing.JFrame {
 				return;
 			}
 
-			if (currentUser.getLevelID() == 1) {
-				// TODO: add proper admin window
-				Order orderWindow = new Order();
+			int userLevel = (int)currentUser.getLevelID();
+			if (userLevel == 1) {
+				Admin adminWindow = new Admin();
+				adminWindow.setVisible(true);
+				adminWindow.setTitle("Halaman Admin");
+				adminWindow.setResizable(false);
+				adminWindow.setLocationRelativeTo(null); // center the window
+			} else if (userLevel == 2) {
+				Kasir orderWindow = new Kasir();
 				orderWindow.setVisible(true);
-				orderWindow.setTitle("Order Makanan");
+				orderWindow.setTitle("Halaman Kasir");
 				orderWindow.setResizable(false);
 				orderWindow.setLocationRelativeTo(null); // center the window
 				this.dispose();
+			} else if (userLevel == 5) {
+
 			}
 		} catch (SQLException ex) {
 			System.out.println(ex);

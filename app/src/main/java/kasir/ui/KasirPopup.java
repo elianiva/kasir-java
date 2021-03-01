@@ -15,17 +15,17 @@ import kasir.controllers.MasakanSource;
 import kasir.helpers.OrderTable;
 import kasir.models.Masakan;
 
-public class OrderPopup extends javax.swing.JFrame {
+public class KasirPopup extends javax.swing.JFrame {
 	private DefaultTableModel foodTableModel;
 	private OrderTable tableData;
-	private Order parentWindow;
+	private Kasir parentWindow;
 
 	/**
 	 * Creates new form OrderPopup
 	 */
-	public OrderPopup() {
+	public KasirPopup() {
 	}
-	public OrderPopup(OrderTable data, Order parent) {
+	public KasirPopup(OrderTable data, Kasir parent) {
 		initComponents();
 		initTableModel();
 		populateData();
@@ -128,12 +128,11 @@ public class OrderPopup extends javax.swing.JFrame {
         amountField = new javax.swing.JTextField();
         amountLabel = new javax.swing.JLabel();
 
+        foodTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        foodTable.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         foodTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nama Makanan", "Harga", "Stok", "Status"
@@ -198,8 +197,8 @@ public class OrderPopup extends javax.swing.JFrame {
                                 .addComponent(cancelButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(amountLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(addButton))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -213,12 +212,11 @@ public class OrderPopup extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(amountLabel)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addButton)
-                        .addComponent(cancelButton)
-                        .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton)
+                    .addComponent(cancelButton)
+                    .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(amountLabel))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -247,7 +245,7 @@ public class OrderPopup extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new OrderPopup().setVisible(true);
+				new KasirPopup().setVisible(true);
 			}
 		});
 	}
