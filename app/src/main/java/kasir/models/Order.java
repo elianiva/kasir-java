@@ -1,5 +1,7 @@
 package kasir.models;
 
+import java.sql.Date;
+
 /**
  * User model
  * self reminder: similar to Mongoose model
@@ -10,6 +12,8 @@ public class Order {
 	private int tableNumber;
 	private String details;
 	private String status;
+	// TODO: figure out this datatype
+	private Date date;
 
 	/**
 	 * Get the user ID
@@ -71,7 +75,7 @@ public class Order {
 	 * Set the status
 	 * @param newStatus
 	 */
-	public void setPassword(String newStatus) {
+	public void setStatus(String newStatus) {
 		this.status = newStatus;
 	}
 
@@ -79,7 +83,7 @@ public class Order {
 	 * Get the table number
 	 * @return tableNumber
 	 */
-	public long getLevelID() {
+	public int getTableNumber() {
 		return tableNumber;
 	}
 
@@ -87,7 +91,23 @@ public class Order {
 	 * Set the table number
 	 * @param newNumber
 	 */
-	public void setLevelID(int newNumber) {
+	public void setTableNumber(int newNumber) {
 		this.tableNumber = newNumber;
+	}
+
+	/**
+	 * Get the order date
+	 * @return date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * Set the user ID
+	 * @param newDate
+	 */
+	public void setDate(Date newDate) {
+		this.date = newDate;
 	}
 }
