@@ -82,7 +82,7 @@ public class MasakanSource {
 		// we use List instead of Vector because it's the recommended way
 		List<Masakan> foodList = new ArrayList<Masakan>();
 
-		// iterate through the available data and add the result to `bookList`
+		// iterate through the available data and add the result to `foodList`
 		while(result.next()) {
 			Masakan food = new Masakan();
 			food.setFoodID(result.getString("id_masakan"));

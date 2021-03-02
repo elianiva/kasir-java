@@ -37,7 +37,7 @@ public class UserSource {
 
 	/**
 	 * Update a user
-	 * @param book - book model
+	 * @param user - user model
 	 * @throws java.sql.SQLException
 	 */
 	public void update(User user) throws SQLException {
@@ -55,7 +55,7 @@ public class UserSource {
 
 	/**
 	 * Delete a user
-	 * @param book - book model
+	 * @param user - user model
 	 * @throws java.sql.SQLException
 	 */
 	public void delete(User user) throws SQLException {
@@ -78,19 +78,19 @@ public class UserSource {
 		ResultSet result = connection.createStatement().executeQuery(sql);
 
 		// we use List instead of Vector because it's the recommended way
-		List<User> bookList = new ArrayList<User>();
+		List<User> userList = new ArrayList<User>();
 
-		// iterate through the available data and add the result to `bookList`
+		// iterate through the available data and add the result to `userList`
 		while(result.next()) {
-			User book = new User();
-			book.setUserID(result.getString("id_user"));
-			book.setUsername(result.getString("username"));
-			book.setPassword(result.getString("password"));
-			book.setLevelID(result.getLong("id_level"));
-			bookList.add(book);
+			User user = new User();
+			user.setUserID(result.getString("id_user"));
+			user.setUsername(result.getString("username"));
+			user.setPassword(result.getString("password"));
+			user.setLevelID(result.getLong("id_level"));
+			userList.add(user);
 		}
 
-		return bookList;
+		return userList;
 	}
 
 	/**
