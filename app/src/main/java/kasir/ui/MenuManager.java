@@ -10,12 +10,17 @@ package kasir.ui;
  * @author elianiva
  */
 public class MenuManager extends javax.swing.JFrame {
+	private Admin parentWindow;
 
 	/**
 	 * Creates new form MenuManagement
 	 */
 	public MenuManager() {
+	}
+	public MenuManager(Admin parent) {
 		initComponents();
+		this.setLocationRelativeTo(null);
+		parentWindow = parent;
 	}
 
 	/**
@@ -42,7 +47,7 @@ public class MenuManager extends javax.swing.JFrame {
         idLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
-        editButton1 = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,6 +57,7 @@ public class MenuManager extends javax.swing.JFrame {
 
         deleteButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
         deleteButton.setText("Hapus Item");
+		deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
@@ -111,6 +117,7 @@ public class MenuManager extends javax.swing.JFrame {
 
         backButton.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         backButton.setText("Kembali");
+		backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -126,11 +133,12 @@ public class MenuManager extends javax.swing.JFrame {
             }
         });
 
-        editButton1.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        editButton1.setText("Edit Item");
-        editButton1.addActionListener(new java.awt.event.ActionListener() {
+        editButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        editButton.setText("Edit Item");
+		backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButton1ActionPerformed(evt);
+                editButtonActionperformed(evt);
             }
         });
 
@@ -162,7 +170,7 @@ public class MenuManager extends javax.swing.JFrame {
                     .addComponent(priceLabel)
                     .addComponent(priceField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                     .addComponent(backButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(14, 14, 14))
@@ -194,7 +202,7 @@ public class MenuManager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(editButton1)
+                        .addComponent(editButton)
                         .addGap(18, 18, 18)
                         .addComponent(addButton)
                         .addGap(18, 18, 18)
@@ -211,7 +219,12 @@ public class MenuManager extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+		Admin adminWindow = new Admin();
+		adminWindow.setVisible(true);
+		adminWindow.setTitle("Halaman Admin");
+		adminWindow.setResizable(false);
+		adminWindow.setLocationRelativeTo(null); // center the window
+		this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -221,11 +234,12 @@ public class MenuManager extends javax.swing.JFrame {
         loginScreen.setResizable(false);
         loginScreen.setLocationRelativeTo(null); // center the window
         this.dispose();
+		parentWindow.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void editButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButton1ActionPerformed
+    private void editButtonActionperformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_editButton1ActionPerformed
+    }//GEN-LAST:event_editButtonActionperformed
 
 	/**
 	 * @param args the command line arguments
@@ -234,7 +248,7 @@ public class MenuManager extends javax.swing.JFrame {
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -269,7 +283,7 @@ public class MenuManager extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JButton editButton1;
+    private javax.swing.JButton editButton;
     private javax.swing.JTextField foodNameField;
     private javax.swing.JLabel foodNameLabel;
     private javax.swing.JTextField foodStockField;
