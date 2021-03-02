@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kasir.ui;
 
-/**
- *
- * @author elianiva
- */
 public class Order extends javax.swing.JFrame {
 
 	/**
@@ -32,14 +23,13 @@ public class Order extends javax.swing.JFrame {
         windowTitle = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        printButton = new javax.swing.JButton();
         detailButton = new javax.swing.JButton();
-        detailButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane1.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
 
-        foodTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         foodTable.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         foodTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,19 +76,19 @@ public class Order extends javax.swing.JFrame {
             }
         });
 
-        detailButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        detailButton.setText("Cetak Laporan");
-        detailButton.addActionListener(new java.awt.event.ActionListener() {
+        printButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        printButton.setText("Cetak Laporan");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                detailButtonActionPerformed(evt);
+                printButtonActionPerformed(evt);
             }
         });
 
-        detailButton1.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        detailButton1.setText("Detail Order");
-        detailButton1.addActionListener(new java.awt.event.ActionListener() {
+        detailButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        detailButton.setText("Detail Order");
+        detailButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                detailButton1ActionPerformed(evt);
+                detailButtonActionPerformed(evt);
             }
         });
 
@@ -116,9 +106,9 @@ public class Order extends javax.swing.JFrame {
                         .addGap(161, 161, 161)
                         .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(detailButton)
+                        .addComponent(printButton)
                         .addGap(18, 18, 18)
-                        .addComponent(detailButton1))
+                        .addComponent(detailButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -134,8 +124,8 @@ public class Order extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(detailButton)
-                    .addComponent(detailButton1))
+                    .addComponent(printButton)
+                    .addComponent(detailButton))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -155,11 +145,11 @@ public class Order extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_detailButtonActionPerformed
 
-    private void detailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButton1ActionPerformed
+    private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_detailButton1ActionPerformed
 
@@ -170,7 +160,7 @@ public class Order extends javax.swing.JFrame {
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -200,8 +190,8 @@ public class Order extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JButton printButton;
     private javax.swing.JButton detailButton;
-    private javax.swing.JButton detailButton1;
     private javax.swing.JTable foodTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;

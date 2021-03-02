@@ -43,7 +43,7 @@ public class UserPopup extends javax.swing.JFrame {
 
         jLabel2.setText("jLabel2");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         windowTitle.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         windowTitle.setText("Tambah User");

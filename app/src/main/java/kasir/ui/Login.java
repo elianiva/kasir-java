@@ -28,6 +28,7 @@ public class Login extends javax.swing.JFrame {
 	 */
 	public Login() {
 		initComponents();
+		this.setLocationRelativeTo(null); // center the window
 	}
 
 	/**
@@ -68,12 +69,12 @@ public class Login extends javax.swing.JFrame {
 				adminWindow.setTitle("Halaman Admin");
 				adminWindow.setResizable(false);
 				adminWindow.setLocationRelativeTo(null); // center the window
+				this.dispose();
 			} else if (userLevel == 2) {
-				Kasir orderWindow = new Kasir();
+				Kasir orderWindow = new Kasir(currentUser);
 				orderWindow.setVisible(true);
 				orderWindow.setTitle("Halaman Kasir");
 				orderWindow.setResizable(false);
-				orderWindow.setLocationRelativeTo(null); // center the window
 				this.dispose();
 			} else if (userLevel == 5) {
 

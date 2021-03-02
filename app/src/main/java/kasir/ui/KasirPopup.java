@@ -85,7 +85,7 @@ public class KasirPopup extends javax.swing.JFrame {
 
 		int row = foodTable.getSelectedRow();
 
-		if ((int)foodTable.getValueAt(row, 3) == 0) {
+		if ((long)foodTable.getValueAt(row, 3) == 0) {
 			JOptionPane.showMessageDialog(this, "Stok masakan sedang kosong!");
 			return;
 		}
@@ -128,7 +128,6 @@ public class KasirPopup extends javax.swing.JFrame {
         amountField = new javax.swing.JTextField();
         amountLabel = new javax.swing.JLabel();
 
-        foodTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         foodTable.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         foodTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
