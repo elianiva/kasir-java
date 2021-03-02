@@ -48,7 +48,7 @@ public class UserSource {
 		preparedStatement.setString(1, user.getUsername());
 		preparedStatement.setString(2, user.getPassword());
 		preparedStatement.setLong(3, user.getLevelID());
-		preparedStatement.setLong(4, user.getUserID());
+		preparedStatement.setString(4, user.getUserID());
 
 		preparedStatement.executeUpdate();
 	}
@@ -63,7 +63,7 @@ public class UserSource {
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-		preparedStatement.setLong(1, user.getUserID());
+		preparedStatement.setString(1, user.getUserID());
 
 		preparedStatement.executeUpdate();
 	}
@@ -83,7 +83,7 @@ public class UserSource {
 		// iterate through the available data and add the result to `bookList`
 		while(result.next()) {
 			User book = new User();
-			book.setUserID(result.getLong("id_user"));
+			book.setUserID(result.getString("id_user"));
 			book.setUsername(result.getString("username"));
 			book.setPassword(result.getString("password"));
 			book.setLevelID(result.getLong("id_level"));
@@ -109,7 +109,7 @@ public class UserSource {
 		ResultSet rs = preparedStatement.executeQuery();
 
 		if (rs.next()) {
-			userResult.setUserID(rs.getLong("id_user"));
+			userResult.setUserID(rs.getString("id_user"));
 			userResult.setLevelID(rs.getLong("id_level"));
 			userResult.setUsername(rs.getString("username"));
 

@@ -50,7 +50,7 @@ public class MasakanSource {
 		preparedStatement.setLong(2, food.getPrice());
 		preparedStatement.setLong(3, food.getStock());
 		preparedStatement.setString(4, food.getStatus());
-		preparedStatement.setLong(5, food.getFoodID());
+		preparedStatement.setString(5, food.getFoodID());
 
 		preparedStatement.executeUpdate();
 	}
@@ -65,7 +65,7 @@ public class MasakanSource {
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-		preparedStatement.setLong(1, food.getFoodID());
+		preparedStatement.setString(1, food.getFoodID());
 
 		preparedStatement.executeUpdate();
 	}
@@ -85,7 +85,7 @@ public class MasakanSource {
 		// iterate through the available data and add the result to `bookList`
 		while(result.next()) {
 			Masakan food = new Masakan();
-			food.setFoodID(result.getLong("id_masakan"));
+			food.setFoodID(result.getString("id_masakan"));
 			food.setName(result.getString("nama_masakan"));
 			food.setPrice(result.getLong("harga"));
 			food.setStock(result.getLong("stok"));
@@ -106,13 +106,13 @@ public class MasakanSource {
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-		preparedStatement.setLong(1, food.getFoodID());
+		preparedStatement.setString(1, food.getFoodID());
 		preparedStatement.setString(2, food.getName());
 
 		ResultSet rs = preparedStatement.executeQuery();
 
 		if (rs.next()) {
-			foodResult.setFoodID(rs.getLong("id_masakan"));
+			foodResult.setFoodID(rs.getString("id_masakan"));
 			foodResult.setName(rs.getString("nama_masakan"));
 			foodResult.setPrice(rs.getLong("harga"));
 			foodResult.setStock(rs.getLong("stock"));

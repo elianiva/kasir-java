@@ -5,7 +5,7 @@ package kasir.models;
  * self reminder: similar to Mongoose model
  */
 public class Masakan {
-	private long foodID;
+	private String foodID;
 	private String name;
 	private long price;
 	private long stock;
@@ -15,7 +15,7 @@ public class Masakan {
 	 * Get the food ID
 	 * @return food ID
 	 */
-	public long getFoodID() {
+	public String getFoodID() {
 		return foodID;
 	}
 
@@ -23,7 +23,7 @@ public class Masakan {
 	 * Set the food ID
 	 * @param id
 	 */
-	public void setFoodID(long id) {
+	public void setFoodID(String id) {
 		this.foodID = id;
 	}
 

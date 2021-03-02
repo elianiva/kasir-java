@@ -5,7 +5,7 @@ package kasir.models;
  * self reminder: similar to Mongoose model
  */
 public class User {
-	private long userID;
+	private String userID;
 	private long levelID;
 	private String username;
 	private String password;
@@ -14,7 +14,7 @@ public class User {
 	 * Get the user ID
 	 * @return userID
 	 */
-	public long getUserID() {
+	public String getUserID() {
 		return userID;
 	}
 
@@ -22,7 +22,7 @@ public class User {
 	 * Set the user ID
 	 * @param newID
 	 */
-	public void setUserID(long newID) {
+	public void setUserID(String newID) {
 		this.userID = newID;
 	}
 
