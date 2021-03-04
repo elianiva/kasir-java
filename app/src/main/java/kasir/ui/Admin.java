@@ -10,8 +10,8 @@ public class Admin extends javax.swing.JFrame {
 	 * Creates new form Admin
 	 */
 	public Admin() {
-		initComponents();
 		this.setLocationRelativeTo(null); // center the window
+		initComponents();
 	}
 
 	/**
@@ -126,19 +126,19 @@ public class Admin extends javax.swing.JFrame {
 
 	private void manageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersButtonActionPerformed
 		UserManager window = new UserManager(this);
+		window.setLocationRelativeTo(null); // center the window
 		window.setVisible(true);
 		window.setTitle("Halaman Admin");
 		window.setResizable(false);
-		window.setLocationRelativeTo(null); // center the window
 		this.dispose();
 	}//GEN-LAST:event_manageUsersButtonActionPerformed
 
 	private void manageMenusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageItemsButtonActionPerformed
 		MenuManager window = new MenuManager(this);
+		window.setLocationRelativeTo(null); // center the window
 		window.setVisible(true);
 		window.setTitle("Manajemen Menu");
 		window.setResizable(false);
-		window.setLocationRelativeTo(null); // center the window
 		this.dispose();
 	}//GEN-LAST:event_manageMenusButtonActionPerformed
 

@@ -16,9 +16,9 @@ public class App {
 		FlatArcOrangeIJTheme.install();
 
 		JFrame loginScreen = new Login();
+		loginScreen.setLocationRelativeTo(null); // center the window
 		loginScreen.setTitle("Login Aplikasi Kasir");
 		loginScreen.setVisible(true);
 		loginScreen.setResizable(false);
-		loginScreen.setLocationRelativeTo(null); // center the window
     }
 }

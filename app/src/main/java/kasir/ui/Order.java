@@ -134,10 +134,10 @@ public class Order extends javax.swing.JFrame {
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         Login loginScreen = new Login();
+        loginScreen.setLocationRelativeTo(null); // center the window
         loginScreen.setTitle("Login Aplikasi Kasir");
         loginScreen.setVisible(true);
         loginScreen.setResizable(false);
-        loginScreen.setLocationRelativeTo(null); // center the window
         this.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
 

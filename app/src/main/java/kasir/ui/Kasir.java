@@ -2,13 +2,9 @@ package kasir.ui;
 
 import java.util.List;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-
-import com.formdev.flatlaf.FlatLightLaf;
 
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.OrderTable;
@@ -18,7 +14,6 @@ public class Kasir extends javax.swing.JFrame {
 	private OrderTable tableData = new OrderTable();
 	private DefaultTableModel foodTableModel;
 	private long price = 0, amount = 0;
-	private User currentUser;
 
 	/**
 	 * Creates new form Order
@@ -26,9 +21,9 @@ public class Kasir extends javax.swing.JFrame {
 	public Kasir() {
 	}
 	public Kasir(User currentUser) {
+		this.setLocationRelativeTo(null); // center the window
 		initComponents();
 		initTableModel();
-		this.setLocationRelativeTo(null); // center the window
 
 		// hide back button if the current user is not an admin
 		if (currentUser.getLevelID() != 1) {
@@ -322,10 +317,10 @@ public class Kasir extends javax.swing.JFrame {
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
 		Login loginScreen = new Login();
+		loginScreen.setLocationRelativeTo(null); // center the window
 		loginScreen.setTitle("Login Aplikasi Kasir");
 		loginScreen.setVisible(true);
 		loginScreen.setResizable(false);
-		loginScreen.setLocationRelativeTo(null); // center the window
 		this.dispose();
 	}//GEN-LAST:event_logoutButtonActionPerformed
 
@@ -335,10 +330,10 @@ public class Kasir extends javax.swing.JFrame {
 
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
 		KasirPopup orderPopupWindow = new KasirPopup(tableData, this);
+		orderPopupWindow.setLocationRelativeTo(this);
 		orderPopupWindow.setTitle("Tambah Item");
 		orderPopupWindow.setVisible(true);
 		orderPopupWindow.setResizable(false);
-		orderPopupWindow.setLocationRelativeTo(this);
 	}//GEN-LAST:event_addItemButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -349,13 +344,6 @@ public class Kasir extends javax.swing.JFrame {
 	* @param args the command line arguments
 	*/
 	public static void main(String args[]) {
-		// use better look and feel
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-		} catch (UnsupportedLookAndFeelException e){
-			System.out.println(e);
-		}
-
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {

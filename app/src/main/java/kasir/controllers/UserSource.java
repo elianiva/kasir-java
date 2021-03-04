@@ -22,15 +22,17 @@ public class UserSource {
 	public void save(User user) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
-		String sql = "INSERT INTO user(username, password, id_level) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO user(id_user, name, username, password, id_level) VALUES (?, ?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
-		// e.g (?, ?, ?) will turn into ("username", "password", 1)
-		preparedStatement.setString(1, user.getUsername());
-		preparedStatement.setString(2, user.getPassword());
-		preparedStatement.setLong(3, user.getLevelID());
+		// e.g (?, ?, ?) will turn into ("username", "password", 1) etc
+		preparedStatement.setString(1, user.getUserID());
+		preparedStatement.setString(2, user.getName());
+		preparedStatement.setString(3, user.getUsername());
+		preparedStatement.setString(4, user.getPassword());
+		preparedStatement.setLong(5, user.getLevelID());
 
 		preparedStatement.executeUpdate();
 	}

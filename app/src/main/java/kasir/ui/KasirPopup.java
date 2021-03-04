@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
-
-import com.formdev.flatlaf.FlatLightLaf;
 
 import kasir.controllers.MasakanSource;
 import kasir.helpers.OrderTable;
@@ -26,10 +22,10 @@ public class KasirPopup extends javax.swing.JFrame {
 	public KasirPopup() {
 	}
 	public KasirPopup(OrderTable data, Kasir parent) {
+		this.setLocationRelativeTo(null); // center the window
 		initComponents();
 		initTableModel();
 		populateData();
-		this.setLocationRelativeTo(null); // center the window
 		tableData = data;
 		parentWindow = parent;
 	}
@@ -234,13 +230,6 @@ public class KasirPopup extends javax.swing.JFrame {
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
-		// use better look and feel
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-		} catch (UnsupportedLookAndFeelException e){
-			System.out.println(e);
-		}
-
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {

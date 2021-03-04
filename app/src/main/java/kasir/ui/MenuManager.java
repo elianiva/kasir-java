@@ -18,8 +18,8 @@ public class MenuManager extends javax.swing.JFrame {
 	public MenuManager() {
 	}
 	public MenuManager(Admin parent) {
-		initComponents();
 		this.setLocationRelativeTo(null);
+		initComponents();
 		parentWindow = parent;
 	}
 
@@ -220,19 +220,19 @@ public class MenuManager extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 		Admin adminWindow = new Admin();
+		adminWindow.setLocationRelativeTo(null); // center the window
 		adminWindow.setVisible(true);
 		adminWindow.setTitle("Halaman Admin");
 		adminWindow.setResizable(false);
-		adminWindow.setLocationRelativeTo(null); // center the window
 		this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         Login loginScreen = new Login();
+        loginScreen.setLocationRelativeTo(null); // center the window
         loginScreen.setTitle("Login Aplikasi Kasir");
         loginScreen.setVisible(true);
         loginScreen.setResizable(false);
-        loginScreen.setLocationRelativeTo(null); // center the window
         this.dispose();
 		parentWindow.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed

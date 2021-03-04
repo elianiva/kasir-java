@@ -10,10 +10,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import com.formdev.flatlaf.FlatLightLaf;
 
 import kasir.controllers.UserSource;
 import kasir.models.User;
@@ -27,8 +23,8 @@ public class Login extends javax.swing.JFrame {
 	 * Creates new form login
 	 */
 	public Login() {
-		initComponents();
 		this.setLocationRelativeTo(null); // center the window
+		initComponents();
 	}
 
 	/**
@@ -65,10 +61,10 @@ public class Login extends javax.swing.JFrame {
 			int userLevel = (int)currentUser.getLevelID();
 			if (userLevel == 1) {
 				Admin adminWindow = new Admin();
+				adminWindow.setLocationRelativeTo(null); // center the window
 				adminWindow.setVisible(true);
 				adminWindow.setTitle("Halaman Admin");
 				adminWindow.setResizable(false);
-				adminWindow.setLocationRelativeTo(null); // center the window
 				this.dispose();
 			} else if (userLevel == 2) {
 				Kasir orderWindow = new Kasir(currentUser);
@@ -192,13 +188,6 @@ public class Login extends javax.swing.JFrame {
 	* @param args the command line arguments
 	*/
 	public static void main(String args[]) {
-		// use better look and feel
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-		} catch (UnsupportedLookAndFeelException e){
-			System.out.println(e);
-		}
-
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
