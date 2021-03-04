@@ -75,18 +75,19 @@ public class UserSource {
 	public List<User> findAll() throws SQLException {
 		String sql = "SELECT * FROM user";
 		Connection connection = ConnectionHelper.getConnection();
-		ResultSet result = connection.createStatement().executeQuery(sql);
+		ResultSet rs = connection.createStatement().executeQuery(sql);
 
 		// we use List instead of Vector because it's the recommended way
 		List<User> userList = new ArrayList<User>();
 
 		// iterate through the available data and add the result to `userList`
-		while(result.next()) {
+		while(rs.next()) {
 			User user = new User();
-			user.setUserID(result.getString("id_user"));
-			user.setUsername(result.getString("username"));
-			user.setPassword(result.getString("password"));
-			user.setLevelID(result.getLong("id_level"));
+			user.setUserID(rs.getString("id_user"));
+			user.setName(rs.getString("name"));
+			user.setUsername(rs.getString("username"));
+			user.setPassword(rs.getString("password"));
+			user.setLevelID(rs.getLong("id_level"));
 			userList.add(user);
 		}
 
@@ -94,7 +95,7 @@ public class UserSource {
 	}
 
 	/**
-	 * Returns user if they exists
+	 * Returns a user if it exists
 	 * @return User
 	 */
 	public User find(User user) throws SQLException {
@@ -111,6 +112,7 @@ public class UserSource {
 		if (rs.next()) {
 			userResult.setUserID(rs.getString("id_user"));
 			userResult.setLevelID(rs.getLong("id_level"));
+			userResult.setName(rs.getString("name"));
 			userResult.setUsername(rs.getString("username"));
 
 			return userResult;
