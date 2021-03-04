@@ -9,6 +9,7 @@ public class User {
 	private long levelID;
 	private String username;
 	private String password;
+	private String name;
 
 	/**
 	 * Get the user ID
@@ -27,6 +28,22 @@ public class User {
 	}
 
 	/**
+	 * Get the name
+	 * @return name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Set the name
+	 * @param newName
+	 */
+	public void setName(String newName) {
+		this.name = newName;
+	}
+
+	/**
 	 * Get the username
 	 * @return username
 	 */
@@ -35,7 +52,7 @@ public class User {
 	}
 
 	/**
-	 * Set the user ID
+	 * Set the user name
 	 * @param newName
 	 */
 	public void setUsername(String newName) {
