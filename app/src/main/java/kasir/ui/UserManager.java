@@ -33,7 +33,7 @@ public class UserManager extends javax.swing.JFrame {
 		this.setLocationRelativeTo(null);
 		initComponents();
 		initTableModel();
-		initTableData();
+		populateData();
 		attachOnSelectionEvent();
 		parentWindow = parent;
 	}
@@ -80,7 +80,7 @@ public class UserManager extends javax.swing.JFrame {
 		});
 	}
 
-	public void initTableData() {
+	public void populateData() {
 		// always reset the table first before filling it
 		userTable.clearSelection();
 		userTableModel.setRowCount(0);
@@ -329,7 +329,7 @@ public class UserManager extends javax.swing.JFrame {
 			ex.printStackTrace();
 		}
 
-		initTableData();
+		populateData();
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

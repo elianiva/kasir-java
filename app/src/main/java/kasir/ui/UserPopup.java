@@ -219,7 +219,7 @@ public class UserPopup extends javax.swing.JFrame {
 
 		try {
 			// this is a bit of a hack, but again, I don't care
-			UserSource userData = new UserSource();
+			UserSource userSource = new UserSource();
 			LevelSource levelData = new LevelSource();
 			Level level = new Level();
 			level.setLevelName(levelComboBox.getSelectedItem().toString());
@@ -234,13 +234,13 @@ public class UserPopup extends javax.swing.JFrame {
 
 			// do action based on current `popup-mode`
 			if (mode == "add") {
-				userData.save(currentUser);
+				userSource.save(currentUser);
 			} else {
-				userData.update(currentUser);
+				userSource.update(currentUser);
 			}
 
 			// we need this here to refresh the parent table view
-			parentWindow.initTableData();
+			parentWindow.populateData();
 
 			JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
 		} catch (SQLException ex) {
