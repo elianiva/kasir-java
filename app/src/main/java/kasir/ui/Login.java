@@ -46,7 +46,7 @@ public class Login extends javax.swing.JFrame {
 			User currentUser = userSource.find(user);
 
 			if (currentUser == null) {
-				JOptionPane.showMessageDialog(this, "User tidak terdaftar!");
+				JOptionPane.showMessageDialog(this, "Password atau Username yang anda masukkan salah!");
 				return;
 			}
 
