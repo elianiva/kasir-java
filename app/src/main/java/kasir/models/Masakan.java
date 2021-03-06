@@ -57,6 +57,7 @@ public class Masakan {
 	 */
 	public void setStock(long newStock) {
 		this.stock = newStock;
+		this.setStatus(stock > 0 ? "Tersedia" : "Habis");
 	}
 
 	/**
@@ -87,7 +88,7 @@ public class Masakan {
 	 * Set the food status
 	 * @param newStatus
 	 */
-	public void setStatus(String newStatus) {
+	private void setStatus(String newStatus) {
 		this.status = newStatus;
 	}
 }

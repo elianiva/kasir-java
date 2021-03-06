@@ -22,7 +22,7 @@ public class MasakanSource {
 	public void save(Masakan food) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
-		String sql = "INSERT INTO food (nama_masakan, harga, stok, status) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO masakan (nama_masakan, harga, stok, status_masakan) VALUES (?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -42,7 +42,7 @@ public class MasakanSource {
 	 * @throws java.sql.SQLException
 	 */
 	public void update(Masakan food) throws SQLException {
-		String sql = "UPDATE user SET nama_masakan=?, harga=?, stok=?, status=? WHERE id_masakan=?";
+		String sql = "UPDATE masakan SET nama_masakan=?, harga=?, stok=?, status_masakan=? WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -89,7 +89,6 @@ public class MasakanSource {
 			food.setName(result.getString("nama_masakan"));
 			food.setPrice(result.getLong("harga"));
 			food.setStock(result.getLong("stok"));
-			food.setStatus(result.getString("status_masakan"));
 			foodList.add(food);
 		}
 
@@ -116,7 +115,6 @@ public class MasakanSource {
 			foodResult.setName(rs.getString("nama_masakan"));
 			foodResult.setPrice(rs.getLong("harga"));
 			foodResult.setStock(rs.getLong("stock"));
-			foodResult.setStatus(rs.getString("status_masakan"));
 
 			return foodResult;
 		}
