@@ -7,19 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kasir.models.Masakan;
+import kasir.models.Food;
 import kasir.database.ConnectionHelper;
 
 /**
- * A class which takes care of any CRUD operation for the `Masakan` model
+ * A class which takes care of any CRUD operation for the `Food` model
  */
-public class MasakanSource {
+public class FoodSource {
 	/**
 	 * Save the passed `food` instance to the database
-	 * @param food - The `Masakan` model
+	 * @param food - The `Food` model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Masakan food) throws SQLException {
+	public void save(Food food) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO masakan (nama_masakan, harga, stok, status_masakan) VALUES (?, ?, ?, ?)";
@@ -38,10 +38,10 @@ public class MasakanSource {
 
 	/**
 	 * Update `masakan`
-	 * @param food - `Masakan` model
+	 * @param food - `Food` model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(Masakan food) throws SQLException {
+	public void update(Food food) throws SQLException {
 		String sql = "UPDATE masakan SET nama_masakan=?, harga=?, stok=?, status_masakan=? WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -57,10 +57,10 @@ public class MasakanSource {
 
 	/**
 	 * Delete a food
-	 * @param food - `Masakan` model
+	 * @param food - `Food` model
 	 * @throws java.sql.SQLException
 	 */
-	public void delete(Masakan food) throws SQLException {
+	public void delete(Food food) throws SQLException {
 		String sql = "DELETE FROM masakan WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -74,17 +74,17 @@ public class MasakanSource {
 	 * Get all foods from the database
 	 * @return List<Masakan>
 	 */
-	public List<Masakan> findAll() throws SQLException {
+	public List<Food> findAll() throws SQLException {
 		String sql = "SELECT * FROM masakan";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet result = connection.createStatement().executeQuery(sql);
 
 		// we use List instead of Vector because it's the recommended way
-		List<Masakan> foodList = new ArrayList<Masakan>();
+		List<Food> foodList = new ArrayList<Food>();
 
 		// iterate through the available data and add the result to `foodList`
 		while(result.next()) {
-			Masakan food = new Masakan();
+			Food food = new Food();
 			food.setFoodID(result.getString("id_masakan"));
 			food.setName(result.getString("nama_masakan"));
 			food.setPrice(result.getLong("harga"));
@@ -97,10 +97,10 @@ public class MasakanSource {
 
 	/**
 	 * Returns food if it exists
-	 * @return Masakan
+	 * @return Food
 	 */
-	public Masakan find(Masakan food) throws SQLException {
-		Masakan foodResult = new Masakan();
+	public Food find(Food food) throws SQLException {
+		Food foodResult = new Food();
 		String sql = "SELECT * FROM masakan WHERE id_masakan=? AND nama_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);

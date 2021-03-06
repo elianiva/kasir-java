@@ -4,12 +4,12 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import kasir.controllers.MasakanSource;
-import kasir.models.Masakan;
+import kasir.controllers.FoodSource;
+import kasir.models.Food;
 
 public class MenuPopup extends javax.swing.JFrame {
 	private MenuManager parentWindow;
-	private Masakan currentFood;
+	private Food currentFood;
 	private String mode = "add";
 
 	/**
@@ -22,7 +22,7 @@ public class MenuPopup extends javax.swing.JFrame {
 		initComponents();
 		parentWindow = parent;
 	}
-	public MenuPopup(MenuManager parent, Masakan food) {
+	public MenuPopup(MenuManager parent, Food food) {
 		this.setLocationRelativeTo(null);
 		initComponents();
 		parentWindow = parent;
@@ -163,11 +163,11 @@ public class MenuPopup extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 		this.dispose();
-	}//GEN-LAST:event_cancelButtonActionPerformed
+	}                                            
 
-	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 		String id = idField.getText();
 		String name = nameField.getText();
 		String stock = stockField.getText();
@@ -179,7 +179,7 @@ public class MenuPopup extends javax.swing.JFrame {
 		}
 
 		try {
-			MasakanSource foodSource = new MasakanSource();
+			FoodSource foodSource = new FoodSource();
 
 			// set the current food details
 			currentFood.setFoodID(id);
@@ -203,7 +203,7 @@ public class MenuPopup extends javax.swing.JFrame {
 			ex.printStackTrace();
 		}
 
-	}//GEN-LAST:event_saveButtonActionPerformed
+	}                                          
 
 	/**
 	 * @param args the command line arguments

@@ -4,7 +4,7 @@ package kasir.models;
  * User model
  * self reminder: similar to Mongoose model
  */
-public class Masakan {
+public class Food {
 	private String foodID;
 	private String name;
 	private long price;

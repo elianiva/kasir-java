@@ -7,9 +7,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import kasir.controllers.MasakanSource;
+import kasir.controllers.FoodSource;
 import kasir.helpers.OrderTable;
-import kasir.models.Masakan;
+import kasir.models.Food;
 
 public class KasirPopup extends javax.swing.JFrame {
 	private DefaultTableModel foodTableModel;
@@ -50,12 +50,12 @@ public class KasirPopup extends javax.swing.JFrame {
 	 * Populate table with initial data from database
 	 */
 	private void populateData() {
-		MasakanSource foodSource = new MasakanSource();
+		FoodSource foodSource = new FoodSource();
 
 		try {
-			List<Masakan> foods = foodSource.findAll();
+			List<Food> foods = foodSource.findAll();
 
-			for (Masakan food : foods) {
+			for (Food food : foods) {
 				foodTableModel.addRow(new Object[] {
 					food.getFoodID(),
 					food.getName(),

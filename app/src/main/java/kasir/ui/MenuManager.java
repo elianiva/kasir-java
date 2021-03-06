@@ -8,15 +8,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import kasir.controllers.MasakanSource;
+import kasir.controllers.FoodSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.Popup;
-import kasir.models.Masakan;
+import kasir.models.Food;
 
 public class MenuManager extends javax.swing.JFrame {
 	private DefaultTableModel foodTableModel;
 	private Admin parentWindow;
-	private Masakan currentFood = new Masakan();
+	private Food currentFood = new Food();
 
 	/**
 	 * Creates new form MenuManagement
@@ -57,12 +57,12 @@ public class MenuManager extends javax.swing.JFrame {
 		foodTableModel.setRowCount(0);
 		foodTable.revalidate();
 
-		MasakanSource foodSource = new MasakanSource();
+		FoodSource foodSource = new FoodSource();
 
 		try {
-			List<Masakan> foods = foodSource.findAll();
+			List<Food> foods = foodSource.findAll();
 
-			for (Masakan food : foods) {
+			for (Food food : foods) {
 				foodTableModel.addRow(new Object[] {
 					food.getFoodID(),
 					food.getName(),
@@ -303,13 +303,13 @@ public class MenuManager extends javax.swing.JFrame {
 		// TODO add your handling code here:
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
-	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
 		Popup.<MenuPopup>open(new MenuPopup(this), "Edit Menu");
-	}//GEN-LAST:event_addButtonActionPerformed
+	}                                         
 
-	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
 		Popup.<MenuPopup>open(new MenuPopup(this, currentFood), "Edit Menu");
-	}//GEN-LAST:event_editButtonActionPerformed
+	}                                          
 
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
