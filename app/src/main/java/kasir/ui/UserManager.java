@@ -10,13 +10,10 @@ import javax.swing.table.DefaultTableModel;
 
 import kasir.controllers.LevelSource;
 import kasir.controllers.UserSource;
+import kasir.helpers.Popup;
 import kasir.models.Level;
 import kasir.models.User;
 
-/**
- *
- * @author elianiva
- */
 public class UserManager extends javax.swing.JFrame {
 	private DefaultTableModel userTableModel;
 	private Admin parentWindow;
@@ -336,20 +333,12 @@ public class UserManager extends javax.swing.JFrame {
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-		Admin adminWindow = new Admin();
-		adminWindow.setLocationRelativeTo(null); // center the window
-		adminWindow.setVisible(true);
-		adminWindow.setTitle("Halaman Admin");
-		adminWindow.setResizable(false);
+		Popup.<Admin>open(new Admin(), "Halaman Admin");
 		this.dispose();
 	}//GEN-LAST:event_backButtonActionPerformed
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-		Login loginScreen = new Login();
-		loginScreen.setLocationRelativeTo(null); // center the window
-		loginScreen.setTitle("Login Aplikasi Kasir");
-		loginScreen.setVisible(true);
-		loginScreen.setResizable(false);
+		Popup.<Login>open(new Login(), "Login Aplikasi Kasir");
 		this.dispose();
 		parentWindow.dispose();
 	}//GEN-LAST:event_logoutButtonActionPerformed
@@ -360,17 +349,11 @@ public class UserManager extends javax.swing.JFrame {
 			return;
 		}
 
-		UserPopup popup = new UserPopup(this, currentUser, currentLevel);
-		popup.setLocationRelativeTo(null); // center the window
-		popup.setVisible(true);
-		popup.setResizable(false);
+		Popup.<UserPopup>open(new UserPopup(this, currentUser, currentLevel), "Edit User");
 	}//GEN-LAST:event_editButtonActionPerformed
 
 	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-		UserPopup popup = new UserPopup(this);
-		popup.setLocationRelativeTo(null); // center the window
-		popup.setVisible(true);
-		popup.setResizable(false);
+		Popup.<UserPopup>open(new UserPopup(this), "Tambah User");
 	}//GEN-LAST:event_addButtonActionPerformed
 
 	/**

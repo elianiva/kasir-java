@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.OrderTable;
+import kasir.helpers.Popup;
 import kasir.models.User;
 
 public class Kasir extends javax.swing.JFrame {
@@ -316,11 +317,7 @@ public class Kasir extends javax.swing.JFrame {
 	}//GEN-LAST:event_resetButtonActionPerformed
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-		Login loginScreen = new Login();
-		loginScreen.setLocationRelativeTo(null); // center the window
-		loginScreen.setTitle("Login Aplikasi Kasir");
-		loginScreen.setVisible(true);
-		loginScreen.setResizable(false);
+		Popup.<Login>open(new Login(), "Login Aplikasi Kasir");
 		this.dispose();
 	}//GEN-LAST:event_logoutButtonActionPerformed
 
@@ -329,11 +326,7 @@ public class Kasir extends javax.swing.JFrame {
 	}//GEN-LAST:event_confirmButtonActionPerformed
 
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
-		KasirPopup orderPopupWindow = new KasirPopup(tableData, this);
-		orderPopupWindow.setLocationRelativeTo(this);
-		orderPopupWindow.setTitle("Tambah Item");
-		orderPopupWindow.setVisible(true);
-		orderPopupWindow.setResizable(false);
+		Popup.<KasirPopup>open(new KasirPopup(tableData, this), "Tambah Item");
 	}//GEN-LAST:event_addItemButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

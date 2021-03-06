@@ -1,8 +1,3 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package kasir.ui;
 
 import java.awt.event.ActionEvent;
@@ -12,12 +7,9 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import kasir.controllers.UserSource;
+import kasir.helpers.Popup;
 import kasir.models.User;
 
-/**
-*
-* @author elianiva
-*/
 public class Login extends javax.swing.JFrame {
 	/**
 	 * Creates new form login
@@ -60,17 +52,10 @@ public class Login extends javax.swing.JFrame {
 
 			int userLevel = (int)currentUser.getLevelID();
 			if (userLevel == 1) {
-				Admin adminWindow = new Admin();
-				adminWindow.setLocationRelativeTo(null); // center the window
-				adminWindow.setVisible(true);
-				adminWindow.setTitle("Halaman Admin");
-				adminWindow.setResizable(false);
+				Popup.<Admin>open(new Admin(), "Halaman Admin");
 				this.dispose();
 			} else if (userLevel == 2) {
-				Kasir orderWindow = new Kasir(currentUser);
-				orderWindow.setVisible(true);
-				orderWindow.setTitle("Halaman Kasir");
-				orderWindow.setResizable(false);
+				Popup.<Kasir>open(new Kasir(currentUser), "Halaman Admin");
 				this.dispose();
 			} else if (userLevel == 5) {
 

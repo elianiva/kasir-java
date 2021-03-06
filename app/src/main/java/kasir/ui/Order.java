@@ -1,5 +1,7 @@
 package kasir.ui;
 
+import kasir.helpers.Popup;
+
 public class Order extends javax.swing.JFrame {
 
 	/**
@@ -133,11 +135,7 @@ public class Order extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        Login loginScreen = new Login();
-        loginScreen.setLocationRelativeTo(null); // center the window
-        loginScreen.setTitle("Login Aplikasi Kasir");
-        loginScreen.setVisible(true);
-        loginScreen.setResizable(false);
+		Popup.<Login>open(new Login(), "Login Aplikasi Kasir");
         this.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
 

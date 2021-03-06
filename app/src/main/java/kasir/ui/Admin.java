@@ -1,9 +1,7 @@
 package kasir.ui;
 
-/**
- *
- * @author elianiva
- */
+import kasir.helpers.Popup;
+
 public class Admin extends javax.swing.JFrame {
 
 	/**
@@ -125,20 +123,12 @@ public class Admin extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void manageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersButtonActionPerformed
-		UserManager window = new UserManager(this);
-		window.setLocationRelativeTo(null); // center the window
-		window.setVisible(true);
-		window.setTitle("Halaman Admin");
-		window.setResizable(false);
+		Popup.<UserManager>open(new UserManager(this), "Manajemen User");
 		this.dispose();
 	}//GEN-LAST:event_manageUsersButtonActionPerformed
 
 	private void manageMenusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageItemsButtonActionPerformed
-		MenuManager window = new MenuManager(this);
-		window.setLocationRelativeTo(null); // center the window
-		window.setVisible(true);
-		window.setTitle("Manajemen Menu");
-		window.setResizable(false);
+		Popup.<MenuManager>open(new MenuManager(this), "Manajemen Menu");
 		this.dispose();
 	}//GEN-LAST:event_manageMenusButtonActionPerformed
 
@@ -151,10 +141,7 @@ public class Admin extends javax.swing.JFrame {
 	}//GEN-LAST:event_manageTransactionsButtonActionPerformed
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordToggleActionPerformed
-		Login loginScreen = new Login();
-		loginScreen.setTitle("Login Aplikasi Kasir");
-		loginScreen.setVisible(true);
-		loginScreen.setResizable(false);
+		Popup.<Login>open(new Login(), "Login Aplikasi Kasir");
 		this.dispose();
 	}//GEN-LAST:event_passwordToggleActionPerformed
 

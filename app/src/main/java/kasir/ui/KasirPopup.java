@@ -73,7 +73,7 @@ public class KasirPopup extends javax.swing.JFrame {
 	/**
 	 * Set parent with selected row
 	 */
-	private void setSelectedRow() {
+	private void setParentData() {
 		if (amountField.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "Jumlah masakan tidak boleh kosong!");
 			return;
@@ -219,7 +219,7 @@ public class KasirPopup extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        setSelectedRow();
+        setParentData();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
