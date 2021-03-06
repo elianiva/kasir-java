@@ -37,6 +37,7 @@ public class UserPopup extends javax.swing.JFrame {
 		currentLevel = level;
 		parentWindow = parent;
 		mode = "edit";
+		idField.setEditable(false);
 
 		initComboboxModel();
 		populateData();
@@ -224,6 +225,11 @@ public class UserPopup extends javax.swing.JFrame {
 			Level level = new Level();
 			level.setLevelName(levelComboBox.getSelectedItem().toString());
 			currentLevelID = levelData.find(level).getLevelID();
+
+			// reset the user if we want to add them
+			if (mode == "add") {
+				currentUser = new User();
+			}
 
 			// set the current user details
 			currentUser.setUserID(id);

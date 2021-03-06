@@ -57,10 +57,8 @@ public class MenuManager extends javax.swing.JFrame {
 		foodTableModel.setRowCount(0);
 		foodTable.revalidate();
 
-		FoodSource foodSource = new FoodSource();
-
 		try {
-			List<Food> foods = foodSource.findAll();
+			List<Food> foods = new FoodSource().findAll();
 
 			for (Food food : foods) {
 				foodTableModel.addRow(new Object[] {
@@ -303,13 +301,18 @@ public class MenuManager extends javax.swing.JFrame {
 		// TODO add your handling code here:
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
-	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-		Popup.<MenuPopup>open(new MenuPopup(this), "Edit Menu");
-	}                                         
+	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		Popup.<MenuPopup>open(new MenuPopup(this), "Tambah Menu");
+	}
 
-	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		if (foodTable.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Tidak ada makanan yang dipilih!");
+			return;
+		}
+
 		Popup.<MenuPopup>open(new MenuPopup(this, currentFood), "Edit Menu");
-	}                                          
+	}
 
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

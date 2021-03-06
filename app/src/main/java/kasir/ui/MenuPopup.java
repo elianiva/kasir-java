@@ -25,9 +25,11 @@ public class MenuPopup extends javax.swing.JFrame {
 	public MenuPopup(MenuManager parent, Food food) {
 		this.setLocationRelativeTo(null);
 		initComponents();
+
 		parentWindow = parent;
 		currentFood = food;
 		mode = "edit";
+		idField.setEditable(false);
 
 		populateData();
 	}
@@ -163,11 +165,11 @@ public class MenuPopup extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		this.dispose();
-	}                                            
+	}
 
-	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		String id = idField.getText();
 		String name = nameField.getText();
 		String stock = stockField.getText();
@@ -180,6 +182,11 @@ public class MenuPopup extends javax.swing.JFrame {
 
 		try {
 			FoodSource foodSource = new FoodSource();
+
+			// reset the food if we want to add them
+			if (mode == "add") {
+				currentFood = new Food();
+			}
 
 			// set the current food details
 			currentFood.setFoodID(id);
@@ -198,12 +205,13 @@ public class MenuPopup extends javax.swing.JFrame {
 			parentWindow.populateData();
 
 			JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
+			this.dispose();
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "Data gagal disimpan!");
 			ex.printStackTrace();
 		}
 
-	}                                          
+	}
 
 	/**
 	 * @param args the command line arguments

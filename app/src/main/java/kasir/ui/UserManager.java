@@ -343,6 +343,10 @@ public class UserManager extends javax.swing.JFrame {
 		parentWindow.dispose();
 	}//GEN-LAST:event_logoutButtonActionPerformed
 
+	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+		Popup.<UserPopup>open(new UserPopup(this), "Tambah User");
+	}//GEN-LAST:event_addButtonActionPerformed
+
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
 		if (userTable.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Tidak ada user yang dipilih!");
@@ -351,10 +355,6 @@ public class UserManager extends javax.swing.JFrame {
 
 		Popup.<UserPopup>open(new UserPopup(this, currentUser, currentLevel), "Edit User");
 	}//GEN-LAST:event_editButtonActionPerformed
-
-	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-		Popup.<UserPopup>open(new UserPopup(this), "Tambah User");
-	}//GEN-LAST:event_addButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments

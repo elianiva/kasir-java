@@ -22,16 +22,17 @@ public class FoodSource {
 	public void save(Food food) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
-		String sql = "INSERT INTO masakan (nama_masakan, harga, stok, status_masakan) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO masakan (id_masakan, nama_masakan, harga, stok, status_masakan) VALUES (?, ?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?, ?) will turn into ("nama_masakan", "1000", 1, "Habis")
-		preparedStatement.setString(1, food.getName());
-		preparedStatement.setLong(2, food.getPrice());
-		preparedStatement.setLong(3, food.getStock());
-		preparedStatement.setString(4, food.getStatus());
+		preparedStatement.setString(1, food.getFoodID());
+		preparedStatement.setString(2, food.getName());
+		preparedStatement.setLong(3, food.getPrice());
+		preparedStatement.setLong(4, food.getStock());
+		preparedStatement.setString(5, food.getStatus());
 
 		preparedStatement.executeUpdate();
 	}
