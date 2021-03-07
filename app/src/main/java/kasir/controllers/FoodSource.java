@@ -115,7 +115,7 @@ public class FoodSource {
 			foodResult.setFoodID(rs.getString("id_masakan"));
 			foodResult.setName(rs.getString("nama_masakan"));
 			foodResult.setPrice(rs.getLong("harga"));
-			foodResult.setStock(rs.getLong("stock"));
+			foodResult.setStock(rs.getLong("stok"));
 
 			return foodResult;
 		}
