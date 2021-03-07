@@ -22,7 +22,21 @@ public class Kasir extends javax.swing.JFrame {
 	public Kasir() {
 	}
 	public Kasir(User currentUser) {
-		this.setLocationRelativeTo(null); // center the window
+		// center the window
+		this.setLocationRelativeTo(null);
+
+		// override the close handler
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (foodTable.getRowCount() != 0) {
+					JOptionPane.showMessageDialog(null, "Anda masih punya item tersisa!");
+					return;
+				}
+				System.exit(0);
+			}
+		});
+
+		// init the component and populate it with data
 		initComponents();
 		initTableModel();
 
@@ -120,7 +134,7 @@ public class Kasir extends javax.swing.JFrame {
 		exchangeField = new javax.swing.JTextField();
 		exchangeLabel = new javax.swing.JLabel();
 		addItemButton = new javax.swing.JButton();
-		cancelButton = new javax.swing.JButton();
+		removeButton = new javax.swing.JButton();
 		orderTitle = new javax.swing.JLabel();
 		logoutButton = new javax.swing.JButton();
 		confirmButton = new javax.swing.JButton();
@@ -139,7 +153,7 @@ public class Kasir extends javax.swing.JFrame {
 			.addGap(0, 100, Short.MAX_VALUE)
 		);
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		scrollPane.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
 
@@ -195,11 +209,11 @@ public class Kasir extends javax.swing.JFrame {
 			}
 		});
 
-		cancelButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-		cancelButton.setText("Hapus Item");
-		cancelButton.addActionListener(new java.awt.event.ActionListener() {
+		removeButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+		removeButton.setText("Hapus Item");
+		removeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				cancelButtonActionPerformed(evt);
+				removeButtonActionPerformed(evt);
 			}
 		});
 
@@ -263,7 +277,7 @@ public class Kasir extends javax.swing.JFrame {
 									.addComponent(payAmountLabel)
 									.addComponent(exchangeLabel)
 									.addComponent(exchangeField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-									.addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(confirmButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(customerNameField))))
@@ -302,7 +316,7 @@ public class Kasir extends javax.swing.JFrame {
 						.addGap(18, 18, 18)
 						.addComponent(addItemButton)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addComponent(cancelButton)
+						.addComponent(removeButton)
 						.addGap(13, 13, 13)
 						.addComponent(confirmButton))
 					.addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -312,11 +326,43 @@ public class Kasir extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_resetButtonActionPerformed
+	private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+		int row = foodTable.getSelectedRow();
+
+		String id = foodTable.getValueAt(row, 0).toString();
+		long amount = Long.parseLong(foodTable.getValueAt(row, 2).toString());
+
+		FoodSource foodSource = new FoodSource();
+
+		try {
+			// we need to do this because we want the detail of the selected item
+			// from the database so we can calculate how many stocks there are
+			Food filter = new Food();
+			filter.setFoodID(id);
+			Food food = foodSource.find(filter);
+
+			// add the existing stock with the selected stock. What we want is
+			// if we have 2 items in the database and 1 item in the foodTable
+			// we want to update the one in the database to 3 items
+			food.setStock(food.getStock() + amount);
+			foodSource.update(food);
+
+			// remove the item from the table
+			foodTableModel.removeRow(row);
+
+			JOptionPane.showMessageDialog(this, "Berhasil menghapus data!");
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(this, "Gagal menghapus data!");
+			ex.printStackTrace();
+		}
+	}//GEN-LAST:event_removeButtonActionPerformed
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+		// don't let user logout if they have an item on the table
+		if (foodTable.getRowCount() != 0) {
+			JOptionPane.showMessageDialog(null, "Anda masih punya item tersisa!");
+			return;
+		}
 		Popup.<Login>open(new Login(), "Login Aplikasi Kasir");
 		this.dispose();
 	}//GEN-LAST:event_logoutButtonActionPerformed
