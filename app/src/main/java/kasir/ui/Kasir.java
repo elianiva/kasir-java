@@ -1,18 +1,25 @@
 package kasir.ui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
+import kasir.controllers.FoodSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.OrderTable;
 import kasir.helpers.Popup;
+import kasir.models.Food;
 import kasir.models.User;
 
 public class Kasir extends javax.swing.JFrame {
-	private OrderTable tableData = new OrderTable();
+	public OrderTable tableData;
 	private DefaultTableModel foodTableModel;
 	private long price = 0, amount = 0;
 
@@ -39,12 +46,14 @@ public class Kasir extends javax.swing.JFrame {
 		// init the component and populate it with data
 		initComponents();
 		initTableModel();
+		tableData = new OrderTable();
 
 		// hide back button if the current user is not an admin
 		if (currentUser.getLevelID() != 1) {
 			backButton.setVisible(false);
 		}
 
+		// update the exchange amount on each `payAmountField` keypress
 		payAmountField.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				setExchangeAmount();
@@ -68,6 +77,8 @@ public class Kasir extends javax.swing.JFrame {
 		long totalPrice = Long.parseLong(priceNumber);
 		long payAmount = Long.parseLong(payAmountField.getText());
 		long exchange = totalPrice - payAmount;
+
+		// handle a case when the paid amount is insufficient
 		if (exchange < 0 && String.valueOf(exchange) != "") {
 			exchangeField.setText(("Rp. " + FormatRupiah.format(exchange)).replace("-", ""));
 		} else {
@@ -95,6 +106,11 @@ public class Kasir extends javax.swing.JFrame {
 	 * Set the table data
 	 */
 	public void setTableData(List<List<Object>> data) {
+		// reset the table before adding a new one
+		foodTableModel.setRowCount(0);
+		foodTable.clearSelection();
+		foodTable.validate();
+
 		// populate the table
 		for (List<Object> row : data) {
 			foodTableModel.addRow(new Object[] {
@@ -104,6 +120,7 @@ public class Kasir extends javax.swing.JFrame {
 				"Rp. " + FormatRupiah.format((long)row.get(3)),
 			});
 		}
+		tableData.setRows(data);
 
 		// takes care of the details
 		for (List<Object> row : data) amount += (long)row.get(2);
@@ -372,11 +389,23 @@ public class Kasir extends javax.swing.JFrame {
 	}//GEN-LAST:event_confirmButtonActionPerformed
 
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
-		Popup.<KasirPopup>open(new KasirPopup(tableData, this), "Tambah Item");
+		int rowCount = foodTableModel.getRowCount();
+		if (rowCount != 0) {
+			for (int i = 0; i < rowCount; i++) {
+				List<Object> row = new ArrayList<Object>();
+				row.add(foodTableModel.getValueAt(i, 0));
+				row.add(foodTableModel.getValueAt(i, 1));
+				row.add(foodTableModel.getValueAt(i, 2));
+				row.add(foodTableModel.getValueAt(i, 3));
+				tableData.addRow(row);
+			}
+		}
+		Popup.<KasirPopup>open(new KasirPopup(this), "Tambah Item");
 	}//GEN-LAST:event_addItemButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-		// TODO add your handling code here:
+		Popup.<Admin>open(new Admin(), "Halaman Admin");
+		this.dispose();
 	}//GEN-LAST:event_backButtonActionPerformed
 
 	/**
@@ -394,7 +423,7 @@ public class Kasir extends javax.swing.JFrame {
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton addItemButton;
 	private javax.swing.JButton backButton;
-	private javax.swing.JButton cancelButton;
+	private javax.swing.JButton removeButton;
 	private javax.swing.JButton confirmButton;
 	private javax.swing.JTextField customerNameField;
 	private javax.swing.JLabel customerNameLabel;

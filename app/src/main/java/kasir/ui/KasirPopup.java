@@ -13,7 +13,6 @@ import kasir.models.Food;
 
 public class KasirPopup extends javax.swing.JFrame {
 	private DefaultTableModel foodTableModel;
-	private OrderTable tableData;
 	private Kasir parentWindow;
 
 	/**
@@ -21,12 +20,11 @@ public class KasirPopup extends javax.swing.JFrame {
 	 */
 	public KasirPopup() {
 	}
-	public KasirPopup(OrderTable data, Kasir parent) {
+	public KasirPopup(Kasir parent) {
 		this.setLocationRelativeTo(null); // center the window
 		initComponents();
 		initTableModel();
 		populateData();
-		tableData = data;
 		parentWindow = parent;
 	}
 
@@ -87,24 +85,80 @@ public class KasirPopup extends javax.swing.JFrame {
 		}
 
 		List<List<Object>> allItems = new ArrayList<List<Object>>();
-		allItems.addAll(tableData.getRows());
 
-		// create a row
+		// the selected item
+		String id = foodTable.getValueAt(row, 0).toString();
+		String foodName = foodTable.getValueAt(row, 1).toString();
+		long amount = Long.parseLong(foodTable.getValueAt(row, 3).toString());
+		long selectedAmount = Long.parseLong(amountField.getText());
+		long price = Long.parseLong(foodTable.getValueAt(row, 2).toString());
+
+		// create a row item
 		List<Object> item = new ArrayList<Object>();
-		item.add(foodTable.getValueAt(row, 0));
-		item.add(foodTable.getValueAt(row, 1));
-		long amount = Long.parseLong(amountField.getText());
-		item.add(amount);
-		item.add((long)foodTable.getValueAt(row, 2) * amount);
+		item.add(id);
+		item.add(foodName);
+		item.add(selectedAmount);
+		item.add(price * selectedAmount);
 
-		allItems.add(item);
+		// combine the previous row with the existing row
+		boolean isDuplicate = false;
+		for (List<Object> old : parentWindow.tableData.getRows()) {
+			// if the ID is the same, we combine both of them
+			String originalID = old.get(0).toString();
+			String newID = item.get(0).toString();
+			long originalAmount = (long)old.get(2);
+			long newAmount = (long)item.get(2);
+			long originalPrice = Long.parseLong(old.get(3).toString().replaceAll("[a-zA-Z\\.\\s]", ""));
+			long newPrice = Long.parseLong(item.get(3).toString().replaceAll("[a-zA-Z\\.\\s]", ""));
 
-		// set parent table data
-		parentWindow.setTableData(allItems);
+			// if the item already exists, modify it instead of adding a new one
+			if (originalID.equals(newID)) {
+				List<Object> merged = new ArrayList<Object>();
+				merged.add(originalID);
+				merged.add(old.get(1));
+				merged.add(originalAmount + newAmount);
+				merged.add(originalPrice + newPrice);
 
-		// cleanup, reset to initial state
-		foodTable.clearSelection();
-		amountField.setText("");
+				allItems.add(merged);
+				isDuplicate = true;
+			} else {
+				allItems.add(old);
+			}
+		}
+
+		// add the new item if it's proven not a duplicate
+		if (!isDuplicate) {
+			allItems.add(item);
+		}
+
+		// prepare the model for the database update
+		Food food = new Food();
+		food.setFoodID(id);
+		food.setName(foodName);
+		food.setStock(amount - selectedAmount);
+		food.setPrice(price);
+
+		try {
+			// update the data inside the database
+			new FoodSource().update(food);
+
+			// cleanup, reset to initial state
+			foodTable.clearSelection();
+			amountField.setText("");
+
+			// set parent table data
+			parentWindow.setTableData(allItems);
+
+			JOptionPane.showMessageDialog(this, "Masakan berhasil ditembahkan!");
+
+			// refresh the table data
+			foodTable.clearSelection();
+			foodTableModel.setRowCount(0);
+			foodTable.revalidate();
+			populateData();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
@@ -219,6 +273,10 @@ public class KasirPopup extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+		if (foodTableModel.getRowCount() == -1) {
+			JOptionPane.showMessageDialog(this, "Tidak ada item di dalam tabel");
+			return;
+		}
         setParentData();
     }//GEN-LAST:event_addButtonActionPerformed
 

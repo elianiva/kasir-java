@@ -12,7 +12,6 @@ public class Order {
 	private int tableNumber;
 	private String details;
 	private String status;
-	// TODO: figure out this datatype
 	private Date date;
 
 	/**

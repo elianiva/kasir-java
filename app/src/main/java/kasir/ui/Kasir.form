@@ -65,7 +65,7 @@
                                   <Component id="payAmountLabel" min="-2" max="-2" attributes="0"/>
                                   <Component id="exchangeLabel" min="-2" max="-2" attributes="0"/>
                                   <Component id="exchangeField" alignment="1" pref="207" max="32767" attributes="0"/>
-                                  <Component id="cancelButton" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="removeButton" alignment="0" max="32767" attributes="0"/>
                                   <Component id="addItemButton" max="32767" attributes="0"/>
                                   <Component id="confirmButton" alignment="0" max="32767" attributes="0"/>
                                   <Component id="customerNameField" max="32767" attributes="0"/>
@@ -112,7 +112,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="addItemButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="removeButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="confirmButton" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -215,7 +215,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addItemButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="cancelButton">
+    <Component class="javax.swing.JButton" name="removeButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="16" style="0"/>
@@ -223,7 +223,7 @@
         <Property name="text" type="java.lang.String" value="Hapus Item"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="orderTitle">

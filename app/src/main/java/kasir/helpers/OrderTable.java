@@ -7,7 +7,11 @@ import java.util.List;
  * Class that provides getter and setter for the table value
  */
 public class OrderTable {
-	private List<List<Object>> rows = new ArrayList<List<Object>>();
+	private List<List<Object>> rows;
+
+	public OrderTable() {
+		this.rows = new ArrayList<List<Object>>();
+	}
 
 	/**
 	 * Get rows
@@ -15,6 +19,14 @@ public class OrderTable {
 	 */
 	public List<List<Object>> getRows() {
 		return rows;
+	}
+
+	/**
+	 * Append row
+	 * @return rows
+	 */
+	public void addRow(List<Object> row) {
+		rows.add(row);
 	}
 
 	/**

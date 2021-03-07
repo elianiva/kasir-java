@@ -102,7 +102,7 @@ public class FoodSource {
 	 */
 	public Food find(Food food) throws SQLException {
 		Food foodResult = new Food();
-		String sql = "SELECT * FROM masakan WHERE id_masakan=? AND nama_masakan=?";
+		String sql = "SELECT * FROM masakan WHERE id_masakan=? OR nama_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
