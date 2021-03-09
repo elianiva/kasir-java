@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>tugas2</name>
+	<name>kasir</name>
 	<comment>Project guitest created by Buildship.</comment>
 	<projects>
 	</projects>
@@ -16,7 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1613992543183</id>
+			<id>0</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
