@@ -79,7 +79,7 @@ public class Order {
 	 * @param newID
 	 */
 	public void setFoodID(String newID) {
-		this.userID = newID;
+		this.foodID = newID;
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class Order {
 	 * Set the table number
 	 * @param newNumber
 	 */
-	public void setTableNumber(int newNumber) {
+	public void setTableNumber(long newNumber) {
 		this.tableNumber = newNumber;
 	}
 

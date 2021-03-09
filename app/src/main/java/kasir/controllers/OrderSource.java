@@ -22,13 +22,11 @@ public class OrderSource {
 	public void save(Order order) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
-		String sql = "INSERT INTO order (id_order, id_transaksi, id_user, no_meja, tanggal, id_masakan, jumlah_masakan, total_harga, keterangan, status_order) "
-					+"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO `order` (id_order, id_transaksi, id_user, no_meja, tanggal, id_masakan, jumlah_masakan, total_harga, keterangan, status_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
-		// e.g (?, ?, ?) will turn into ("Ordername", "password", 1)
 		stmt.setString(1, order.getOrderID());
 		stmt.setString(2, order.getTransactionID());
 		stmt.setString(3, order.getUserID());
@@ -49,7 +47,7 @@ public class OrderSource {
 	 * @throws java.sql.SQLException
 	 */
 	public void update(Order order) throws SQLException {
-		String sql = "UPDATE order SET id_transaksi=?, id_user=?, no_meja=?, tanggal=?, id_masakan=?, jumlah_masakan=?, total_harga=?, keterangan=?, status_order=? WHERE id_order=?";
+		String sql = "UPDATE `order` SET id_transaksi=?, id_user=?, no_meja=?, tanggal=?, id_masakan=?, jumlah_masakan=?, total_harga=?, keterangan=?, status_order=? WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -73,7 +71,7 @@ public class OrderSource {
 	 * @throws java.sql.SQLException
 	 */
 	public void delete(Order order) throws SQLException {
-		String sql = "DELETE FROM Order WHERE id_order=?";
+		String sql = "DELETE FROM `order` WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -87,7 +85,7 @@ public class OrderSource {
 	 * @return List<Order>
 	 */
 	public List<Order> findAll() throws SQLException {
-		String sql = "SELECT * FROM Order";
+		String sql = "SELECT * FROM `order`";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet rs = connection.createStatement().executeQuery(sql);
 
@@ -115,7 +113,7 @@ public class OrderSource {
 	 */
 	public Order find(Order order) throws SQLException {
 		Order orderResult = new Order();
-		String sql = "SELECT * FROM order WHERE id_order=?";
+		String sql = "SELECT * FROM `order` WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
 

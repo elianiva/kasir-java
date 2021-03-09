@@ -2,9 +2,11 @@ package kasir.ui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -12,14 +14,18 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import kasir.controllers.FoodSource;
+import kasir.controllers.OrderSource;
+import kasir.controllers.TransactionSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.OrderTable;
 import kasir.helpers.Popup;
 import kasir.models.Food;
+import kasir.models.Transaction;
 import kasir.models.User;
 
 public class Kasir extends javax.swing.JFrame {
 	public OrderTable tableData;
+	private User user;
 	private DefaultTableModel foodTableModel;
 	private long price = 0, amount = 0;
 
@@ -31,6 +37,7 @@ public class Kasir extends javax.swing.JFrame {
 	public Kasir(User currentUser) {
 		// center the window
 		this.setLocationRelativeTo(null);
+		user = currentUser;
 
 		// override the close handler
 		this.addWindowListener(new WindowAdapter() {
@@ -49,7 +56,7 @@ public class Kasir extends javax.swing.JFrame {
 		tableData = new OrderTable();
 
 		// hide back button if the current user is not an admin
-		if (currentUser.getLevelID() != 1) {
+		if (user.getLevelID() != 1) {
 			backButton.setVisible(false);
 		}
 
@@ -69,7 +76,7 @@ public class Kasir extends javax.swing.JFrame {
 
 	private void setExchangeAmount() {
 		// don't do anything if we don't have any items
-		if (totalPriceField.getText().isEmpty()) {
+		if (totalPriceField.getText().isEmpty() || payAmountField.getText().isEmpty()) {
 			return;
 		}
 
@@ -155,8 +162,8 @@ public class Kasir extends javax.swing.JFrame {
 		orderTitle = new javax.swing.JLabel();
 		logoutButton = new javax.swing.JButton();
 		confirmButton = new javax.swing.JButton();
-		customerNameField = new javax.swing.JTextField();
-		customerNameLabel = new javax.swing.JLabel();
+		tableNumberField = new javax.swing.JTextField();
+		tableNumberLabel = new javax.swing.JLabel();
 		backButton = new javax.swing.JButton();
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -254,8 +261,8 @@ public class Kasir extends javax.swing.JFrame {
 			}
 		});
 
-		customerNameLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-		customerNameLabel.setText("Nomor Meja");
+		tableNumberLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+		tableNumberLabel.setText("Nomor Meja");
 
 		backButton.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
 		backButton.setText("Kembali");
@@ -282,7 +289,7 @@ public class Kasir extends javax.swing.JFrame {
 						.addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addGap(18, 18, 18)
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-							.addComponent(customerNameLabel)
+							.addComponent(tableNumberLabel)
 							.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
 								.addComponent(backButton)
 								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -297,7 +304,7 @@ public class Kasir extends javax.swing.JFrame {
 									.addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(confirmButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(customerNameField))))
+									.addComponent(tableNumberField))))
 						.addGap(18, 18, 18))))
 		);
 		layout.setVerticalGroup(
@@ -311,9 +318,9 @@ public class Kasir extends javax.swing.JFrame {
 				.addGap(35, 35, 35)
 				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
 					.addGroup(layout.createSequentialGroup()
-						.addComponent(customerNameLabel)
+						.addComponent(tableNumberLabel)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(tableNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 						.addComponent(foodAmountLabel)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -384,12 +391,109 @@ public class Kasir extends javax.swing.JFrame {
 		this.dispose();
 	}//GEN-LAST:event_logoutButtonActionPerformed
 
+	private String randHelper(Random rand, int upperBound) {
+		int randomNumber = rand.nextInt(upperBound);
+
+		if (randomNumber < 10) return "00" + randomNumber;
+		if (randomNumber < 100) return "0" + randomNumber;
+		return String.valueOf(randomNumber);
+	}
+
 	private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-		// TODO add your handling code here:
+		int rowCount = foodTableModel.getRowCount();
+
+		if (rowCount == 0) {
+			JOptionPane.showMessageDialog(this, "Tidak ada item yang akan dibeli!");
+			return;
+		}
+
+		if (payAmountField.getText().isEmpty() || tableNumberField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Harap isi semua field!");
+			return;
+		}
+
+		try {
+			// need to specifically say this one is the order model
+			// because we also have `kasir.ui.Order`
+			kasir.models.Order order = new kasir.models.Order();
+			OrderSource orderSource = new OrderSource();
+			Random rand = new Random();
+			Date date = new Date(new java.util.Date().getTime());
+
+			// these are the values that we need to get once
+			String transactionID = "T"+randHelper(rand, 999);
+			String userID = user.getUserID();
+			long tableNumber = Long.parseLong(tableNumberField.getText());
+			long totalPaid = Long.parseLong(payAmountField.getText().toString());
+			long totalPrice = Long.parseLong(FormatRupiah.normalise(totalPriceField.getText().toString()));
+			long exchange = Long.parseLong(FormatRupiah.normalise(exchangeField.getText().toString()));
+
+			// this feels kinda wrong
+			Transaction transaction = new Transaction();
+			transaction.setTransactionID(transactionID);
+			transaction.setUserID(userID);
+			transaction.setDate(date);
+			transaction.setTotalPrice(totalPrice);
+			transaction.setTotalPaid(totalPaid);
+			transaction.setExchange(exchange);
+
+			// create the transaction item
+			new TransactionSource().save(transaction);
+
+			for (int i = 0; i < rowCount; i++) {
+				// and these are the ones that needs to be different for each
+				// iteration
+				String id = randHelper(rand, 999);
+				long amount = Long.parseLong(foodTableModel.getValueAt(i, 2).toString());
+				long price = Long.parseLong(FormatRupiah.normalise(foodTableModel.getValueAt(i, 3).toString()));
+
+				// find the food ID based on its name
+				// I think this can be optimised but let's forget about that for now
+				// I'm not sure about the performance implication of running a
+				// query inside a for loop
+				Food food = new Food();
+				food.setName(foodTableModel.getValueAt(i, 1).toString());
+				String foodID = new FoodSource().find(food).getFoodID();
+
+				// this also feels kinda wrong
+				// man, I really don't enjoy writing Java :p
+				order.setOrderID("OR" + id);
+				order.setTransactionID(transactionID);
+				order.setUserID(userID);
+				order.setDate(date);
+				order.setTableNumber(tableNumber);
+				order.setFoodAmount(amount);
+				order.setFoodPrice(price);
+				order.setFoodID(foodID);
+				order.setDetails("TODO");
+				order.setStatus("Lunas");
+
+				orderSource.save(order);
+			}
+
+			// cleanup for the fields and table
+			foodTableModel.setRowCount(0);
+			foodTable.clearSelection();
+			foodTable.validate();
+			tableNumberField.setText("");
+			payAmountField.setText("");
+			exchangeField.setText("");
+			totalPriceField.setText("");
+			foodAmountField.setText("");
+
+			// are ya winning son? yah, I'm winning
+			// TODO: implement print using jasperthingamabob, i can't remember the name
+			JOptionPane.showConfirmDialog(this, "Transaksi berhasil disimpan! Cetak nota?", "Cetak Nota", JOptionPane.YES_NO_OPTION);
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(this, "Transaksi gagal disimpan!");
+			ex.printStackTrace();
+		}
 	}//GEN-LAST:event_confirmButtonActionPerformed
 
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
 		int rowCount = foodTableModel.getRowCount();
+
+		// we want to add the existing items when we have them
 		if (rowCount != 0) {
 			for (int i = 0; i < rowCount; i++) {
 				List<Object> row = new ArrayList<Object>();
@@ -409,7 +513,7 @@ public class Kasir extends javax.swing.JFrame {
 	}//GEN-LAST:event_backButtonActionPerformed
 
 	/**
-	* @param args the command line arguments
+	 * @param args the command line arguments
 	*/
 	public static void main(String args[]) {
 		/* Create and display the form */
@@ -425,8 +529,8 @@ public class Kasir extends javax.swing.JFrame {
 	private javax.swing.JButton backButton;
 	private javax.swing.JButton removeButton;
 	private javax.swing.JButton confirmButton;
-	private javax.swing.JTextField customerNameField;
-	private javax.swing.JLabel customerNameLabel;
+	private javax.swing.JTextField tableNumberField;
+	private javax.swing.JLabel tableNumberLabel;
 	private javax.swing.JTextField exchangeField;
 	private javax.swing.JLabel exchangeLabel;
 	private javax.swing.JTextField foodAmountField;

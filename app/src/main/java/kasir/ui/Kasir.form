@@ -53,7 +53,7 @@
                       <Component id="jScrollPane1" min="-2" pref="516" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="customerNameLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="tableNumberLabel" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                               <Component id="backButton" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -68,7 +68,7 @@
                                   <Component id="removeButton" alignment="0" max="32767" attributes="0"/>
                                   <Component id="addItemButton" max="32767" attributes="0"/>
                                   <Component id="confirmButton" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="customerNameField" max="32767" attributes="0"/>
+                                  <Component id="tableNumberField" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -90,9 +90,9 @@
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="customerNameLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="tableNumberLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="customerNameField" min="-2" max="-2" attributes="0"/>
+                      <Component id="tableNumberField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="foodAmountLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -259,9 +259,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="customerNameField">
+    <Component class="javax.swing.JTextField" name="tableNumberField">
     </Component>
-    <Component class="javax.swing.JLabel" name="customerNameLabel">
+    <Component class="javax.swing.JLabel" name="tableNumberLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="16" style="0"/>
