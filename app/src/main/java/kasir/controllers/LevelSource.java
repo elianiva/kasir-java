@@ -19,12 +19,12 @@ public class LevelSource {
 		Level levelResult = new Level();
 		String sql = "SELECT * FROM level WHERE id_level=? OR nama_level=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setLong(1, level.getLevelID());
-		preparedStatement.setString(2, level.getLevelName());
+		stmt.setLong(1, level.getLevelID());
+		stmt.setString(2, level.getLevelName());
 
-		ResultSet rs = preparedStatement.executeQuery();
+		ResultSet rs = stmt.executeQuery();
 
 		if (rs.next()) {
 			levelResult.setLevelID(rs.getLong("id_level"));

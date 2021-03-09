@@ -24,17 +24,17 @@ public class FoodSource {
 		// SQL injection
 		String sql = "INSERT INTO masakan (id_masakan, nama_masakan, harga, stok, status_masakan) VALUES (?, ?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?, ?) will turn into ("nama_masakan", "1000", 1, "Habis")
-		preparedStatement.setString(1, food.getFoodID());
-		preparedStatement.setString(2, food.getName());
-		preparedStatement.setLong(3, food.getPrice());
-		preparedStatement.setLong(4, food.getStock());
-		preparedStatement.setString(5, food.getStatus());
+		stmt.setString(1, food.getFoodID());
+		stmt.setString(2, food.getName());
+		stmt.setLong(3, food.getPrice());
+		stmt.setLong(4, food.getStock());
+		stmt.setString(5, food.getStatus());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -45,15 +45,15 @@ public class FoodSource {
 	public void update(Food food) throws SQLException {
 		String sql = "UPDATE masakan SET nama_masakan=?, harga=?, stok=?, status_masakan=? WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, food.getName());
-		preparedStatement.setLong(2, food.getPrice());
-		preparedStatement.setLong(3, food.getStock());
-		preparedStatement.setString(4, food.getStatus());
-		preparedStatement.setString(5, food.getFoodID());
+		stmt.setString(1, food.getName());
+		stmt.setLong(2, food.getPrice());
+		stmt.setLong(3, food.getStock());
+		stmt.setString(4, food.getStatus());
+		stmt.setString(5, food.getFoodID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -64,11 +64,11 @@ public class FoodSource {
 	public void delete(Food food) throws SQLException {
 		String sql = "DELETE FROM masakan WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, food.getFoodID());
+		stmt.setString(1, food.getFoodID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -104,12 +104,12 @@ public class FoodSource {
 		Food foodResult = new Food();
 		String sql = "SELECT * FROM masakan WHERE id_masakan=? OR nama_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, food.getFoodID());
-		preparedStatement.setString(2, food.getName());
+		stmt.setString(1, food.getFoodID());
+		stmt.setString(2, food.getName());
 
-		ResultSet rs = preparedStatement.executeQuery();
+		ResultSet rs = stmt.executeQuery();
 
 		if (rs.next()) {
 			foodResult.setFoodID(rs.getString("id_masakan"));

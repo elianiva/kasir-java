@@ -24,17 +24,17 @@ public class UserSource {
 		// SQL injection
 		String sql = "INSERT INTO user(id_user, name, username, password, id_level) VALUES (?, ?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?, ?) will turn into ("username", "password", 1) etc
-		preparedStatement.setString(1, user.getUserID());
-		preparedStatement.setString(2, user.getName());
-		preparedStatement.setString(3, user.getUsername());
-		preparedStatement.setString(4, user.getPassword());
-		preparedStatement.setLong(5, user.getLevelID());
+		stmt.setString(1, user.getUserID());
+		stmt.setString(2, user.getName());
+		stmt.setString(3, user.getUsername());
+		stmt.setString(4, user.getPassword());
+		stmt.setLong(5, user.getLevelID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -45,14 +45,14 @@ public class UserSource {
 	public void update(User user) throws SQLException {
 		String sql = "UPDATE user SET username=?, password=?, id_level=? WHERE id_user=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, user.getUsername());
-		preparedStatement.setString(2, user.getPassword());
-		preparedStatement.setLong(3, user.getLevelID());
-		preparedStatement.setString(4, user.getUserID());
+		stmt.setString(1, user.getUsername());
+		stmt.setString(2, user.getPassword());
+		stmt.setLong(3, user.getLevelID());
+		stmt.setString(4, user.getUserID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -63,11 +63,11 @@ public class UserSource {
 	public void delete(User user) throws SQLException {
 		String sql = "DELETE FROM user WHERE id_user=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, user.getUserID());
+		stmt.setString(1, user.getUserID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -104,12 +104,12 @@ public class UserSource {
 		User userResult = new User();
 		String sql = "SELECT * FROM user WHERE username=? AND password=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, user.getUsername());
-		preparedStatement.setString(2, user.getPassword());
+		stmt.setString(1, user.getUsername());
+		stmt.setString(2, user.getPassword());
 
-		ResultSet rs = preparedStatement.executeQuery();
+		ResultSet rs = stmt.executeQuery();
 
 		if (rs.next()) {
 			userResult.setUserID(rs.getString("id_user"));
