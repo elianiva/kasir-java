@@ -7,12 +7,48 @@ import java.sql.Date;
  * self reminder: similar to Mongoose model
  */
 public class Order {
-	private String userID;
 	private String orderID;
-	private int tableNumber;
+	private String transactionID;
+	private String userID;
+	private String foodID;
+	private long foodAmount;
+	private long foodPrice;
+	private long tableNumber;
 	private String details;
 	private String status;
 	private Date date;
+
+	/**
+	 * Get the order ID
+	 * @return orderID
+	 */
+	public String getOrderID() {
+		return orderID;
+	}
+
+	/**
+	 * Set the order ID
+	 * @param newID
+	 */
+	public void setOrderID(String newID) {
+		this.orderID = newID;
+	}
+
+	/**
+	 * Get the transaction ID
+	 * @return transactionID
+	 */
+	public String getTransactionID() {
+		return transactionID;
+	}
+
+	/**
+	 * Set the transaction ID
+	 * @param newID
+	 */
+	public void setTransactionID(String newID) {
+		this.transactionID = newID;
+	}
 
 	/**
 	 * Get the user ID
@@ -31,19 +67,51 @@ public class Order {
 	}
 
 	/**
-	 * Get the order ID
-	 * @return orderID
+	 * Get the food ID
+	 * @return foodID
 	 */
-	public String getOrderID() {
-		return orderID;
+	public String getFoodID() {
+		return foodID;
 	}
 
 	/**
-	 * Set the order ID
+	 * Set the user ID
 	 * @param newID
 	 */
-	public void setOrderID(String newID) {
-		this.orderID = newID;
+	public void setFoodID(String newID) {
+		this.userID = newID;
+	}
+
+	/**
+	 * Get the food amount
+	 * @return foodAmount
+	 */
+	public long getFoodAmount() {
+		return foodAmount;
+	}
+
+	/**
+	 * Set the food amount
+	 * @param newAmount
+	 */
+	public void setFoodAmount(long newAmount) {
+		this.foodAmount = newAmount;
+	}
+
+	/**
+	 * Get the food price
+	 * @return foodAmount
+	 */
+	public long getFoodPrice() {
+		return foodPrice;
+	}
+
+	/**
+	 * Set the food price
+	 * @param newAmount
+	 */
+	public void setFoodPrice(long newPrice) {
+		this.foodPrice = newPrice;
 	}
 
 	/**
@@ -82,7 +150,7 @@ public class Order {
 	 * Get the table number
 	 * @return tableNumber
 	 */
-	public int getTableNumber() {
+	public long getTableNumber() {
 		return tableNumber;
 	}
 

@@ -16,26 +16,31 @@ import kasir.database.ConnectionHelper;
 public class OrderSource {
 	/**
 	 * Save the passed `Order` instance to the database
-	 * @param Order - The `Order` model
+	 * @param order - The `Order` model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Order Order) throws SQLException {
+	public void save(Order order) throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
-		String sql = "INSERT INTO order (id_order, no_meja, tanggal, id_user, keterangan, status_order) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO order (id_order, id_transaksi, id_user, no_meja, tanggal, id_masakan, jumlah_masakan, total_harga, keterangan, status_order) "
+					+"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
 		// this code replaces the `?` from the `sql` string above
 		// e.g (?, ?, ?) will turn into ("Ordername", "password", 1)
-		preparedStatement.setString(1, Order.getOrderID());
-		preparedStatement.setInt(2, Order.getTableNumber());
-		preparedStatement.setDate(3, Order.getDate());
-		preparedStatement.setString(4, Order.getUserID());
-		preparedStatement.setString(5, Order.getDetails());
-		preparedStatement.setString(6, Order.getStatus());
+		stmt.setString(1, order.getOrderID());
+		stmt.setString(2, order.getTransactionID());
+		stmt.setString(3, order.getUserID());
+		stmt.setLong(4, order.getTableNumber());
+		stmt.setDate(5, order.getDate());
+		stmt.setString(6, order.getFoodID());
+		stmt.setLong(7, order.getFoodAmount());
+		stmt.setLong(8, order.getFoodPrice());
+		stmt.setString(9, order.getDetails());
+		stmt.setString(10, order.getStatus());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -44,17 +49,22 @@ public class OrderSource {
 	 * @throws java.sql.SQLException
 	 */
 	public void update(Order order) throws SQLException {
-		String sql = "UPDATE order SET no_meja=?, tanggal=?, id_user=?, keterangan=?, status_order=? WHERE id_order=?";
+		String sql = "UPDATE order SET id_transaksi=?, id_user=?, no_meja=?, tanggal=?, id_masakan=?, jumlah_masakan=?, total_harga=?, keterangan=?, status_order=? WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setInt(1, order.getTableNumber());
-		preparedStatement.setDate(2, order.getDate());
-		preparedStatement.setString(3, order.getUserID());
-		preparedStatement.setString(4, order.getDetails());
-		preparedStatement.setString(4, order.getStatus());
+		stmt.setString(1, order.getTransactionID());
+		stmt.setString(2, order.getUserID());
+		stmt.setLong(3, order.getTableNumber());
+		stmt.setDate(4, order.getDate());
+		stmt.setString(5, order.getFoodID());
+		stmt.setLong(6, order.getFoodAmount());
+		stmt.setLong(7, order.getFoodPrice());
+		stmt.setString(8, order.getDetails());
+		stmt.setString(9, order.getStatus());
+		stmt.setString(10, order.getOrderID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -65,11 +75,11 @@ public class OrderSource {
 	public void delete(Order order) throws SQLException {
 		String sql = "DELETE FROM Order WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, order.getOrderID());
+		stmt.setString(1, order.getOrderID());
 
-		preparedStatement.executeUpdate();
+		stmt.executeUpdate();
 	}
 
 	/**
@@ -103,15 +113,15 @@ public class OrderSource {
 	 * Returns Order if they exists
 	 * @return Order
 	 */
-	public Order find(Order Order) throws SQLException {
+	public Order find(Order order) throws SQLException {
 		Order orderResult = new Order();
-		String sql = "SELECT * FROM Order WHERE id_order=?";
+		String sql = "SELECT * FROM order WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		preparedStatement.setString(1, Order.getOrderID());
+		stmt.setString(1, order.getOrderID());
 
-		ResultSet rs = preparedStatement.executeQuery();
+		ResultSet rs = stmt.executeQuery();
 
 		if (rs.next()) {
 			orderResult.setOrderID(rs.getString("id_order"));
