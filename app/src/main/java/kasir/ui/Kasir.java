@@ -73,14 +73,14 @@ public class Kasir extends javax.swing.JFrame {
 			return;
 		}
 
-		String priceNumber = totalPriceField.getText().replaceAll("[a-zA-Z\\.\\s]", "");
+		String priceNumber = FormatRupiah.normalise(totalPriceField.getText());
 		long totalPrice = Long.parseLong(priceNumber);
 		long payAmount = Long.parseLong(payAmountField.getText());
 		long exchange = totalPrice - payAmount;
 
 		// handle a case when the paid amount is insufficient
 		if (exchange < 0 && String.valueOf(exchange) != "") {
-			exchangeField.setText(("Rp. " + FormatRupiah.format(exchange)).replace("-", ""));
+			exchangeField.setText(FormatRupiah.format(exchange).replace("-", ""));
 		} else {
 			exchangeField.setText("Pembayaran belum cukup");
 		}
@@ -117,7 +117,7 @@ public class Kasir extends javax.swing.JFrame {
 				row.get(0),
 				row.get(1),
 				row.get(2),
-				"Rp. " + FormatRupiah.format((long)row.get(3)),
+				FormatRupiah.format((long)row.get(3)),
 			});
 		}
 		tableData.setRows(data);
@@ -127,7 +127,7 @@ public class Kasir extends javax.swing.JFrame {
 		foodAmountField.setText(String.valueOf(amount));
 
 		for (List<Object> row : data) price += (long)row.get(3);
-		totalPriceField.setText("Rp. " + FormatRupiah.format(price));
+		totalPriceField.setText(FormatRupiah.format(price));
 	}
 
 	/**

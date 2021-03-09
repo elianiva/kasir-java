@@ -65,7 +65,7 @@ public class MenuManager extends javax.swing.JFrame {
 					food.getFoodID(),
 					food.getName(),
 					food.getStock(),
-					"Rp. " + FormatRupiah.format(food.getPrice()),
+					FormatRupiah.format(food.getPrice()),
 					food.getStatus(),
 				});
 			}
@@ -94,9 +94,7 @@ public class MenuManager extends javax.swing.JFrame {
 				currentFood.setFoodID(foodTable.getValueAt(selectedRow, 0).toString());
 				currentFood.setName(foodTable.getValueAt(selectedRow, 1).toString());
 				currentFood.setStock(Long.parseLong(foodTable.getValueAt(selectedRow, 2).toString()));
-				String priceNumber = foodTable.getValueAt(selectedRow, 3)
-					.toString()
-					.replaceAll("[a-zA-Z\\.\\s]", "");
+				String priceNumber = FormatRupiah.normalise(foodTable.getValueAt(selectedRow, 3).toString());
 				currentFood.setPrice(Long.parseLong(priceNumber));
 			}
 		});

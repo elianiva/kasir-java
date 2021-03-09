@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import kasir.controllers.FoodSource;
-import kasir.helpers.OrderTable;
+import kasir.helpers.FormatRupiah;
 import kasir.models.Food;
 
 public class KasirPopup extends javax.swing.JFrame {
@@ -108,8 +108,8 @@ public class KasirPopup extends javax.swing.JFrame {
 			String newID = item.get(0).toString();
 			long originalAmount = (long)old.get(2);
 			long newAmount = (long)item.get(2);
-			long originalPrice = Long.parseLong(old.get(3).toString().replaceAll("[a-zA-Z\\.\\s]", ""));
-			long newPrice = Long.parseLong(item.get(3).toString().replaceAll("[a-zA-Z\\.\\s]", ""));
+			long originalPrice = Long.parseLong(FormatRupiah.normalise(old.get(3).toString()));
+			long newPrice = Long.parseLong(FormatRupiah.normalise(item.get(3).toString()));
 
 			// if the item already exists, modify it instead of adding a new one
 			if (originalID.equals(newID)) {
