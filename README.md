@@ -26,10 +26,10 @@ Here's how the database laid out. (My own version compared to the original desig
 | -------------------------------- | ----------------------------------- |
 | ![redesign](./pix/final_db.webp) | ![original](./pix/original_db.webp) |
 
-I changed it to only use 5 tables instead of 6 because that doesn't make any
-sense to me.
+I changed it to only use 5 tables instead of 6 because the original design
+doesn't make any sense to me.
 
-Two of them are *very* similar and that would just over-complicate the query
+Two of them (order & detail_order) are *very* similar and that would just over-complicate the query
 (to me anyways, I don't want to query 2 tables just to find out that both of
 them are pretty much the same)
 
