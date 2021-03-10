@@ -55,7 +55,7 @@ public class Login extends javax.swing.JFrame {
 				Popup.<Admin>open(new Admin(), "Halaman Admin");
 				this.dispose();
 			} else if (userLevel == 2) {
-				Popup.<Kasir>open(new Kasir(currentUser), "Halaman Admin");
+				Popup.<Kasir>open(new Kasir(currentUser), "Halaman Kasir");
 				this.dispose();
 			} else if (userLevel == 5) {
 
