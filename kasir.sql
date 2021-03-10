@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database:3306
--- Generation Time: Mar 02, 2021 at 05:04 AM
+-- Generation Time: Mar 10, 2021 at 06:16 AM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.11
 
@@ -24,27 +24,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_order`
---
-
-CREATE TABLE `detail_order` (
-  `id_detail_order` varchar(11) CHARACTER SET utf8 NOT NULL,
-  `id_order` varchar(11) CHARACTER SET utf8 NOT NULL,
-  `id_masakan` varchar(11) CHARACTER SET utf8 NOT NULL,
-  `keterangan` text NOT NULL,
-  `status_detail_order` enum('Lunas','Belum Dibayar') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `level`
 --
 
 CREATE TABLE `level` (
   `id_level` int(11) NOT NULL,
   `nama_level` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `level`
@@ -63,40 +49,60 @@ INSERT INTO `level` (`id_level`, `nama_level`) VALUES
 --
 
 CREATE TABLE `masakan` (
-  `id_masakan` varchar(11) CHARACTER SET utf8 NOT NULL,
-  `nama_masakan` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `id_masakan` varchar(11) NOT NULL,
+  `nama_masakan` varchar(64) NOT NULL,
   `harga` int(11) NOT NULL,
   `stok` int(11) NOT NULL,
-  `status_masakan` enum('Tersedia','Habis') CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status_masakan` enum('Tersedia','Habis') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `masakan`
 --
 
 INSERT INTO `masakan` (`id_masakan`, `nama_masakan`, `harga`, `stok`, `status_masakan`) VALUES
-('A001', 'Chicken Steak', 50000, 12, 'Tersedia'),
-('A002', 'Ayam Lada Hitam', 40000, 10, 'Tersedia'),
-('A003', 'Gurame Asam Manis', 30000, 20, 'Tersedia'),
-('A004', 'Ayam Goreng Serundeng', 20000, 8, 'Tersedia'),
-('A005', 'Oseng Cumi Asin Pedas', 35000, 31, 'Tersedia'),
-('A006', 'Gurame Bakar', 25000, 12, 'Tersedia'),
-('A007', 'Udang Pedas Gurih', 10000, 0, 'Habis');
+('A001', 'Chicken Steak', 20000, 68, 'Tersedia'),
+('A002', 'Ayam Lada Hitam', 40000, 5, 'Tersedia'),
+('A003', 'Gurame Asam Manis', 30000, 18, 'Tersedia'),
+('A004', 'Ayam Goreng Serundeng', 20000, 5, 'Tersedia'),
+('A005', 'Oseng Cumi Asin Pedas', 35000, 25, 'Tersedia'),
+('A006', 'Gurame Bakar', 25000, 8, 'Tersedia'),
+('A007', 'Udang Pedas Gurih', 10000, 0, 'Habis'),
+('A008', 'Something', 20000, 0, 'Habis');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderr`
+-- Table structure for table `order`
 --
 
-CREATE TABLE `orderr` (
+CREATE TABLE `order` (
   `id_order` varchar(11) NOT NULL,
+  `id_transaksi` varchar(11) NOT NULL,
+  `id_user` varchar(11) NOT NULL,
   `no_meja` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `id_user` varchar(11) NOT NULL,
+  `id_masakan` varchar(11) NOT NULL,
+  `jumlah_masakan` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
   `keterangan` text NOT NULL,
   `status_order` enum('Lunas','Belum Dibayar') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`id_order`, `id_transaksi`, `id_user`, `no_meja`, `tanggal`, `id_masakan`, `jumlah_masakan`, `total_harga`, `keterangan`, `status_order`) VALUES
+('OR001', 'T001', 'U002', 2, '2021-03-16', 'A001', 4, 80000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut metus ut elit ornare fermentum.', 'Belum Dibayar'),
+('OR002', 'T001', 'U002', 2, '2021-03-16', 'A002', 3, 120000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut metus ut elit ornare fermentum.', 'Belum Dibayar'),
+('OR003', 'T002', 'U002', 3, '2021-03-17', 'A004', 4, 80000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut metus ut elit ornare fermentum.', 'Lunas'),
+('OR159', 'T240', 'U002', 2, '2021-03-10', 'A002', 3, 120000, 'TODO', 'Lunas'),
+('OR180', 'T240', 'U002', 2, '2021-03-10', 'A004', 1, 20000, 'TODO', 'Lunas'),
+('OR429', 'T302', 'U002', 3, '2021-03-09', 'A006', 2, 50000, 'TODO', 'Lunas'),
+('OR453', 'T240', 'U002', 2, '2021-03-10', 'A001', 2, 40000, 'TODO', 'Lunas'),
+('OR689', 'T302', 'U002', 3, '2021-03-09', 'A001', 5, 100000, 'TODO', 'Lunas'),
+('OR773', 'T240', 'U002', 2, '2021-03-10', 'A006', 2, 50000, 'TODO', 'Lunas');
 
 -- --------------------------------------------------------
 
@@ -107,10 +113,21 @@ CREATE TABLE `orderr` (
 CREATE TABLE `transaksi` (
   `id_transaksi` varchar(11) NOT NULL,
   `id_user` varchar(11) NOT NULL,
-  `id_order` varchar(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `total_bayar` int(11) NOT NULL
+  `total_bayar` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `kembalian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `tanggal`, `total_bayar`, `total_harga`, `kembalian`) VALUES
+('T001', 'U002', '2021-03-16', 200000, 200000, 0),
+('T002', 'U002', '2021-03-17', 100000, 120000, 20000),
+('T240', 'U002', '2021-03-10', 650000, 610000, 40000),
+('T302', 'U002', '2021-03-09', 300000, 250000, 50000);
 
 -- --------------------------------------------------------
 
@@ -141,14 +158,6 @@ INSERT INTO `user` (`id_user`, `name`, `username`, `password`, `id_level`) VALUE
 --
 
 --
--- Indexes for table `detail_order`
---
-ALTER TABLE `detail_order`
-  ADD PRIMARY KEY (`id_detail_order`),
-  ADD KEY `fk_id_detail_order` (`id_order`) USING BTREE,
-  ADD KEY `fk_id_masakan` (`id_masakan`);
-
---
 -- Indexes for table `level`
 --
 ALTER TABLE `level`
@@ -161,56 +170,51 @@ ALTER TABLE `masakan`
   ADD PRIMARY KEY (`id_masakan`);
 
 --
--- Indexes for table `orderr`
+-- Indexes for table `order`
 --
-ALTER TABLE `orderr`
+ALTER TABLE `order`
   ADD PRIMARY KEY (`id_order`),
-  ADD KEY `fk_id_user` (`id_user`);
+  ADD KEY `fk_order_id_masakan` (`id_masakan`),
+  ADD KEY `fk_order_id_user` (`id_user`) USING BTREE,
+  ADD KEY `fk_order_id_transaksi` (`id_transaksi`);
 
 --
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
-  ADD KEY `fk_id_user` (`id_user`),
-  ADD KEY `fk_id_orderr` (`id_order`);
+  ADD KEY `fk_transaksi_id_user` (`id_user`) USING BTREE;
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
-  ADD KEY `fk_id_level` (`id_level`);
+  ADD KEY `fk_user_id_level` (`id_level`);
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `detail_order`
+-- Constraints for table `order`
 --
-ALTER TABLE `detail_order`
-  ADD CONSTRAINT `detail_order_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `orderr` (`id_order`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_masakan` FOREIGN KEY (`id_masakan`) REFERENCES `masakan` (`id_masakan`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `orderr`
---
-ALTER TABLE `orderr`
-  ADD CONSTRAINT `fk_id_order` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `order`
+  ADD CONSTRAINT `fk_order_id_masakan` FOREIGN KEY (`id_masakan`) REFERENCES `masakan` (`id_masakan`),
+  ADD CONSTRAINT `fk_order_id_order` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_order_id_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `fk_id_orderr` FOREIGN KEY (`id_order`) REFERENCES `orderr` (`id_order`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_transaksi` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_transaksi_id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `fk_id_level` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`);
+  ADD CONSTRAINT `fk_user_id_level` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
