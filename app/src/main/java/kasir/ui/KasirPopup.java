@@ -48,10 +48,8 @@ public class KasirPopup extends javax.swing.JFrame {
 	 * Populate table with initial data from database
 	 */
 	private void populateData() {
-		FoodSource foodSource = new FoodSource();
-
 		try {
-			List<Food> foods = foodSource.findAll();
+			List<Food> foods = FoodSource.findAll();
 
 			for (Food food : foods) {
 				foodTableModel.addRow(new Object[] {
@@ -140,7 +138,7 @@ public class KasirPopup extends javax.swing.JFrame {
 
 		try {
 			// update the data inside the database
-			new FoodSource().update(food);
+			new FoodSource(food).update();
 
 			// cleanup, reset to initial state
 			foodTable.clearSelection();

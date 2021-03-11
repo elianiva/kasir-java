@@ -14,12 +14,22 @@ import kasir.database.ConnectionHelper;
  * A class which takes care of any CRUD operation for the `Transaction` model
  */
 public class TransactionSource {
+	private Transaction transaction;
+
+	/**
+	 * Initialise the `user` instance for this class
+	 * @param user - The User instance
+	 */
+	public TransactionSource(Transaction transaction) {
+		this.transaction = transaction;
+	}
+
 	/**
 	 * Save the passed `Transaction` instance to the database
 	 * @param transaction - The `Transaction` model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Transaction transaction) throws SQLException {
+	public void save() throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO transaksi (id_transaksi, id_user, tanggal, total_harga, total_bayar, kembalian) "
@@ -43,7 +53,7 @@ public class TransactionSource {
 	 * @param order - order model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(Transaction transaction) throws SQLException {
+	public void update() throws SQLException {
 		String sql = "UPDATE order SET id_user=?, tanggal=?, total_harga=?, total_bayar=?, kembalian=? WHERE id_transaksi=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -63,7 +73,7 @@ public class TransactionSource {
 	 * @param transaction - transaction model
 	 * @throws java.sql.SQLException
 	 */
-	public void delete(Transaction transaction) throws SQLException {
+	public void delete() throws SQLException {
 		String sql = "DELETE FROM transaksi WHERE id_transaksi=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -77,7 +87,7 @@ public class TransactionSource {
 	 * Get all Transactions from the database
 	 * @return List<Transaction>
 	 */
-	public List<Transaction> findAll() throws SQLException {
+	public static List<Transaction> findAll() throws SQLException {
 		String sql = "SELECT * FROM transaksi";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet rs = connection.createStatement().executeQuery(sql);
@@ -99,7 +109,7 @@ public class TransactionSource {
 	 * Returns Transaction if they exists
 	 * @return Transaction
 	 */
-	public Transaction find(Transaction transaction) throws SQLException {
+	public Transaction find() throws SQLException {
 		Transaction orderResult = new Transaction();
 		String sql = "SELECT * FROM order WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();

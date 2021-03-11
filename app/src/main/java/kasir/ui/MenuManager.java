@@ -58,7 +58,7 @@ public class MenuManager extends javax.swing.JFrame {
 		foodTable.revalidate();
 
 		try {
-			List<Food> foods = new FoodSource().findAll();
+			List<Food> foods = FoodSource.findAll();
 
 			for (Food food : foods) {
 				foodTableModel.addRow(new Object[] {
@@ -296,7 +296,31 @@ public class MenuManager extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-		// TODO add your handling code here:
+		if (foodTable.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Tidak ada makanan yang dipilih!");
+			return;
+		}
+
+		int confirmation = JOptionPane.showConfirmDialog(this, "Hapus menu yang dipilih?", "Hapus Menu", JOptionPane.YES_NO_OPTION);
+		try {
+			String foodID = foodTable.getValueAt(foodTable.getSelectedRow(), 0).toString();
+
+			if (confirmation == JOptionPane.NO_OPTION) {
+				return;
+			}
+
+			Food food = new Food();
+			food.setFoodID(foodID);
+			new FoodSource(food).delete();
+
+			JOptionPane.showMessageDialog(this, "Berhasil menghapus menu!");
+
+			// refresh the table
+			populateData();
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(this, "Gagal menghapus menu!");
+			ex.printStackTrace();
+		}
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
 	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {

@@ -87,13 +87,12 @@ public class UserManager extends javax.swing.JFrame {
 		userTable.revalidate();
 
 		try {
-			allUsers = new UserSource().findAll();
+			allUsers = UserSource.findAll();
 			Level level = new Level();
-			LevelSource levelSource = new LevelSource();
 
 			for (User user : allUsers) {
 				level.setLevelID(user.getLevelID());
-				Level foundLevel = levelSource.find(level);
+				Level foundLevel = new LevelSource(level).find();
 
 				userTableModel.addRow(new Object[] {
 					user.getUserID(),
@@ -317,18 +316,21 @@ public class UserManager extends javax.swing.JFrame {
 
 	private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
 		User user = new User();
-		UserSource userData = new UserSource();
 		int selectedRow = userTable.getSelectedRow();
 		user.setUserID(userTable.getValueAt(selectedRow, 0).toString());
 
+		// initialise using the above user instance
+		UserSource userData = new UserSource(user);
+
 		try {
-			userData.delete(user);
+			userData.delete();
 			JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "Data gagal dihapus!");
 			ex.printStackTrace();
 		}
 
+		// we need to refresh the table; hence this function call
 		populateData();
 	}//GEN-LAST:event_deleteButtonActionPerformed
 

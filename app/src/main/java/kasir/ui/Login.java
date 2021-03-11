@@ -39,11 +39,13 @@ public class Login extends javax.swing.JFrame {
 		}
 
 		try {
-			UserSource userSource = new UserSource();
 			User user = new User();
 			user.setUsername(username);
 			user.setPassword(password);
-			User currentUser = userSource.find(user);
+			UserSource userSource = new UserSource(user);
+
+			// find the username in the database
+			User currentUser = userSource.find();
 
 			if (currentUser == null) {
 				JOptionPane.showMessageDialog(this, "Password atau Username yang anda masukkan salah!");
@@ -51,6 +53,8 @@ public class Login extends javax.swing.JFrame {
 			}
 
 			int userLevel = (int)currentUser.getLevelID();
+
+			// depending on the role, show different window
 			if (userLevel == 1) {
 				Popup.<Admin>open(new Admin(), "Halaman Admin");
 				this.dispose();

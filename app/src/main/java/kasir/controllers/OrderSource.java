@@ -14,12 +14,22 @@ import kasir.database.ConnectionHelper;
  * A class which takes care of any CRUD operation for the `Order` model
  */
 public class OrderSource {
+	private Order order;
+
+	/**
+	 * Initialise the `user` instance for this class
+	 * @param user - The User instance
+	 */
+	public OrderSource(Order order) {
+		this.order = order;
+	}
+
 	/**
 	 * Save the passed `Order` instance to the database
 	 * @param order - The `Order` model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Order order) throws SQLException {
+	public void save() throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO `order` (id_order, id_transaksi, id_user, no_meja, tanggal, id_masakan, jumlah_masakan, total_harga, keterangan, status_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -46,7 +56,7 @@ public class OrderSource {
 	 * @param order - order model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(Order order) throws SQLException {
+	public void update() throws SQLException {
 		String sql = "UPDATE `order` SET id_transaksi=?, id_user=?, no_meja=?, tanggal=?, id_masakan=?, jumlah_masakan=?, total_harga=?, keterangan=?, status_order=? WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -70,7 +80,7 @@ public class OrderSource {
 	 * @param order - order model
 	 * @throws java.sql.SQLException
 	 */
-	public void delete(Order order) throws SQLException {
+	public void delete() throws SQLException {
 		String sql = "DELETE FROM `order` WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -84,7 +94,9 @@ public class OrderSource {
 	 * Get all Orders from the database
 	 * @return List<Order>
 	 */
-	public List<Order> findAll() throws SQLException {
+	public static List<Order> findAll() throws SQLException {
+		// this function can be static because we don't need the `User`
+		// instance here
 		String sql = "SELECT * FROM `order`";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet rs = connection.createStatement().executeQuery(sql);
@@ -111,7 +123,7 @@ public class OrderSource {
 	 * Returns Order if they exists
 	 * @return Order
 	 */
-	public Order find(Order order) throws SQLException {
+	public Order find() throws SQLException {
 		Order orderResult = new Order();
 		String sql = "SELECT * FROM `order` WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();

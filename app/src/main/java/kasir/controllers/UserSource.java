@@ -14,12 +14,22 @@ import kasir.database.ConnectionHelper;
  * A class which takes care of any CRUD operation for the `User` model
  */
 public class UserSource {
+	private User user;
+
+	/**
+	 * Initialise the `user` instance for this class
+	 * @param user - The User instance
+	 */
+	public UserSource(User user) {
+		this.user = user;
+	}
+
 	/**
 	 * Save the passed `user` instance to the database
 	 * @param user - The `User` model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(User user) throws SQLException {
+	public void save() throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO user(id_user, name, username, password, id_level) VALUES (?, ?, ?, ?, ?)";
@@ -42,7 +52,7 @@ public class UserSource {
 	 * @param user - user model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(User user) throws SQLException {
+	public void update() throws SQLException {
 		String sql = "UPDATE user SET username=?, password=?, id_level=? WHERE id_user=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -60,7 +70,7 @@ public class UserSource {
 	 * @param user - user model
 	 * @throws java.sql.SQLException
 	 */
-	public void delete(User user) throws SQLException {
+	public void delete() throws SQLException {
 		String sql = "DELETE FROM user WHERE id_user=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -74,7 +84,9 @@ public class UserSource {
 	 * Get all users from the database
 	 * @return List<User>
 	 */
-	public List<User> findAll() throws SQLException {
+	public static List<User> findAll() throws SQLException {
+		// this function can be static because we don't need the `User`
+		// instance here
 		String sql = "SELECT * FROM user";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet rs = connection.createStatement().executeQuery(sql);
@@ -100,7 +112,7 @@ public class UserSource {
 	 * Returns a user if it exists
 	 * @return User
 	 */
-	public User find(User user) throws SQLException {
+	public User find() throws SQLException {
 		User userResult = new User();
 		String sql = "SELECT * FROM user WHERE username=? AND password=?";
 		Connection connection = ConnectionHelper.getConnection();

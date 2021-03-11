@@ -356,20 +356,18 @@ public class Kasir extends javax.swing.JFrame {
 		String id = foodTable.getValueAt(row, 0).toString();
 		long amount = Long.parseLong(foodTable.getValueAt(row, 2).toString());
 
-		FoodSource foodSource = new FoodSource();
-
 		try {
 			// we need to do this because we want the detail of the selected item
 			// from the database so we can calculate how many stocks there are
 			Food filter = new Food();
 			filter.setFoodID(id);
-			Food food = foodSource.find(filter);
+			Food food = new FoodSource(filter).find();
 
 			// add the existing stock with the selected stock. What we want is
 			// if we have 2 items in the database and 1 item in the foodTable
 			// we want to update the one in the database to 3 items
 			food.setStock(food.getStock() + amount);
-			foodSource.update(food);
+			new FoodSource(food).update();
 
 			// remove the item from the table
 			foodTableModel.removeRow(row);
@@ -416,7 +414,6 @@ public class Kasir extends javax.swing.JFrame {
 			// need to specifically say this one is the order model
 			// because we also have `kasir.ui.Order`
 			kasir.models.Order order = new kasir.models.Order();
-			OrderSource orderSource = new OrderSource();
 			Random rand = new Random();
 			Date date = new Date(new java.util.Date().getTime());
 
@@ -438,7 +435,7 @@ public class Kasir extends javax.swing.JFrame {
 			transaction.setExchange(exchange);
 
 			// create the transaction item
-			new TransactionSource().save(transaction);
+			new TransactionSource(transaction).save();
 
 			for (int i = 0; i < rowCount; i++) {
 				// and these are the ones that needs to be different for each
@@ -453,7 +450,7 @@ public class Kasir extends javax.swing.JFrame {
 				// query inside a for loop
 				Food food = new Food();
 				food.setName(foodTableModel.getValueAt(i, 1).toString());
-				String foodID = new FoodSource().find(food).getFoodID();
+				String foodID = new FoodSource(food).find().getFoodID();
 
 				// this also feels kinda wrong
 				// man, I really don't enjoy writing Java :p
@@ -468,7 +465,7 @@ public class Kasir extends javax.swing.JFrame {
 				order.setDetails("TODO");
 				order.setStatus("Lunas");
 
-				orderSource.save(order);
+				new OrderSource(order).save();
 			}
 
 			// cleanup for the fields and table

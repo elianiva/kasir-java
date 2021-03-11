@@ -181,8 +181,6 @@ public class MenuPopup extends javax.swing.JFrame {
 		}
 
 		try {
-			FoodSource foodSource = new FoodSource();
-
 			// reset the food if we want to add them
 			if (mode == "add") {
 				currentFood = new Food();
@@ -194,11 +192,14 @@ public class MenuPopup extends javax.swing.JFrame {
 			currentFood.setStock(Long.parseLong(stock));
 			currentFood.setPrice(Long.parseLong(price));
 
-			// do action based on current `popup-mode`
+			// initialise the controller using the current food
+			FoodSource foodSource = new FoodSource(currentFood);
+
+			// do action based on the current `popup-mode`
 			if (mode == "add") {
-				foodSource.save(currentFood);
+				foodSource.save();
 			} else {
-				foodSource.update(currentFood);
+				foodSource.update();
 			}
 
 			// we need this here to refresh the parent table view

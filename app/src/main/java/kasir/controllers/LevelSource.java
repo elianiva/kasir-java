@@ -11,11 +11,21 @@ import kasir.database.ConnectionHelper;
 import kasir.models.Level;
 
 public class LevelSource {
+	private Level level;
+
+	/**
+	 * Initialise the `user` instance for this class
+	 * @param user - The User instance
+	 */
+	public LevelSource(Level level) {
+		this.level = level;
+	}
+
 	/**
 	 * Returns a level if it exists
 	 * @return Level
 	 */
-	public Level find(Level level) throws SQLException {
+	public Level find() throws SQLException {
 		Level levelResult = new Level();
 		String sql = "SELECT * FROM level WHERE id_level=? OR nama_level=?";
 		Connection connection = ConnectionHelper.getConnection();
@@ -40,7 +50,9 @@ public class LevelSource {
 	 * Get all levels from the database
 	 * @return List<Level>
 	 */
-	public List<Level> findAll() throws SQLException {
+	public static List<Level> findAll() throws SQLException {
+		// this function can be static because we don't need the `User`
+		// instance here
 		String sql = "SELECT * FROM level";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet result = connection.createStatement().executeQuery(sql);

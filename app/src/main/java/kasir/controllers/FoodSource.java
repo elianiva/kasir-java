@@ -14,12 +14,22 @@ import kasir.database.ConnectionHelper;
  * A class which takes care of any CRUD operation for the `Food` model
  */
 public class FoodSource {
+	private Food food;
+
+	/**
+	 * Initialise the `user` instance for this class
+	 * @param user - The User instance
+	 */
+	public FoodSource(Food food) {
+		this.food = food;
+	}
+
 	/**
 	 * Save the passed `food` instance to the database
 	 * @param food - The `Food` model
 	 * @throws java.sql.SQLException
 	 */
-	public void save(Food food) throws SQLException {
+	public void save() throws SQLException {
 		// we should use prepared statement to prevent
 		// SQL injection
 		String sql = "INSERT INTO masakan (id_masakan, nama_masakan, harga, stok, status_masakan) VALUES (?, ?, ?, ?, ?)";
@@ -42,7 +52,7 @@ public class FoodSource {
 	 * @param food - `Food` model
 	 * @throws java.sql.SQLException
 	 */
-	public void update(Food food) throws SQLException {
+	public void update() throws SQLException {
 		String sql = "UPDATE masakan SET nama_masakan=?, harga=?, stok=?, status_masakan=? WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -61,7 +71,7 @@ public class FoodSource {
 	 * @param food - `Food` model
 	 * @throws java.sql.SQLException
 	 */
-	public void delete(Food food) throws SQLException {
+	public void delete() throws SQLException {
 		String sql = "DELETE FROM masakan WHERE id_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -75,7 +85,9 @@ public class FoodSource {
 	 * Get all foods from the database
 	 * @return List<Masakan>
 	 */
-	public List<Food> findAll() throws SQLException {
+	public static List<Food> findAll() throws SQLException {
+		// this function can be static because we don't need the `User`
+		// instance here
 		String sql = "SELECT * FROM masakan";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet result = connection.createStatement().executeQuery(sql);
@@ -100,7 +112,7 @@ public class FoodSource {
 	 * Returns food if it exists
 	 * @return Food
 	 */
-	public Food find(Food food) throws SQLException {
+	public Food find() throws SQLException {
 		Food foodResult = new Food();
 		String sql = "SELECT * FROM masakan WHERE id_masakan=? OR nama_masakan=?";
 		Connection connection = ConnectionHelper.getConnection();

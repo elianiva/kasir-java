@@ -55,10 +55,8 @@ public class UserPopup extends javax.swing.JFrame {
 		Level level = new Level();
 		level.setLevelName(currentLevel);
 
-		LevelSource levelData = new LevelSource();
-
 		try {
-			List<Level> allLevels = levelData.findAll();
+			List<Level> allLevels = LevelSource.findAll();
 			Vector<String> levelNames = new Vector<String>();
 			allLevels.stream().forEach(item -> levelNames.add(item.getLevelName()));
 
@@ -220,11 +218,9 @@ public class UserPopup extends javax.swing.JFrame {
 
 		try {
 			// this is a bit of a hack, but again, I don't care
-			UserSource userSource = new UserSource();
-			LevelSource levelData = new LevelSource();
 			Level level = new Level();
 			level.setLevelName(levelComboBox.getSelectedItem().toString());
-			currentLevelID = levelData.find(level).getLevelID();
+			currentLevelID = new LevelSource(level).find().getLevelID();
 
 			// reset the user if we want to add them
 			if (mode == "add") {
@@ -238,11 +234,15 @@ public class UserPopup extends javax.swing.JFrame {
 			currentUser.setPassword(password);
 			currentUser.setLevelID(currentLevelID);
 
+			// initialise the controller so we can do CRUD operations with the
+			// User model
+			UserSource userSource = new UserSource(currentUser);
+
 			// do action based on current `popup-mode`
 			if (mode == "add") {
-				userSource.save(currentUser);
+				userSource.save();
 			} else {
-				userSource.update(currentUser);
+				userSource.update();
 			}
 
 			// we need this here to refresh the parent table view
