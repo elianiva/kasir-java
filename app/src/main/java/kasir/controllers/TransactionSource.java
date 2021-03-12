@@ -93,16 +93,20 @@ public class TransactionSource {
 		ResultSet rs = connection.createStatement().executeQuery(sql);
 
 		// we use List instead of Vector because it's the recommended way
-		List<Transaction> orderList = new ArrayList<Transaction>();
+		List<Transaction> transactionList = new ArrayList<Transaction>();
 
 		// iterate through the available data and add the result to `orderList`
 		while(rs.next()) {
-			// TODO: finish this tomorrow
-			// Transaction transaction = new Transaction();
-			// orderList.add(order);
+			Transaction transaction = new Transaction();
+			transaction.setUserID(rs.getString("id_user"));
+			transaction.setTransactionID(rs.getString("id_transaksi"));
+			transaction.setDate(rs.getDate("tanggal"));
+			transaction.setTotalPrice(rs.getLong("total_harga"));
+			transaction.setTotalPaid(rs.getLong("total_bayar"));
+			transaction.setExchange(rs.getLong("kembalian"));
 		}
 
-		return orderList;
+		return transactionList;
 	}
 
 	/**
@@ -110,7 +114,7 @@ public class TransactionSource {
 	 * @return Transaction
 	 */
 	public Transaction find() throws SQLException {
-		Transaction orderResult = new Transaction();
+		Transaction transaction = new Transaction();
 		String sql = "SELECT * FROM order WHERE id_order=?";
 		Connection connection = ConnectionHelper.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
@@ -120,8 +124,13 @@ public class TransactionSource {
 		ResultSet rs = stmt.executeQuery();
 
 		if (rs.next()) {
-			// TODO: finish this tomorrow
-			return orderResult;
+			transaction.setUserID(rs.getString("id_user"));
+			transaction.setTransactionID(rs.getString("id_transaksi"));
+			transaction.setDate(rs.getDate("tanggal"));
+			transaction.setTotalPrice(rs.getLong("total_harga"));
+			transaction.setTotalPaid(rs.getLong("total_bayar"));
+			transaction.setExchange(rs.getLong("kembalian"));
+			return transaction;
 		}
 
 		return null;
