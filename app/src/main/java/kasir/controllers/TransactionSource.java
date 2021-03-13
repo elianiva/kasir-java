@@ -88,7 +88,7 @@ public class TransactionSource {
 	 * @return List<Transaction>
 	 */
 	public static List<Transaction> findAll() throws SQLException {
-		String sql = "SELECT * FROM transaksi";
+		String sql = "SELECT * FROM `transaksi`";
 		Connection connection = ConnectionHelper.getConnection();
 		ResultSet rs = connection.createStatement().executeQuery(sql);
 
@@ -98,12 +98,13 @@ public class TransactionSource {
 		// iterate through the available data and add the result to `orderList`
 		while(rs.next()) {
 			Transaction transaction = new Transaction();
-			transaction.setUserID(rs.getString("id_user"));
 			transaction.setTransactionID(rs.getString("id_transaksi"));
+			transaction.setUserID(rs.getString("id_user"));
 			transaction.setDate(rs.getDate("tanggal"));
-			transaction.setTotalPrice(rs.getLong("total_harga"));
 			transaction.setTotalPaid(rs.getLong("total_bayar"));
+			transaction.setTotalPrice(rs.getLong("total_harga"));
 			transaction.setExchange(rs.getLong("kembalian"));
+			transactionList.add(transaction);
 		}
 
 		return transactionList;

@@ -70,6 +70,8 @@ public class KasirPopup extends javax.swing.JFrame {
 	 * Set parent with selected row
 	 */
 	private void setParentData() {
+		// TODO: refactor this function
+		// it's getting too massive
 		if (amountField.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "Jumlah masakan tidak boleh kosong!");
 			return;

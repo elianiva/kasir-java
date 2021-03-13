@@ -1,15 +1,20 @@
 package kasir.ui;
 
 import kasir.helpers.Popup;
+import kasir.models.User;
 
 public class Admin extends javax.swing.JFrame {
+	private User currentUser;
 
 	/**
 	 * Creates new form Admin
 	 */
 	public Admin() {
+	}
+	public Admin(User user) {
 		this.setLocationRelativeTo(null); // center the window
 		initComponents();
+		currentUser = user;
 	}
 
 	/**
@@ -119,22 +124,23 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 	private void manageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersButtonActionPerformed
-		Popup.<UserManager>open(new UserManager(this), "Manajemen User");
+		Popup.<UserManager>open(new UserManager(this, currentUser), "Manajemen User");
 		this.dispose();
 	}//GEN-LAST:event_manageUsersButtonActionPerformed
 
 	private void manageItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		Popup.<MenuManager>open(new MenuManager(this), "Manajemen Menu");
+		Popup.<MenuManager>open(new MenuManager(this, currentUser), "Manajemen Menu");
 		this.dispose();
 	}
 
 	private void menuKasirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKasirButtonActionPerformed
-		Popup.<Kasir>open(new Kasir(), "Halaman Kasir");
+		Popup.<Kasir>open(new Kasir(currentUser), "Halaman Kasir");
 		this.dispose();
 	}//GEN-LAST:event_menuKasirButtonActionPerformed
 
 	private void manageTransactionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageTransactionsButtonActionPerformed
-		// TODO add your handling code here:
+		Popup.<TransactionManager>open(new TransactionManager(this, currentUser), "Manajemen Transaksi");
+		this.dispose();
 	}//GEN-LAST:event_manageTransactionsButtonActionPerformed
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordToggleActionPerformed

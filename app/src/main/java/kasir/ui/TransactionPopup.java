@@ -8,24 +8,28 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import kasir.controllers.FoodSource;
+import kasir.controllers.OrderSource;
 import kasir.helpers.FormatRupiah;
 import kasir.models.Food;
+import kasir.models.Order;
 
-public class KasirPopup extends javax.swing.JFrame {
-	private DefaultTableModel foodTableModel;
-	private Kasir parentWindow;
+public class TransactionPopup extends javax.swing.JFrame {
+	private DefaultTableModel orderTableModel;
+	private String transactionID;
 
 	/**
 	 * Creates new form OrderPopup
 	 */
-	public KasirPopup() {
+	public TransactionPopup() {
 	}
-	public KasirPopup(Kasir parent) {
+	public TransactionPopup(String id) {
 		this.setLocationRelativeTo(null); // center the window
 		initComponents();
 		initTableModel();
+
+		// the order matters
+		transactionID = id;
 		populateData();
-		parentWindow = parent;
 	}
 
 	/**
@@ -33,15 +37,15 @@ public class KasirPopup extends javax.swing.JFrame {
 	 */
 	private void initTableModel() {
 		String[] columns = new String[]{
-			"ID", "Nama Masakan", "Harga", "Stok", "Status"
+			"ID", "No Meja", "Nama Masakan", "Jumlah Masakan", "Total Harga"
 		};
-		foodTableModel = new DefaultTableModel(columns, 0) {
+		orderTableModel = new DefaultTableModel(columns, 0) {
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
 				return false;
 			}
 		};
-		foodTable.setModel(foodTableModel);
-		foodTable.getTableHeader().setReorderingAllowed(false); // prevent from table re-ordering
+		orderTable.setModel(orderTableModel);
+		orderTable.getTableHeader().setReorderingAllowed(false); // prevent from table re-ordering
 	}
 
 	/**
@@ -49,112 +53,20 @@ public class KasirPopup extends javax.swing.JFrame {
 	 */
 	private void populateData() {
 		try {
-			List<Food> foods = FoodSource.findAll();
+			List<Order> orders = OrderSource.findByTransactionID(transactionID);
 
-			for (Food food : foods) {
-				foodTableModel.addRow(new Object[] {
-					food.getFoodID(),
+			for (Order order : orders) {
+				Food food = FoodSource.findByID(order.getFoodID());
+				orderTableModel.addRow(new Object[] {
+					order.getOrderID(),
+					order.getStatus(),
 					food.getName(),
-					food.getPrice(),
-					food.getStock(),
-					food.getStatus(),
+					order.getFoodAmount(),
+					FormatRupiah.format(order.getFoodPrice()),
 				});
 			}
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null, "Tidak dapat memuat data!");
-			ex.printStackTrace();
-		}
-	}
-
-	/**
-	 * Set parent with selected row
-	 */
-	private void setParentData() {
-		if (amountField.getText().equals("")) {
-			JOptionPane.showMessageDialog(this, "Jumlah masakan tidak boleh kosong!");
-			return;
-		}
-
-		int row = foodTable.getSelectedRow();
-
-		if ((long)foodTable.getValueAt(row, 3) == 0) {
-			JOptionPane.showMessageDialog(this, "Stok masakan sedang kosong!");
-			return;
-		}
-
-		List<List<Object>> allItems = new ArrayList<List<Object>>();
-
-		// the selected item
-		String id = foodTable.getValueAt(row, 0).toString();
-		String foodName = foodTable.getValueAt(row, 1).toString();
-		long amount = Long.parseLong(foodTable.getValueAt(row, 3).toString());
-		long selectedAmount = Long.parseLong(amountField.getText());
-		long price = Long.parseLong(foodTable.getValueAt(row, 2).toString());
-
-		// create a row item
-		List<Object> item = new ArrayList<Object>();
-		item.add(id);
-		item.add(foodName);
-		item.add(selectedAmount);
-		item.add(price * selectedAmount);
-
-		// combine the previous row with the existing row
-		boolean isDuplicate = false;
-		for (List<Object> old : parentWindow.tableData.getRows()) {
-			// if the ID is the same, we combine both of them
-			String originalID = old.get(0).toString();
-			String newID = item.get(0).toString();
-			long originalAmount = (long)old.get(2);
-			long newAmount = (long)item.get(2);
-			long originalPrice = Long.parseLong(FormatRupiah.normalise(old.get(3).toString()));
-			long newPrice = Long.parseLong(FormatRupiah.normalise(item.get(3).toString()));
-
-			// if the item already exists, modify it instead of adding a new one
-			if (originalID.equals(newID)) {
-				List<Object> merged = new ArrayList<Object>();
-				merged.add(originalID);
-				merged.add(old.get(1));
-				merged.add(originalAmount + newAmount);
-				merged.add(originalPrice + newPrice);
-
-				allItems.add(merged);
-				isDuplicate = true;
-			} else {
-				allItems.add(old);
-			}
-		}
-
-		// add the new item if it's proven not a duplicate
-		if (!isDuplicate) {
-			allItems.add(item);
-		}
-
-		// prepare the model for the database update
-		Food food = new Food();
-		food.setFoodID(id);
-		food.setName(foodName);
-		food.setStock(amount - selectedAmount);
-		food.setPrice(price);
-
-		try {
-			// update the data inside the database
-			new FoodSource(food).update();
-
-			// cleanup, reset to initial state
-			foodTable.clearSelection();
-			amountField.setText("");
-
-			// set parent table data
-			parentWindow.setTableData(allItems);
-
-			JOptionPane.showMessageDialog(this, "Masakan berhasil ditembahkan!");
-
-			// refresh the table data
-			foodTable.clearSelection();
-			foodTableModel.setRowCount(0);
-			foodTable.revalidate();
-			populateData();
-		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -169,15 +81,12 @@ public class KasirPopup extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        foodTable = new javax.swing.JTable();
+        orderTable = new javax.swing.JTable();
         windowTitle = new javax.swing.JLabel();
-        addButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        amountField = new javax.swing.JTextField();
-        amountLabel = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
 
-        foodTable.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
-        foodTable.setModel(new javax.swing.table.DefaultTableModel(
+        orderTable.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -200,54 +109,32 @@ public class KasirPopup extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(foodTable);
+        jScrollPane1.setViewportView(orderTable);
 
         windowTitle.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
-        windowTitle.setText("Tambah Item");
+        windowTitle.setText("Detail Transaksi");
 
-        addButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        addButton.setText("Tambah Item");
-        addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        backButton.setText("Kembali");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
-
-        cancelButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        cancelButton.setText("Batalkan");
-        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-
-        amountField.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-
-        amountLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        amountLabel.setText("Jumlah");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(windowTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cancelButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(amountLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(addButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(backButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(242, 242, 242)
+                            .addComponent(windowTitle))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(19, 19, 19)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -258,29 +145,17 @@ public class KasirPopup extends javax.swing.JFrame {
                 .addComponent(windowTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(cancelButton)
-                    .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(amountLabel))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(backButton)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-		if (foodTableModel.getRowCount() == -1) {
-			JOptionPane.showMessageDialog(this, "Tidak ada item di dalam tabel");
-			return;
-		}
-        setParentData();
-    }//GEN-LAST:event_addButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -289,17 +164,14 @@ public class KasirPopup extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new KasirPopup().setVisible(true);
+				new TransactionPopup().setVisible(true);
 			}
 		});
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
-    private javax.swing.JTextField amountField;
-    private javax.swing.JLabel amountLabel;
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JTable foodTable;
+    private javax.swing.JButton backButton;
+    private javax.swing.JTable orderTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel windowTitle;
     // End of variables declaration//GEN-END:variables

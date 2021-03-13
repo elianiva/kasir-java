@@ -135,11 +135,49 @@ public class OrderSource {
 
 		if (rs.next()) {
 			orderResult.setOrderID(rs.getString("id_order"));
+			orderResult.setFoodID(rs.getString("id_masakan"));
+			orderResult.setFoodAmount(rs.getLong("jumlah_masakan"));
+			orderResult.setFoodPrice(rs.getLong("total_harga"));
 			orderResult.setTableNumber(rs.getInt("no_meja"));
 			orderResult.setDate(rs.getDate("tanggal"));
 			orderResult.setUserID(rs.getString("id_user"));
 			orderResult.setDetails(rs.getString("keterangan"));
 			orderResult.setStatus(rs.getString("status_order"));
+			return orderResult;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Find Orders that has the same transaction ID
+	 * @return Order
+	 */
+	public static List<Order> findByTransactionID(String transactionID) throws SQLException {
+		List<Order> orderResult = new ArrayList<Order>();
+		String sql = "SELECT * FROM `order` WHERE id_transaksi=?";
+		Connection connection = ConnectionHelper.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(sql);
+
+		stmt.setString(1, transactionID);
+
+		ResultSet rs = stmt.executeQuery();
+
+		while (rs.next()) {
+			Order order = new Order();
+			order.setOrderID(rs.getString("id_order"));
+			order.setFoodID(rs.getString("id_masakan"));
+			order.setFoodAmount(rs.getLong("jumlah_masakan"));
+			order.setFoodPrice(rs.getLong("total_harga"));
+			order.setTableNumber(rs.getInt("no_meja"));
+			order.setDate(rs.getDate("tanggal"));
+			order.setUserID(rs.getString("id_user"));
+			order.setDetails(rs.getString("keterangan"));
+			order.setStatus(rs.getString("status_order"));
+			orderResult.add(order);
+		}
+
+		if (orderResult.size() != 0) {
 			return orderResult;
 		}
 

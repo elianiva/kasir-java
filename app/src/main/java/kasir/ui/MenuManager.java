@@ -12,10 +12,12 @@ import kasir.controllers.FoodSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.Popup;
 import kasir.models.Food;
+import kasir.models.User;
 
 public class MenuManager extends javax.swing.JFrame {
 	private DefaultTableModel foodTableModel;
 	private Admin parentWindow;
+	private User currentUser;
 	private Food currentFood = new Food();
 
 	/**
@@ -23,13 +25,14 @@ public class MenuManager extends javax.swing.JFrame {
 	 */
 	public MenuManager() {
 	}
-	public MenuManager(Admin parent) {
+	public MenuManager(Admin parent, User user) {
 		this.setLocationRelativeTo(null);
 		initComponents();
 		initTableModel();
 		populateData();
 		attachOnSelectionEvent();
 		parentWindow = parent;
+		currentUser = user;
 	}
 
 	/**
@@ -338,7 +341,7 @@ public class MenuManager extends javax.swing.JFrame {
 
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-		Popup.<Admin>open(new Admin(), "Halaman Admin");
+		Popup.<Admin>open(new Admin(currentUser), "Halaman Admin");
 		this.dispose();
 	}//GEN-LAST:event_backButtonActionPerformed
 

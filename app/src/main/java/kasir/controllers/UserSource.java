@@ -134,4 +134,32 @@ public class UserSource {
 
 		return null;
 	}
+
+	/**
+	 * Returns a user if it exists
+	 * @return User
+	 */
+	public static User findByID(String id) throws SQLException {
+		// we can make this function as static because we don't need the
+		// entire User instance; instead, we only need its ID
+		User userResult = new User();
+		String sql = "SELECT * FROM user WHERE id_user=?";
+		Connection connection = ConnectionHelper.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(sql);
+
+		stmt.setString(1, id);
+
+		ResultSet rs = stmt.executeQuery();
+
+		if (rs.next()) {
+			userResult.setUserID(rs.getString("id_user"));
+			userResult.setLevelID(rs.getLong("id_level"));
+			userResult.setName(rs.getString("name"));
+			userResult.setUsername(rs.getString("username"));
+
+			return userResult;
+		}
+
+		return null;
+	}
 }

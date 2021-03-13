@@ -134,4 +134,30 @@ public class FoodSource {
 
 		return null;
 	}
+
+	/**
+	 * Find a food using an ID
+	 * @return Food
+	 */
+	public static Food findByID(String id) throws SQLException {
+		Food foodResult = new Food();
+		String sql = "SELECT * FROM masakan WHERE id_masakan=?";
+		Connection connection = ConnectionHelper.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(sql);
+
+		stmt.setString(1, id);
+
+		ResultSet rs = stmt.executeQuery();
+
+		if (rs.next()) {
+			foodResult.setFoodID(rs.getString("id_masakan"));
+			foodResult.setName(rs.getString("nama_masakan"));
+			foodResult.setPrice(rs.getLong("harga"));
+			foodResult.setStock(rs.getLong("stok"));
+
+			return foodResult;
+		}
+
+		return null;
+	}
 }

@@ -25,7 +25,7 @@ import kasir.models.User;
 
 public class Kasir extends javax.swing.JFrame {
 	public OrderTable tableData;
-	private User user;
+	private User currentUser;
 	private DefaultTableModel foodTableModel;
 	private long price = 0, amount = 0;
 
@@ -34,10 +34,10 @@ public class Kasir extends javax.swing.JFrame {
 	 */
 	public Kasir() {
 	}
-	public Kasir(User currentUser) {
+	public Kasir(User user) {
 		// center the window
 		this.setLocationRelativeTo(null);
-		user = currentUser;
+		currentUser = user;
 
 		// override the close handler
 		this.addWindowListener(new WindowAdapter() {
@@ -56,7 +56,7 @@ public class Kasir extends javax.swing.JFrame {
 		tableData = new OrderTable();
 
 		// hide back button if the current user is not an admin
-		if (user.getLevelID() != 1) {
+		if (currentUser.getLevelID() != 1) {
 			backButton.setVisible(false);
 		}
 
@@ -419,7 +419,7 @@ public class Kasir extends javax.swing.JFrame {
 
 			// these are the values that we need to get once
 			String transactionID = "T"+randHelper(rand, 999);
-			String userID = user.getUserID();
+			String userID = currentUser.getUserID();
 			long tableNumber = Long.parseLong(tableNumberField.getText());
 			long totalPaid = Long.parseLong(payAmountField.getText().toString());
 			long totalPrice = Long.parseLong(FormatRupiah.normalise(totalPriceField.getText().toString()));
@@ -505,7 +505,7 @@ public class Kasir extends javax.swing.JFrame {
 	}//GEN-LAST:event_addItemButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-		Popup.<Admin>open(new Admin(), "Halaman Admin");
+		Popup.<Admin>open(new Admin(currentUser), "Halaman Admin");
 		this.dispose();
 	}//GEN-LAST:event_backButtonActionPerformed
 

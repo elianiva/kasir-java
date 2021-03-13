@@ -56,16 +56,24 @@ public class Login extends javax.swing.JFrame {
 
 			// depending on the role, show different window
 			if (userLevel == 1) {
-				Popup.<Admin>open(new Admin(), "Halaman Admin");
+				Popup.<Admin>open(new Admin(currentUser), "Halaman Admin");
 				this.dispose();
 			} else if (userLevel == 2) {
 				Popup.<Kasir>open(new Kasir(currentUser), "Halaman Kasir");
 				this.dispose();
-			} else if (userLevel == 5) {
+			} else if (userLevel == 3) {
+				// we use `null` here because we don't need a parent window for
+				// this window when it's called from here
+				Popup.<TransactionManager>open(new TransactionManager(null, currentUser), "Halaman Kasir");
+				this.dispose();
+			} else if (userLevel == 4) {
 
+			} else {
+				System.out.println("ERror");
 			}
 		} catch (SQLException ex) {
-			System.out.println(ex);
+			JOptionPane.showMessageDialog(this, "Gagal Login.");
+			ex.printStackTrace();
 		}
 	}
 

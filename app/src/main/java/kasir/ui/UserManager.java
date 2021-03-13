@@ -18,7 +18,7 @@ public class UserManager extends javax.swing.JFrame {
 	private DefaultTableModel userTableModel;
 	private Admin parentWindow;
 	private List<User> allUsers;
-	private	User currentUser = new User();
+	private	User currentUser;
 
 	// This is a bit hack-ish but I don't care lmao, I don't enjoy writing java
 	private String currentLevel = "";
@@ -29,13 +29,14 @@ public class UserManager extends javax.swing.JFrame {
 	public UserManager() {
 		initComponents();
 	}
-	public UserManager(Admin parent) {
+	public UserManager(Admin parent, User user) {
 		this.setLocationRelativeTo(null);
 		initComponents();
 		initTableModel();
 		populateData();
 		attachOnSelectionEvent();
 		parentWindow = parent;
+		currentUser = user;
 	}
 
 	/**
@@ -335,7 +336,7 @@ public class UserManager extends javax.swing.JFrame {
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-		Popup.<Admin>open(new Admin(), "Halaman Admin");
+		Popup.<Admin>open(new Admin(currentUser), "Halaman Admin");
 		this.dispose();
 	}//GEN-LAST:event_backButtonActionPerformed
 
