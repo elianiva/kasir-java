@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database:3306
--- Generation Time: Mar 10, 2021 at 06:16 AM
+-- Generation Time: Mar 14, 2021 at 09:48 PM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.11
 
@@ -67,8 +67,7 @@ INSERT INTO `masakan` (`id_masakan`, `nama_masakan`, `harga`, `stok`, `status_ma
 ('A004', 'Ayam Goreng Serundeng', 20000, 5, 'Tersedia'),
 ('A005', 'Oseng Cumi Asin Pedas', 35000, 25, 'Tersedia'),
 ('A006', 'Gurame Bakar', 25000, 8, 'Tersedia'),
-('A007', 'Udang Pedas Gurih', 10000, 0, 'Habis'),
-('A008', 'Something', 20000, 0, 'Habis');
+('A007', 'Udang Pedas Gurih', 10000, 2, 'Tersedia');
 
 -- --------------------------------------------------------
 
@@ -94,9 +93,8 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`id_order`, `id_transaksi`, `id_user`, `no_meja`, `tanggal`, `id_masakan`, `jumlah_masakan`, `total_harga`, `keterangan`, `status_order`) VALUES
-('OR001', 'T001', 'U002', 2, '2021-03-16', 'A001', 4, 80000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut metus ut elit ornare fermentum.', 'Belum Dibayar'),
-('OR002', 'T001', 'U002', 2, '2021-03-16', 'A002', 3, 120000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut metus ut elit ornare fermentum.', 'Belum Dibayar'),
-('OR003', 'T002', 'U002', 3, '2021-03-17', 'A004', 4, 80000, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut metus ut elit ornare fermentum.', 'Lunas'),
+('OR001', 'T001', 'U002', 2, '2021-03-16', 'A001', 4, 80000, 'Lorem ipsum.', 'Lunas'),
+('OR002', 'T001', 'U002', 2, '2021-03-16', 'A002', 3, 120000, 'Lorem ipsum.', 'Lunas'),
 ('OR159', 'T240', 'U002', 2, '2021-03-10', 'A002', 3, 120000, 'TODO', 'Lunas'),
 ('OR180', 'T240', 'U002', 2, '2021-03-10', 'A004', 1, 20000, 'TODO', 'Lunas'),
 ('OR429', 'T302', 'U002', 3, '2021-03-09', 'A006', 2, 50000, 'TODO', 'Lunas'),
@@ -125,7 +123,6 @@ CREATE TABLE `transaksi` (
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `tanggal`, `total_bayar`, `total_harga`, `kembalian`) VALUES
 ('T001', 'U002', '2021-03-16', 200000, 200000, 0),
-('T002', 'U002', '2021-03-17', 100000, 120000, 20000),
 ('T240', 'U002', '2021-03-10', 650000, 610000, 40000),
 ('T302', 'U002', '2021-03-09', 300000, 250000, 50000);
 
@@ -151,7 +148,8 @@ INSERT INTO `user` (`id_user`, `name`, `username`, `password`, `id_level`) VALUE
 ('U001', 'Nama Admin', 'admin', 'admin123', 1),
 ('U002', 'Nama Kasir', 'kasir', 'kasir123', 2),
 ('U003', 'Nama Owner', 'owner', 'owner123', 3),
-('U004', 'Nama Pelanggan', 'pelanggan', 'pelanggan123', 4);
+('U004', 'Nama Pelanggan', 'pelanggan', 'pelanggan123', 4),
+('U005', 'Manusia Bernapas', 'manusia', 'bernapas', 1);
 
 --
 -- Indexes for dumped tables
@@ -202,7 +200,7 @@ ALTER TABLE `user`
 ALTER TABLE `order`
   ADD CONSTRAINT `fk_order_id_masakan` FOREIGN KEY (`id_masakan`) REFERENCES `masakan` (`id_masakan`),
   ADD CONSTRAINT `fk_order_id_order` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_order_id_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_order_id_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaksi`
