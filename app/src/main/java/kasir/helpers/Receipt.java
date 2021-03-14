@@ -21,6 +21,11 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class Receipt {
+
+	/**
+	 * Method to get a receipt of order based on the passed transaction id
+	 * @param transactionID - The transaction ID
+	 */
 	public static void getReceipt(String transactionID) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id_transaksi", transactionID);
@@ -31,7 +36,7 @@ public class Receipt {
 			Connection conn = ConnectionHelper.getConnection();
 
 			// load the template file using `File` constructor
-			File template = new File("./src/main/java/kasir/reports/struk_pembayaran.jrxml");
+			File template = new File("src/main/java/kasir/reports/struk_pembayaran.jrxml");
 
 			// prepare the jasper design by loading the template
 			JasperDesign design = JRXmlLoader.load(template);

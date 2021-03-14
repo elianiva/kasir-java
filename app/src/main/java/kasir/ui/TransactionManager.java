@@ -1,6 +1,7 @@
 package kasir.ui;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ import kasir.controllers.UserSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.Popup;
 import kasir.helpers.Receipt;
+import kasir.helpers.Report;
 import kasir.models.Transaction;
 import kasir.models.User;
 
@@ -67,7 +69,7 @@ public class TransactionManager extends javax.swing.JFrame {
 			List<Transaction> transactions = TransactionSource.findAll();
 
 			for (Transaction transaction : transactions) {
-				String userName = UserSource.findByID(currentUser.getUserID()).getName();
+				String userName = UserSource.findByID(transaction.getUserID()).getName();
 
 				transactionTableModel.addRow(new Object[] {
 					transaction.getTransactionID(),
@@ -126,13 +128,13 @@ public class TransactionManager extends javax.swing.JFrame {
         priceField = new javax.swing.JTextField();
         paidLabel = new javax.swing.JLabel();
         exchangeLabel = new javax.swing.JLabel();
-        foodNameLabel = new javax.swing.JLabel();
+        priceLabel = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         nameLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
-        printButton = new javax.swing.JButton();
-        editButton = new javax.swing.JButton();
+        printReceiptButton = new javax.swing.JButton();
+        printReportButton = new javax.swing.JButton();
         detailButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -191,8 +193,8 @@ public class TransactionManager extends javax.swing.JFrame {
         exchangeLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
         exchangeLabel.setText("Kembalian");
 
-        foodNameLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        foodNameLabel.setText("Total Harga");
+        priceLabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        priceLabel.setText("Total Harga");
 
         nameField.setEditable(false);
 
@@ -216,19 +218,19 @@ public class TransactionManager extends javax.swing.JFrame {
             }
         });
 
-        printButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        printButton.setText("Cetak Nota");
-        printButton.addActionListener(new java.awt.event.ActionListener() {
+        printReceiptButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        printReceiptButton.setText("Cetak Nota");
+        printReceiptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printButtonActionPerformed(evt);
+                printReceiptButtonActionPerformed(evt);
             }
         });
 
-        editButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        editButton.setText("Edit Item");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
+        printReportButton.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        printReportButton.setText("Cetak Laporan");
+        printReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
+                printReportButtonActionPerformed(evt);
             }
         });
 
@@ -256,15 +258,15 @@ public class TransactionManager extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(nameField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(nameLabel)
-                    .addComponent(foodNameLabel)
+                    .addComponent(priceLabel)
                     .addComponent(priceField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(paidField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(paidLabel)
                     .addComponent(exchangeLabel)
                     .addComponent(exchangeField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(printButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(printReceiptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(printReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                     .addComponent(backButton, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(detailButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
@@ -285,7 +287,7 @@ public class TransactionManager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(foodNameLabel)
+                        .addComponent(priceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -297,11 +299,11 @@ public class TransactionManager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exchangeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)
-                        .addComponent(printButton)
+                        .addComponent(printReceiptButton)
                         .addGap(13, 13, 13)
                         .addComponent(detailButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(editButton)
+                        .addComponent(printReportButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -329,17 +331,17 @@ public class TransactionManager extends javax.swing.JFrame {
 			transaction.setTransactionID(transactionID);
 			new TransactionSource(transaction).delete();
 
-			JOptionPane.showMessageDialog(this, "Berhasil menghapus menu!");
+			JOptionPane.showMessageDialog(this, "Berhasil menghapus transaksi!");
 
 			// refresh the table
 			populateData();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Gagal menghapus menu!");
+			JOptionPane.showMessageDialog(this, "Gagal menghapus transaksi!");
 			ex.printStackTrace();
 		}
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
-	private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	private void printReceiptButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		if (transactionTable.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Tidak ada transaksi yang dipilih!");
 			return;
@@ -347,14 +349,34 @@ public class TransactionManager extends javax.swing.JFrame {
 		int selectedRow = transactionTable.getSelectedRow();
 		String transactionID = transactionTable.getValueAt(selectedRow, 0).toString();
 		Receipt.getReceipt(transactionID);
-	}
+	}//GEN-LAST:event_printReceiptButtonActionPerformed
 
-	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		if (transactionTable.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(this, "Tidak ada makanan yang dipilih!");
-			return;
+	private void printReportButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		// create a new row for each iteration
+		List<List<String>> rows = new ArrayList<List<String>>();
+
+		// add the title
+		List<String> header = new ArrayList<String>();
+		header.add("ID Transaksi");
+		header.add("Nama Kasir");
+		header.add("Total Bayar");
+		header.add("Total Harga");
+		header.add("Kembalian");
+		header.add("Tanggal Transaksi");
+		rows.add(header);
+
+		// fill the row with each of the column value
+		for (int i = 0, len = transactionTableModel.getRowCount(); i < len; i++) {
+			List<String> row = new ArrayList<String>();
+			for (int j = 0; j < transactionTableModel.getColumnCount(); j++){
+				row.add(transactionTableModel.getValueAt(i, j).toString());
+			}
+			rows.add(row);
 		}
-	}
+
+		// export to excel
+		Report.getReport(rows);
+	}//GEN-LAST:event_printReportButtonActionPerformed
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 		Popup.<Admin>open(new Admin(currentUser), "Halaman Admin");
@@ -368,7 +390,8 @@ public class TransactionManager extends javax.swing.JFrame {
 	}//GEN-LAST:event_logoutButtonActionPerformed
 
     private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
-		if (currentTransaction.getTransactionID().isEmpty()) {
+		// throw an error if a user tries to open a detail page without selecting any transaction
+		if (transactionTable.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Harap pilih transaksi terlebih dahulu!");
 			return;
 		}
@@ -391,18 +414,18 @@ public class TransactionManager extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton detailButton;
-    private javax.swing.JButton editButton;
     private javax.swing.JTextField exchangeField;
     private javax.swing.JLabel exchangeLabel;
-    private javax.swing.JTextField priceField;
-    private javax.swing.JLabel foodNameLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField paidField;
     private javax.swing.JLabel paidLabel;
-    private javax.swing.JButton printButton;
+    private javax.swing.JTextField priceField;
+    private javax.swing.JLabel priceLabel;
+    private javax.swing.JButton printReceiptButton;
+    private javax.swing.JButton printReportButton;
     private javax.swing.JTable transactionTable;
     private javax.swing.JLabel windowTitle;
     // End of variables declaration//GEN-END:variables

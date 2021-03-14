@@ -42,6 +42,10 @@ dependencies {
 
     // jasper reports
     implementation 'net.sf.jasperreports:jasperreports:6.1.0'
+
+    // apache poi for exporting to excel
+    implementation 'org.apache.poi:poi:3.9'
+    implementation 'org.apache.poi:poi-ooxml:3.9'
 }
 
 application {

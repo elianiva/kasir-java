@@ -37,15 +37,15 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="nameField" alignment="1" max="32767" attributes="0"/>
                   <Component id="nameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="foodNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="foodNameField" alignment="1" max="32767" attributes="0"/>
+                  <Component id="priceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="priceField" alignment="1" max="32767" attributes="0"/>
                   <Component id="paidField" alignment="1" max="32767" attributes="0"/>
                   <Component id="paidLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="exchangeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="exchangeField" alignment="1" max="32767" attributes="0"/>
                   <Component id="deleteButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="printButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="editButton" pref="207" max="32767" attributes="0"/>
+                  <Component id="printReceiptButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="printReportButton" pref="207" max="32767" attributes="0"/>
                   <Component id="backButton" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="detailButton" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -71,9 +71,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="nameField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="foodNameLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="priceLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="foodNameField" min="-2" max="-2" attributes="0"/>
+                      <Component id="priceField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="paidLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -83,11 +83,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="exchangeField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                      <Component id="printButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="printReceiptButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="detailButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="editButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="printReportButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -156,7 +156,7 @@
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="foodNameField">
+    <Component class="javax.swing.JTextField" name="priceField">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
@@ -177,7 +177,7 @@
         <Property name="text" type="java.lang.String" value="Kembalian"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="foodNameLabel">
+    <Component class="javax.swing.JLabel" name="priceLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="16" style="0"/>
@@ -223,7 +223,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="printButton">
+    <Component class="javax.swing.JButton" name="printReceiptButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="16" style="0"/>
@@ -231,18 +231,18 @@
         <Property name="text" type="java.lang.String" value="Cetak Nota"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printReceiptButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="editButton">
+    <Component class="javax.swing.JButton" name="printReportButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="16" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Edit Item"/>
+        <Property name="text" type="java.lang.String" value="Cetak Laporan"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printReportButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="detailButton">
