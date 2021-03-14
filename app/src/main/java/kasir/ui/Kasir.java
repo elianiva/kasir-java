@@ -462,7 +462,7 @@ public class Kasir extends javax.swing.JFrame {
 				order.setFoodAmount(amount);
 				order.setFoodPrice(price);
 				order.setFoodID(foodID);
-				order.setDetails("TODO");
+				order.setDetails("TODO"); // TODO: figure out what this thing is
 				order.setStatus("Lunas");
 
 				new OrderSource(order).save();

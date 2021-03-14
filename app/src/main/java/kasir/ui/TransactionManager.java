@@ -86,6 +86,9 @@ public class TransactionManager extends javax.swing.JFrame {
 		}
 	}
 
+	/**
+	 * Listen for each row selection and update the values accordingly
+	 */
 	private void attachOnSelectionEvent() {
 		transactionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
@@ -101,11 +104,9 @@ public class TransactionManager extends javax.swing.JFrame {
 				paidField.setText(transactionTable.getValueAt(selectedRow, 3).toString());
 				exchangeField.setText(transactionTable.getValueAt(selectedRow, 4).toString());
 
+				// the only thing that matters here is the transaction id
+				// because we need that to index the orders
 				currentTransaction.setTransactionID(transactionTable.getValueAt(selectedRow, 0).toString());
-				// currentTransaction.setUserID(transactionTable.getValueAt(selectedRow, 1).toString());
-				// currentTransaction.setStock(Long.parseLong(transactionTable.getValueAt(selectedRow, 2).toString()));
-				// String priceNumber = FormatRupiah.normalise(transactionTable.getValueAt(selectedRow, 3).toString());
-				// currentTransaction.setPrice(Long.parseLong(priceNumber));
 			}
 		});
 	}
@@ -321,16 +322,12 @@ public class TransactionManager extends javax.swing.JFrame {
 
 		int confirmation = JOptionPane.showConfirmDialog(this, "Hapus transaksi yang dipilih?", "Hapus Menu", JOptionPane.YES_NO_OPTION);
 		try {
-			String transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
-
 			if (confirmation == JOptionPane.NO_OPTION) {
 				return;
 			}
 
-			Transaction transaction = new Transaction();
-			transaction.setTransactionID(transactionID);
-			new TransactionSource(transaction).delete();
-
+			// delete the data from the database
+			new TransactionSource(currentTransaction).delete();
 			JOptionPane.showMessageDialog(this, "Berhasil menghapus transaksi!");
 
 			// refresh the table
@@ -355,7 +352,7 @@ public class TransactionManager extends javax.swing.JFrame {
 		// create a new row for each iteration
 		List<List<String>> rows = new ArrayList<List<String>>();
 
-		// add the title
+		// add the header for the spreadsheet
 		List<String> header = new ArrayList<String>();
 		header.add("ID Transaksi");
 		header.add("Nama Kasir");
