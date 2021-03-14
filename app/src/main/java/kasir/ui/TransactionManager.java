@@ -12,6 +12,7 @@ import kasir.controllers.TransactionSource;
 import kasir.controllers.UserSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.Popup;
+import kasir.helpers.Receipt;
 import kasir.models.Transaction;
 import kasir.models.User;
 
@@ -312,11 +313,11 @@ public class TransactionManager extends javax.swing.JFrame {
 
 	private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
 		if (transactionTable.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(this, "Tidak ada makanan yang dipilih!");
+			JOptionPane.showMessageDialog(this, "Tidak ada transaksi yang dipilih!");
 			return;
 		}
 
-		int confirmation = JOptionPane.showConfirmDialog(this, "Hapus menu yang dipilih?", "Hapus Menu", JOptionPane.YES_NO_OPTION);
+		int confirmation = JOptionPane.showConfirmDialog(this, "Hapus transaksi yang dipilih?", "Hapus Menu", JOptionPane.YES_NO_OPTION);
 		try {
 			String transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
 
@@ -339,11 +340,13 @@ public class TransactionManager extends javax.swing.JFrame {
 	}//GEN-LAST:event_deleteButtonActionPerformed
 
 	private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO: later
-	}
-
-	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO: later
+		if (transactionTable.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Tidak ada transaksi yang dipilih!");
+			return;
+		}
+		int selectedRow = transactionTable.getSelectedRow();
+		String transactionID = transactionTable.getValueAt(selectedRow, 0).toString();
+		Receipt.getReceipt(transactionID);
 	}
 
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,7 +355,6 @@ public class TransactionManager extends javax.swing.JFrame {
 			return;
 		}
 	}
-
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 		Popup.<Admin>open(new Admin(currentUser), "Halaman Admin");

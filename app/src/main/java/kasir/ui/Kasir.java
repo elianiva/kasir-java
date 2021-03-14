@@ -19,6 +19,7 @@ import kasir.controllers.TransactionSource;
 import kasir.helpers.FormatRupiah;
 import kasir.helpers.OrderTable;
 import kasir.helpers.Popup;
+import kasir.helpers.Receipt;
 import kasir.models.Food;
 import kasir.models.Transaction;
 import kasir.models.User;
@@ -411,8 +412,6 @@ public class Kasir extends javax.swing.JFrame {
 		}
 
 		try {
-			// need to specifically say this one is the order model
-			// because we also have `kasir.ui.Order`
 			kasir.models.Order order = new kasir.models.Order();
 			Random rand = new Random();
 			Date date = new Date(new java.util.Date().getTime());
@@ -480,7 +479,11 @@ public class Kasir extends javax.swing.JFrame {
 
 			// are ya winning son? yah, I'm winning
 			// TODO: implement print using jasperthingamabob, i can't remember the name
-			JOptionPane.showConfirmDialog(this, "Transaksi berhasil disimpan! Cetak nota?", "Cetak Nota", JOptionPane.YES_NO_OPTION);
+			int printReceipt = JOptionPane.showConfirmDialog(this, "Transaksi berhasil disimpan! Cetak nota?", "Cetak Nota", JOptionPane.YES_NO_OPTION);
+			if (printReceipt == JOptionPane.NO_OPTION) {
+				return;
+			}
+			Receipt.getReceipt(transactionID);
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "Transaksi gagal disimpan!");
 			ex.printStackTrace();

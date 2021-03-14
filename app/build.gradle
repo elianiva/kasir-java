@@ -14,6 +14,16 @@ plugins {
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
+
+    // mavens dependencies
+    maven{
+      url "http://jasperreports.sourceforge.net/maven2/"
+      allowInsecureProtocol true
+    }
+    maven{
+      url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"
+      allowInsecureProtocol true
+    }
 }
 
 dependencies {
@@ -29,6 +39,9 @@ dependencies {
     // Material look and feel
     implementation 'com.formdev:flatlaf:1.0'
     implementation 'com.formdev:flatlaf-intellij-themes:1.0'
+
+    // jasper reports
+    implementation 'net.sf.jasperreports:jasperreports:6.1.0'
 }
 
 application {
