@@ -1,0 +1,4 @@
+- Implement logger for each exceptions
+- Refactor how we pass in `currentUser`
+- Make a documentation for other people to read
+- More pictures
