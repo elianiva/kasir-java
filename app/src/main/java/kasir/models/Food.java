@@ -21,7 +21,7 @@ public class Food {
 
 	/**
 	 * Set the food ID
-	 * @param id
+	 * @param id - The food ID
 	 */
 	public void setFoodID(String id) {
 		this.foodID = id;
@@ -37,7 +37,7 @@ public class Food {
 
 	/**
 	 * Set the food name
-	 * @param newName
+	 * @param newName - The new food name
 	 */
 	public void setName(String newName) {
 		this.name = newName;
@@ -53,7 +53,7 @@ public class Food {
 
 	/**
 	 * Set the food stock
-	 * @param newStock
+	 * @param newStock - The new food stock
 	 */
 	public void setStock(long newStock) {
 		this.stock = newStock;
@@ -70,7 +70,7 @@ public class Food {
 
 	/**
 	 * Set the food price
-	 * @param newPrice
+	 * @param newPrice - The new food price
 	 */
 	public void setPrice(long newPrice) {
 		this.price = newPrice;
@@ -86,7 +86,7 @@ public class Food {
 
 	/**
 	 * Set the food status
-	 * @param newStatus
+	 * @param newStatus - The new food status
 	 */
 	private void setStatus(String newStatus) {
 		this.status = newStatus;

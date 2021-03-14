@@ -23,7 +23,7 @@ public class OrderTable {
 
 	/**
 	 * Append row
-	 * @return rows
+	 * @param row - The row you want to add
 	 */
 	public void addRow(List<Object> row) {
 		rows.add(row);
@@ -31,7 +31,7 @@ public class OrderTable {
 
 	/**
 	 * Set rows
-	 * @param newRows
+	 * @param newRows - The new rows
 	 */
 	public void setRows(List<List<Object>> newRows) {
 		this.rows = newRows;

@@ -112,6 +112,7 @@ public class Kasir extends javax.swing.JFrame {
 
 	/**
 	 * Set the table data
+	 * @param data - The table data which in form of list of table rows
 	 */
 	public void setTableData(List<List<Object>> data) {
 		// reset the table before adding a new one

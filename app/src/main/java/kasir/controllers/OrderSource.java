@@ -17,8 +17,8 @@ public class OrderSource {
 	private Order order;
 
 	/**
-	 * Initialise the `user` instance for this class
-	 * @param user - The User instance
+	 * Initialise the `order` instance for this class
+	 * @param order - The Order instance
 	 */
 	public OrderSource(Order order) {
 		this.order = order;
@@ -26,8 +26,7 @@ public class OrderSource {
 
 	/**
 	 * Save the passed `Order` instance to the database
-	 * @param order - The `Order` model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void save() throws SQLException {
 		// we should use prepared statement to prevent
@@ -53,8 +52,7 @@ public class OrderSource {
 
 	/**
 	 * Update an Order
-	 * @param order - order model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void update() throws SQLException {
 		String sql = "UPDATE `order` SET id_transaksi=?, id_user=?, no_meja=?, tanggal=?, id_masakan=?, jumlah_masakan=?, total_harga=?, keterangan=?, status_order=? WHERE id_order=?";
@@ -77,8 +75,7 @@ public class OrderSource {
 
 	/**
 	 * Delete an Order
-	 * @param order - order model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void delete() throws SQLException {
 		String sql = "DELETE FROM `order` WHERE id_order=?";
@@ -92,7 +89,8 @@ public class OrderSource {
 
 	/**
 	 * Get all Orders from the database
-	 * @return List<Order>
+	 * @return orderList
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static List<Order> findAll() throws SQLException {
 		// this function can be static because we don't need the `User`
@@ -122,6 +120,7 @@ public class OrderSource {
 	/**
 	 * Returns Order if they exists
 	 * @return Order
+	 * @throws java.sql.SQLException - Error
 	 */
 	public Order find() throws SQLException {
 		Order orderResult = new Order();
@@ -151,7 +150,9 @@ public class OrderSource {
 
 	/**
 	 * Find Orders that has the same transaction ID
+	 * @param transactionID - The transaction ID
 	 * @return Order
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static List<Order> findByTransactionID(String transactionID) throws SQLException {
 		List<Order> orderResult = new ArrayList<Order>();

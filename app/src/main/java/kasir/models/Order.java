@@ -28,7 +28,7 @@ public class Order {
 
 	/**
 	 * Set the order ID
-	 * @param newID
+	 * @param newID - The order ID
 	 */
 	public void setOrderID(String newID) {
 		this.orderID = newID;
@@ -44,7 +44,7 @@ public class Order {
 
 	/**
 	 * Set the transaction ID
-	 * @param newID
+	 * @param newID - The new transaction ID
 	 */
 	public void setTransactionID(String newID) {
 		this.transactionID = newID;
@@ -60,7 +60,7 @@ public class Order {
 
 	/**
 	 * Set the user ID
-	 * @param newID
+	 * @param newID - The new user ID
 	 */
 	public void setUserID(String newID) {
 		this.userID = newID;
@@ -75,8 +75,8 @@ public class Order {
 	}
 
 	/**
-	 * Set the user ID
-	 * @param newID
+	 * Set the food ID
+	 * @param newID - The new food ID
 	 */
 	public void setFoodID(String newID) {
 		this.foodID = newID;
@@ -92,7 +92,7 @@ public class Order {
 
 	/**
 	 * Set the food amount
-	 * @param newAmount
+	 * @param newAmount - The new food amount
 	 */
 	public void setFoodAmount(long newAmount) {
 		this.foodAmount = newAmount;
@@ -108,7 +108,7 @@ public class Order {
 
 	/**
 	 * Set the food price
-	 * @param newAmount
+	 * @param newPrice - The new food price
 	 */
 	public void setFoodPrice(long newPrice) {
 		this.foodPrice = newPrice;
@@ -124,7 +124,7 @@ public class Order {
 
 	/**
 	 * Set the order details
-	 * @param newDetails
+	 * @param newDetails - The new detail
 	 */
 	public void setDetails(String newDetails) {
 		this.details = newDetails;
@@ -140,7 +140,7 @@ public class Order {
 
 	/**
 	 * Set the status
-	 * @param newStatus
+	 * @param newStatus - The new status
 	 */
 	public void setStatus(String newStatus) {
 		this.status = newStatus;
@@ -156,7 +156,7 @@ public class Order {
 
 	/**
 	 * Set the table number
-	 * @param newNumber
+	 * @param newNumber - The new table number
 	 */
 	public void setTableNumber(long newNumber) {
 		this.tableNumber = newNumber;
@@ -172,7 +172,7 @@ public class Order {
 
 	/**
 	 * Set the user ID
-	 * @param newDate
+	 * @param newDate - The new order date
 	 */
 	public void setDate(Date newDate) {
 		this.date = newDate;

@@ -14,8 +14,8 @@ public class LevelSource {
 	private Level level;
 
 	/**
-	 * Initialise the `user` instance for this class
-	 * @param user - The User instance
+	 * Initialise the `level` instance for this class
+	 * @param level - The Level instance
 	 */
 	public LevelSource(Level level) {
 		this.level = level;
@@ -23,7 +23,8 @@ public class LevelSource {
 
 	/**
 	 * Returns a level if it exists
-	 * @return Level
+	 * @return levelResult
+	 * @throws java.sql.SQLException - Error
 	 */
 	public Level find() throws SQLException {
 		Level levelResult = new Level();
@@ -48,7 +49,8 @@ public class LevelSource {
 
 	/**
 	 * Get all levels from the database
-	 * @return List<Level>
+	 * @return levelList
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static List<Level> findAll() throws SQLException {
 		// this function can be static because we don't need the `User`

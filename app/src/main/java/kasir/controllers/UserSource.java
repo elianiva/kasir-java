@@ -26,8 +26,7 @@ public class UserSource {
 
 	/**
 	 * Save the passed `user` instance to the database
-	 * @param user - The `User` model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void save() throws SQLException {
 		// we should use prepared statement to prevent
@@ -49,8 +48,7 @@ public class UserSource {
 
 	/**
 	 * Update a user
-	 * @param user - user model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void update() throws SQLException {
 		String sql = "UPDATE user SET username=?, password=?, id_level=? WHERE id_user=?";
@@ -67,8 +65,7 @@ public class UserSource {
 
 	/**
 	 * Delete a user
-	 * @param user - user model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void delete() throws SQLException {
 		String sql = "DELETE FROM user WHERE id_user=?";
@@ -82,7 +79,8 @@ public class UserSource {
 
 	/**
 	 * Get all users from the database
-	 * @return List<User>
+	 * @return userList
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static List<User> findAll() throws SQLException {
 		// this function can be static because we don't need the `User`
@@ -110,7 +108,8 @@ public class UserSource {
 
 	/**
 	 * Returns a user if it exists
-	 * @return User
+	 * @return userResult
+	 * @throws java.sql.SQLException - Error
 	 */
 	public User find() throws SQLException {
 		User userResult = new User();
@@ -137,7 +136,9 @@ public class UserSource {
 
 	/**
 	 * Returns a user if it exists
+	 * @param id - The user ID
 	 * @return User
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static User findByID(String id) throws SQLException {
 		// we can make this function as static because we don't need the

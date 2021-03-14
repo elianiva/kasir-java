@@ -17,8 +17,8 @@ public class FoodSource {
 	private Food food;
 
 	/**
-	 * Initialise the `user` instance for this class
-	 * @param user - The User instance
+	 * Initialise the `food` instance for this class
+	 * @param food - The Food instance
 	 */
 	public FoodSource(Food food) {
 		this.food = food;
@@ -26,8 +26,7 @@ public class FoodSource {
 
 	/**
 	 * Save the passed `food` instance to the database
-	 * @param food - The `Food` model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void save() throws SQLException {
 		// we should use prepared statement to prevent
@@ -49,8 +48,7 @@ public class FoodSource {
 
 	/**
 	 * Update `masakan`
-	 * @param food - `Food` model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void update() throws SQLException {
 		String sql = "UPDATE masakan SET nama_masakan=?, harga=?, stok=?, status_masakan=? WHERE id_masakan=?";
@@ -68,8 +66,7 @@ public class FoodSource {
 
 	/**
 	 * Delete a food
-	 * @param food - `Food` model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void delete() throws SQLException {
 		String sql = "DELETE FROM masakan WHERE id_masakan=?";
@@ -83,7 +80,8 @@ public class FoodSource {
 
 	/**
 	 * Get all foods from the database
-	 * @return List<Masakan>
+	 * @return foodList
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static List<Food> findAll() throws SQLException {
 		// this function can be static because we don't need the `User`
@@ -110,7 +108,8 @@ public class FoodSource {
 
 	/**
 	 * Returns food if it exists
-	 * @return Food
+	 * @return foodResult
+	 * @throws java.sql.SQLException - Error
 	 */
 	public Food find() throws SQLException {
 		Food foodResult = new Food();
@@ -137,7 +136,9 @@ public class FoodSource {
 
 	/**
 	 * Find a food using an ID
-	 * @return Food
+	 * @param id - The food ID
+	 * @return foodResult
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static Food findByID(String id) throws SQLException {
 		Food foodResult = new Food();

@@ -9,6 +9,7 @@ public class Popup {
 
 	/**
 	 * Open the popup and do some stuff with it so we don't repeat ourself
+	 * @param <T> - The window type
 	 * @param popup - The instance of the window
 	 * @param title - The window title
 	 * @return popup

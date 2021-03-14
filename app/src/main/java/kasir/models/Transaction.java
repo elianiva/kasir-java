@@ -24,7 +24,7 @@ public class Transaction {
 
 	/**
 	 * Set the user ID
-	 * @param newID
+	 * @param newID - The new user ID
 	 */
 	public void setUserID(String newID) {
 		this.userID = newID;
@@ -40,7 +40,7 @@ public class Transaction {
 
 	/**
 	 * Set the exchange
-	 * @param newExchange
+	 * @param newExchange - The new exchange amount
 	 */
 	public void setExchange(long newExchange) {
 		this.exchange = newExchange;
@@ -56,7 +56,7 @@ public class Transaction {
 
 	/**
 	 * Set the date
-	 * @param newDate
+	 * @param newDate - The new date
 	 */
 	public void setDate(Date newDate) {
 		this.date = newDate;
@@ -72,7 +72,7 @@ public class Transaction {
 
 	/**
 	 * Set the total paid
-	 * @param newAmount
+	 * @param newAmount - The new total paid amount
 	 */
 	public void setTotalPaid(long newAmount) {
 		this.totalPaid = newAmount;
@@ -88,7 +88,7 @@ public class Transaction {
 
 	/**
 	 * Set the total price
-	 * @param newAmount
+	 * @param newAmount - The new total price amount
 	 */
 	public void setTotalPrice(long newAmount) {
 		this.totalPrice = newAmount;
@@ -104,7 +104,7 @@ public class Transaction {
 
 	/**
 	 * Set the transaction ID
-	 * @param newID
+	 * @param newID - The new transaction ID
 	 */
 	public void setTransactionID(String newID) {
 		this.transactionID = newID;

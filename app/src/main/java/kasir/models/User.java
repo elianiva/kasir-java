@@ -21,7 +21,7 @@ public class User {
 
 	/**
 	 * Set the user ID
-	 * @param newID
+	 * @param newID - The new user ID
 	 */
 	public void setUserID(String newID) {
 		this.userID = newID;
@@ -37,7 +37,7 @@ public class User {
 
 	/**
 	 * Set the name
-	 * @param newName
+	 * @param newName - The new name
 	 */
 	public void setName(String newName) {
 		this.name = newName;
@@ -53,7 +53,7 @@ public class User {
 
 	/**
 	 * Set the user name
-	 * @param newName
+	 * @param newName - The new username
 	 */
 	public void setUsername(String newName) {
 		this.username = newName;
@@ -69,7 +69,7 @@ public class User {
 
 	/**
 	 * Set the password
-	 * @param newPassword
+	 * @param newPassword - The new password
 	 */
 	public void setPassword(String newPassword) {
 		this.password = newPassword;
@@ -85,7 +85,7 @@ public class User {
 
 	/**
 	 * Set the level ID
-	 * @param newID
+	 * @param newID - The new level ID
 	 */
 	public void setLevelID(long newID) {
 		this.levelID = newID;

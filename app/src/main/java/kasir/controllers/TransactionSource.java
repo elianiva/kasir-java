@@ -17,8 +17,8 @@ public class TransactionSource {
 	private Transaction transaction;
 
 	/**
-	 * Initialise the `user` instance for this class
-	 * @param user - The User instance
+	 * Initialise the `transaction` instance for this class
+	 * @param transaction - The Transaction instance
 	 */
 	public TransactionSource(Transaction transaction) {
 		this.transaction = transaction;
@@ -26,8 +26,7 @@ public class TransactionSource {
 
 	/**
 	 * Save the passed `Transaction` instance to the database
-	 * @param transaction - The `Transaction` model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void save() throws SQLException {
 		// we should use prepared statement to prevent
@@ -50,8 +49,7 @@ public class TransactionSource {
 
 	/**
 	 * Update an Transaction
-	 * @param order - order model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void update() throws SQLException {
 		String sql = "UPDATE order SET id_user=?, tanggal=?, total_harga=?, total_bayar=?, kembalian=? WHERE id_transaksi=?";
@@ -70,8 +68,7 @@ public class TransactionSource {
 
 	/**
 	 * Delete a Transaction
-	 * @param transaction - transaction model
-	 * @throws java.sql.SQLException
+	 * @throws java.sql.SQLException - Error
 	 */
 	public void delete() throws SQLException {
 		String sql = "DELETE FROM transaksi WHERE id_transaksi=?";
@@ -85,7 +82,8 @@ public class TransactionSource {
 
 	/**
 	 * Get all Transactions from the database
-	 * @return List<Transaction>
+	 * @return transactionList
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static List<Transaction> findAll() throws SQLException {
 		String sql = "SELECT * FROM `transaksi`";
@@ -112,7 +110,8 @@ public class TransactionSource {
 
 	/**
 	 * Returns Transaction if they exists
-	 * @return Transaction
+	 * @return transaction
+	 * @throws java.sql.SQLException - Error
 	 */
 	public Transaction find() throws SQLException {
 		Transaction transaction = new Transaction();

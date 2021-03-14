@@ -19,8 +19,8 @@ public class ConnectionHelper {
 	/**
 	 * Method that returns connection to the database which we can then
 	 * re-use over and over
-	 * @return Connection - The connection instance
-	 * @throws java.sql.SQLException
+	 * @return connection
+	 * @throws java.sql.SQLException - Error
 	 */
 	public static Connection getConnection() throws SQLException {
 		DriverManager.registerDriver(new Driver());

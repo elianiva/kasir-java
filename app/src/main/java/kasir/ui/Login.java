@@ -67,9 +67,9 @@ public class Login extends javax.swing.JFrame {
 				Popup.<TransactionManager>open(new TransactionManager(null, currentUser), "Halaman Kasir");
 				this.dispose();
 			} else if (userLevel == 4) {
-
+				// TODO: idk what this is
 			} else {
-				System.out.println("ERror");
+				System.out.println("Error");
 			}
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "Gagal Login.");

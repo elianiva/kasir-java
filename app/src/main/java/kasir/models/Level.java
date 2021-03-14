@@ -14,7 +14,7 @@ public class Level {
 
 	/**
 	 * Set the level ID
-	 * @param newID
+	 * @param newID - The new level ID
 	 */
 	public void setLevelID(long newID) {
 		this.levelID = newID;
@@ -30,7 +30,7 @@ public class Level {
 
 	/**
 	 * Set the level name
-	 * @param newName
+	 * @param newName - The new level name
 	 */
 	public void setLevelName(String newName) {
 		this.levelName = newName;
