@@ -67,7 +67,8 @@ public class Login extends javax.swing.JFrame {
 				Popup.<TransactionManager>open(new TransactionManager(null, currentUser), "Halaman Kasir");
 				this.dispose();
 			} else if (userLevel == 4) {
-				// TODO: idk what this is
+				Popup.<Kasir>open(new Kasir(currentUser), "Halaman Kasir");
+				this.dispose();
 			} else {
 				System.out.println("Error");
 			}

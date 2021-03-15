@@ -462,8 +462,15 @@ public class Kasir extends javax.swing.JFrame {
 				order.setFoodAmount(amount);
 				order.setFoodPrice(price);
 				order.setFoodID(foodID);
-				order.setDetails("TODO"); // TODO: figure out what this thing is
-				order.setStatus("Lunas");
+
+				// conditinally set the order detail based on the user
+				if (currentUser.getLevelID() == 4) {
+					order.setDetails("Pesanan dilakukan oleh pelanggan");
+					order.setStatus("Belum Lunas");
+				} else {
+					order.setDetails("Pesanan dilayani oleh kasir");
+					order.setStatus("Lunas");
+				}
 
 				new OrderSource(order).save();
 			}
@@ -478,8 +485,13 @@ public class Kasir extends javax.swing.JFrame {
 			totalPriceField.setText("");
 			foodAmountField.setText("");
 
-			// are ya winning son? yah, I'm winning
-			// TODO: implement print using jasperthingamabob, i can't remember the name
+			// if it's just a regular user, just say that it's done without
+			// printing the receipt
+			if (currentUser.getLevelID() == 4) {
+				JOptionPane.showMessageDialog(this, "Transaksi berhasil disimpan! Pesanan anda akan segera dilayani");
+				return;
+			}
+
 			int printReceipt = JOptionPane.showConfirmDialog(this, "Transaksi berhasil disimpan! Cetak nota?", "Cetak Nota", JOptionPane.YES_NO_OPTION);
 			if (printReceipt == JOptionPane.NO_OPTION) {
 				return;
