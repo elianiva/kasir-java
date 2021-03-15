@@ -14,6 +14,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Report {
 
+	/**
+	 * Export the given data to an excel file
+	 * @param data - The data you want to export
+	 */
 	public static void getReport(List<List<String>> data) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("Sheet Name");

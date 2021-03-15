@@ -44,6 +44,10 @@ I'm still planning some things to make this complete, but most of them are done.
 
 ![login](./pix/login.webp)
 
+### Halaman Admin
+
+![admin](./pix/admin.webp)
+
 
 ### Halaman Kasir
 
@@ -106,3 +110,80 @@ Here's a project structure that will (hopefully) guide you to understand this ap
 - **gradlew** - Gradle Wrapper, this is how you'd run the tasks on Unix system (Linux, Mac, etc).
 - **gradlew.bat** - Also a Gradle wrapper, but this one is for Windows.
 - **kasir.sql** - This is the dump of the database to help you setup the database.
+
+### How it works (briefly).
+
+Here's some brief explanation on how it works.
+
+- Login
+  How this work is actually really simple. I don't use any hashing for the password (and that's probably not a good idea), but for the sake of simplicity, I chose not to use any.
+
+  First, the code in `App.java` opens up a window which comes from `ui/Login.java`. You might notice there's a line which looks something like `Popup.<Login>open(new Login(), ...)`, we'll talk about that later.
+
+  The logic is available inside the `ui/Login.java`. What it does is it gets the user's input, make a new instance of a user model (which is available from `User.java` file), and feed that model into the `UserSource.java` which is the controller for the user model. After that, it tries to find a user with the given username and password. If it doesn't found the user, it will throw an error by opening a popup window that tells the user what's going on and do a `return` from that point. Otherwise, it proceeds to the next piece of code.
+
+  From here, we check the user's level ID that we've found from the database. Based on that level ID, we'd open different windows. Ex: 1 will open Admin window, 2 will open Cashier window, so on and so forth.
+
+  It will also pass the current window reference and the current user to the next window so the next window will have some information about what to do when the user press logout, who is currently using it, etc.
+
+  That's pretty much it. Nothing crazy because this is just a simple app.
+
+- Logout
+  This feature is *very* easy to implement. How it works is it close the current window by doing `this.dispose()` or `dispose()`, and it will open the Login window again.
+
+- Admin Page
+  The main admin page is really simple. It only consists of several buttons that opens another window if pressed. That's it.
+
+- Cashier Page (Kasir)
+  This page is probably the most difficult one for me to implement because this is one of the very first page that I made in this app so I haven't got the hang of it.
+
+  How it works is actually quite simple though. You have 1 table for the orders and the side form in which you can fill out the details such as table number and the paid amount.
+
+  If you're just a customer, you can only fill out the table number. But if you're the staff (admin, cashier, etc) then you can fill the paid amount.
+
+  The table will stack duplicate item (although the logic behind this is *kinda* questionable) and it will calculate the amount properly.
+
+  When you're done, you can press the confirm button and it will give you the option to print the receipt.
+
+- User Manager Page (Manajemen User)
+  This page manage the user and can only be accessed by the admin. If you want to add a new user, it will use a popup window to insert all of the user details.
+
+---
+
+Those are how this app work, pretty much. But here's a lower level concept that gets applied for this app.
+
+- General Flow
+  1. We create an instance of the model by filling it with the appropriate data.
+  2. We feed the model to the controller
+  3. When the controller receives an instance of the model and gets instantiated, it can do a basic CRUD operation. There are differences on some controllers that other controllers don't have like `findByID`, `findByTransactionID`, etc. But those are some minor differences, the logic stays the same, instead of using the model instance, we'd use the parameter of that function. Because we don't rely on the instance of the model, we can make these functions as static.
+  4. Repeat this logic and change them if needed :)
+
+- Helper Classes
+  - **Popup**
+    This class *helps* us to open a new popup window with the appropriate properties like `setLocationRelativeTo`, `setResizable`, etc so we don't repeat ourself. It looks cleaner too!
+
+  - **FormatRupiah**
+    We use this class to format the given number to the appropriate rupiah currency format and vice versa. It utilises `java.text.DecimalFormat` and `java.text.DecimalFormatSymbols` for converting it to the formatted number and a simple regex to normalise the formatted number.
+
+  - **OrderTable**
+    This class act as a *store* for the order table. It stores the list of rows using an `ArrayList`. The data will look something like this (in JSON representation)
+
+    ```
+    [
+      ["ORDER_ID_1", "ORDER_NAME_1", "ORDER_PRICE_1", "ETC"],
+      ["ORDER_ID_2", "ORDER_NAME_2", "ORDER_PRICE_2", "ETC"],
+      ["ORDER_ID_3", "ORDER_NAME_3", "ORDER_PRICE_3", "ETC"],
+      ["ORDER_ID_4", "ORDER_NAME_4", "ORDER_PRICE_4", "ETC"],
+    ]
+    ```
+
+    It pretty much looks like a table.
+
+  - **Receipt**
+    This class is where the `JasperReport` library gets used. It's pretty much self explanatory, I've added some comments there to (hopefully) help you out :)
+
+  - **Report**
+    This class takes care of the report using `Apache POI`. It exports the given data to an `.xlsx` file format. It's also self explanatory and I also add some comments there, feel free to explore it yourself.
+
+  - **Database**
+    It's used to get the connection to the database so we don't need to repeatedly fill out the data needed to connect to the database. It's also quite simple.
