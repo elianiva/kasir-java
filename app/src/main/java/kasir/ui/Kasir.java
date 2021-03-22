@@ -466,10 +466,10 @@ public class Kasir extends javax.swing.JFrame {
 				order.setFoodPrice(price);
 				order.setFoodID(foodID);
 
-				// conditinally set the order detail based on the user
+				// conditionally set the order detail based on the user
 				if (currentUser.getLevelID() == 4) {
 					order.setDetails("Pesanan dilakukan oleh pelanggan");
-					order.setStatus("Belum Lunas");
+					order.setStatus("Belum Dibayar");
 				} else {
 					order.setDetails("Pesanan dilayani oleh kasir");
 					order.setStatus("Lunas");
