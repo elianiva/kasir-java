@@ -3,6 +3,8 @@ package kasir.ui;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -61,6 +63,7 @@ public class KasirPopup extends javax.swing.JFrame {
 				});
 			}
 		} catch (SQLException ex) {
+			Logger.getLogger(KasirPopup.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(null, "Tidak dapat memuat data!");
 			ex.printStackTrace();
 		}
@@ -70,8 +73,7 @@ public class KasirPopup extends javax.swing.JFrame {
 	 * Set parent with selected row
 	 */
 	private void setParentData() {
-		// TODO: refactor this function
-		// it's getting too massive
+		// this function is really massive, I probably should refactor this
 		if (amountField.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "Jumlah masakan tidak boleh kosong!");
 			return;
@@ -149,7 +151,7 @@ public class KasirPopup extends javax.swing.JFrame {
 			// set parent table data
 			parentWindow.setTableData(allItems);
 
-			JOptionPane.showMessageDialog(this, "Masakan berhasil ditembahkan!");
+			JOptionPane.showMessageDialog(this, "Masakan berhasil ditambahkan!");
 
 			// refresh the table data
 			foodTable.clearSelection();
@@ -157,6 +159,8 @@ public class KasirPopup extends javax.swing.JFrame {
 			foodTable.revalidate();
 			populateData();
 		} catch (SQLException ex) {
+			Logger.getLogger(KasirPopup.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(null, "Gagal memperbarui masakan!");
 			ex.printStackTrace();
 		}
 	}

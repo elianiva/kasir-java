@@ -3,6 +3,8 @@ package kasir.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -73,6 +75,7 @@ public class Login extends javax.swing.JFrame {
 				System.out.println("Error");
 			}
 		} catch (SQLException ex) {
+			Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Gagal Login.");
 			ex.printStackTrace();
 		}

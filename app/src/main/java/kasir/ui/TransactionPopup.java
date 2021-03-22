@@ -1,8 +1,9 @@
 package kasir.ui;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -66,6 +67,7 @@ public class TransactionPopup extends javax.swing.JFrame {
 				});
 			}
 		} catch (SQLException ex) {
+			Logger.getLogger(TransactionPopup.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(null, "Tidak dapat memuat data!");
 			ex.printStackTrace();
 		}

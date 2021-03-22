@@ -3,6 +3,7 @@ package kasir.ui;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -62,6 +63,9 @@ public class UserPopup extends javax.swing.JFrame {
 
 			levelComboBox.setModel(new DefaultComboBoxModel<>(levelNames));
 		} catch (SQLException ex) {
+			// this has a conflict so we use a full `Level` path here
+			Logger.getLogger(UserPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(null, "Gagal mendapatkan data!");
 			ex.printStackTrace();
 		}
 	}
@@ -250,6 +254,8 @@ public class UserPopup extends javax.swing.JFrame {
 
 			JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
 		} catch (SQLException ex) {
+			// this also has a conflict; hence the full path
+			Logger.getLogger(UserPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Data gagal disimpan!");
 			ex.printStackTrace();
 		}

@@ -2,6 +2,8 @@ package kasir.ui;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -73,6 +75,7 @@ public class MenuManager extends javax.swing.JFrame {
 				});
 			}
 		} catch (SQLException ex) {
+			Logger.getLogger(MenuManager.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(null, "Tidak dapat memuat data!");
 			ex.printStackTrace();
 		}
@@ -321,6 +324,7 @@ public class MenuManager extends javax.swing.JFrame {
 			// refresh the table
 			populateData();
 		} catch (SQLException ex) {
+			Logger.getLogger(MenuManager.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Gagal menghapus menu!");
 			ex.printStackTrace();
 		}

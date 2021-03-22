@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -376,6 +378,7 @@ public class Kasir extends javax.swing.JFrame {
 
 			JOptionPane.showMessageDialog(this, "Berhasil menghapus data!");
 		} catch (SQLException ex) {
+			Logger.getLogger(Kasir.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Gagal menghapus data!");
 			ex.printStackTrace();
 		}
@@ -498,6 +501,7 @@ public class Kasir extends javax.swing.JFrame {
 			}
 			Receipt.getReceipt(transactionID);
 		} catch (SQLException ex) {
+			Logger.getLogger(Kasir.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Transaksi gagal disimpan!");
 			ex.printStackTrace();
 		}

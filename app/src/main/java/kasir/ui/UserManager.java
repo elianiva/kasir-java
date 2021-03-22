@@ -2,6 +2,7 @@ package kasir.ui;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -104,6 +105,9 @@ public class UserManager extends javax.swing.JFrame {
 				});
 			}
 		} catch (SQLException ex) {
+			// this conflicts with our Level class so we use the full path
+			Logger.getLogger(UserManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(null, "Gagal menambahkan pengguna!");
 			ex.printStackTrace();
 		}
 	}
@@ -327,6 +331,8 @@ public class UserManager extends javax.swing.JFrame {
 			userData.delete();
 			JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
 		} catch (SQLException ex) {
+			// use full path, if not, it will conflict with the other one
+			Logger.getLogger(UserManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Data gagal dihapus!");
 			ex.printStackTrace();
 		}

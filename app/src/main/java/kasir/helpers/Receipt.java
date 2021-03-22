@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -59,9 +61,11 @@ public class Receipt {
 			dialog.setLocationRelativeTo(null); // center the dialog
 			dialog.setVisible(true);
 		} catch (SQLException ex) {
+			Logger.getLogger(Receipt.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(null, "Gagal mendapatkan koneksi!");
 			ex.printStackTrace();
 		} catch (JRException ex) {
+			Logger.getLogger(Receipt.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(null, "Gagal mencetak struk!");
 			ex.printStackTrace();
 		}

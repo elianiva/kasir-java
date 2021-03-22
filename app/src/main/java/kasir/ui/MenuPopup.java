@@ -1,6 +1,8 @@
 package kasir.ui;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -208,6 +210,7 @@ public class MenuPopup extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
 			this.dispose();
 		} catch (SQLException ex) {
+			Logger.getLogger(MenuPopup.class.getName()).log(Level.SEVERE, null, ex);
 			JOptionPane.showMessageDialog(this, "Data gagal disimpan!");
 			ex.printStackTrace();
 		}
